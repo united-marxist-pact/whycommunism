@@ -10,8 +10,12 @@
 <meta property="og:title" content="Join the Discussion · United Marxist Pact">
 <meta property="og:description" content="United Marxist Pact: a living international space for study, discussion, contribution, and collective political development.">
 <meta property="og:url" content="https://whycommunism.com/test/join/">
-<meta property="og:image" content="https://whycommunism.com/test/join/poster.jpg">
+<meta property="og:image" content="https://whycommunism.com/og-card.png">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="Why Communism? A library of guides, studies, and sources across six pillars.">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://whycommunism.com/og-card.png">
 <meta name="theme-color" content="#E9DFC9">
 <link rel="preload" as="font" type="font/woff2" href="/assets/archivo.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/mono.woff2" crossorigin>
@@ -31,20 +35,23 @@ html{overflow-x:hidden;-webkit-text-size-adjust:100%}
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
 a{color:inherit}
 #track{width:1px}
-#film{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--paper)}
-#bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:flex-end;align-items:center;
-  padding:14px clamp(16px,4vw,46px);pointer-events:none}
-#bar a,#bar button{pointer-events:auto}
-#idxbtn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;cursor:pointer;
-  background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
-#idxbtn:hover{background:var(--ink)}
-@media(max-width:700px){#plate{display:none}}
-#plate{position:fixed;right:14px;bottom:10px;z-index:30;color:var(--ink);
-  font-family:var(--disp);font-weight:400;font-size:clamp(14px,1.6vw,19px);letter-spacing:.01em;
-  white-space:nowrap;text-decoration:none;line-height:1;
-  text-shadow:-1px -1px 0 var(--paper),1px -1px 0 var(--paper),-1px 1px 0 var(--paper),1px 1px 0 var(--paper),2px 2px 0 rgba(23,19,14,.15)}
-#plate b{color:var(--red);font-weight:400}
-#plate:hover{color:var(--red)}
+#film{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--paper);
+  object-fit:cover;object-position:50% 55%}
+#plate{position:fixed;right:0;bottom:3px;z-index:30;width:clamp(196px,20vw,248px);min-height:78px;
+  display:flex;flex-direction:column;justify-content:center;gap:7px;padding:13px 18px 12px;
+  background:#F2EDE2;color:var(--ink);border:2px solid var(--ink);border-right:0;
+  border-bottom:0;border-top:7px solid var(--red);box-shadow:-7px -7px 0 rgba(23,19,14,.13);
+  text-decoration:none;text-transform:uppercase;text-align:left;appearance:none;cursor:pointer}
+#plate .plate-name{font-family:var(--disp);font-size:clamp(15px,1.55vw,20px);letter-spacing:.01em;line-height:.95}
+#plate .plate-name b{color:var(--red);font-weight:400}
+#plate .plate-route{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:#5C5446}
+#plate:hover{background:var(--ink);color:#F2EDE2;border-top-color:#E8B45A}
+#plate:hover .plate-route{color:#E8B45A}
+@media(max-width:700px){
+  #plate{width:174px;min-height:64px;padding:10px 12px 9px;border-top-width:5px;box-shadow:-5px -5px 0 rgba(23,19,14,.13)}
+  #plate .plate-name{font-size:14px}
+  #plate .plate-route{font-size:8px;letter-spacing:.16em}
+}
 
 #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
 #pfill{height:100%;width:0;background:var(--red)}
@@ -129,11 +136,12 @@ body.ready #loader{opacity:0;pointer-events:none}
 <body>
 
 <div id="track"></div>
-<canvas id="film" aria-label="A paper diorama: black paper figures with red flags gather among houses as the view closes on a red star in a circle."></canvas>
-
-<header id="bar">
-  <button id="idxbtn" aria-haspopup="dialog">INDEX</button>
-</header>
+<video id="film" poster="poster.jpg" preload="none" muted playsinline tabindex="-1"
+  data-full-parts="film-full.part-00,film-full.part-01" data-full-bytes="58516735"
+  aria-label="A paper-cut town and assembly moving smoothly toward a red star.">
+  <source data-src="film-1440.mp4" type="video/mp4">
+  <source data-src="film.mp4" type="video/mp4">
+</video>
 
 <section class="card l" id="hero" data-a="-9" data-b="20">
   <h1><span>JOIN THE</span><span class="m">DISCUSSION</span></h1>
@@ -172,10 +180,14 @@ body.ready #loader{opacity:0;pointer-events:none}
 
 <div id="cue">SCROLL<span class="ar">↓</span></div>
 
-<a id="plate" href="/">Why Communism<b>?</b></a>
+<button id="plate" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false"
+  aria-label="Explore this page">
+  <span class="plate-name">Why Communism<b>?</b></span>
+  <span class="plate-route">EXPLORE&nbsp; →</span>
+</button>
 <div id="pbar"><div id="pfill"></div></div>
 
-<div id="menu" role="dialog" aria-label="Contents">
+<div id="menu" role="dialog" aria-modal="true" aria-label="Explore this page">
   <div class="inner">
     <p class="mh">WHYCOMMUNISM.COM · JOIN THE DISCUSSION</p>
     <h3>Join the Discussion</h3>
@@ -207,23 +219,21 @@ body.ready #loader{opacity:0;pointer-events:none}
 <script>
 (function(){
 'use strict';
-var N=121, VN=160, PAD=4;
-var DIR = 'frames/L/';
-var IW = 1872, IH = 1056;
+var VN=160, FILM_END=120;
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
+var film=document.getElementById('film');
 var track=document.getElementById('track');
 
 var pfill=document.getElementById('pfill');
-var lfill=document.getElementById('lfill');
+var lfill=document.getElementById('lfill'), lcap=document.getElementById('lcap');
 var cards=[].slice.call(document.querySelectorAll('.card'));
 cards.forEach(function(c){ c.a=+c.dataset.a; c.b=+c.dataset.b;
   c.rot=c.classList.contains('c')?0:-1.2;
   c.mode=c.id==='hero'?'zoomexit':(c.classList.contains('l')?'zoom':'fade'); });
 
-var PPF=50, trackH=0, dpr=1, cw=0, ch=0;
-var cur=0, target=0, drawn=-1;
+var PPF=50, trackH=0;
+var cur=0, target=0;
 
 function layout(){
   var vh=innerHeight;
@@ -231,77 +241,114 @@ function layout(){
   var prog = trackH>0 ? (scrollY/Math.max(1,trackH-vh)) : 0;
   trackH=(VN-1)*PPF+vh;
   track.style.height=trackH+'px';
-  dpr=Math.min(devicePixelRatio||1,2);
-  cw=innerWidth; ch=vh;
-  canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
-  canvas.style.width=cw+'px'; canvas.style.height=ch+'px';
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  ctx.imageSmoothingQuality='high';
   if(prog>0) scrollTo(0, prog*(trackH-vh));
-  drawn=-1;
 }
-function cover(){
-  var s=Math.max(cw/IW, ch/IH);
-  var sw=cw/s, sh=ch/s;
-  var sx=(IW-sw)*0.5, sy=(IH-sh)*0.55;
-  return {s:s,sx:sx,sy:sy,sw:sw,sh:sh};
-}
-var imgs=new Array(N), tries=new Array(N), okc=0;
-function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
-function load(i,cb){
-  if(imgs[i] && imgs[i]!=='dead') return;
-  var im=new Image();
-  im.onload=function(){ im.ok=true; okc++; if(cb)cb(); tick(); };
-  im.onerror=function(){
-    tries[i]=(tries[i]||0)+1;
-    if(tries[i]<3){ imgs[i]=null; setTimeout(function(){ load(i,cb); }, 400*tries[i]); }
-    else { imgs[i]='dead'; if(cb)cb(); }
-  };
-  im.src=src(i); imgs[i]=im;
-}
-function nearest(i){
-  if(imgs[i]&&imgs[i].ok) return imgs[i];
-  for(var d=1;d<N;d++){
-    if(i-d>=0&&imgs[i-d]&&imgs[i-d].ok) return imgs[i-d];
-    if(i+d<N&&imgs[i+d]&&imgs[i+d].ok) return imgs[i+d];
-  }
-  return null;
-}
-var wave1=[], w1done=0;
-for(var i=0;i<N;i+=4) wave1.push(i);
-if(wave1.indexOf(N-1)<0) wave1.push(N-1);
-function w1cb(){
-  w1done++;
-  lfill.style.width=Math.round(w1done/wave1.length*100)+'%';
-  if(w1done>=wave1.length) begin();
-}
-wave1.forEach(function(i){ load(i,w1cb); });
-function wave2(){
-  var q=[]; for(var i=0;i<N;i++) if(!imgs[i]) q.push(i);
-  var inflight=0;
-  function pump(){
-    while(inflight<6&&q.length){
-      var i=q.shift(); inflight++;
-      load(i,function(){ inflight--; pump(); });
-    }
-  }
-  pump();
+var started=false, duration=0, pendingTime=null, MIN_BUFFER=reduced?0:.12;
+function updateLoad(){
+  if(!duration) return;
+  var end=film.buffered.length?film.buffered.end(film.buffered.length-1):0;
+  var ratio=Math.max(0,Math.min(1,end/duration));
+  var pct=Math.round(ratio*100);
+  lfill.style.width=Math.max(8,pct)+'%';
+  lcap.textContent='LOADING · '+pct+'%';
+  if(!started&&(ratio>=MIN_BUFFER||film.readyState>=4)) begin();
 }
 function begin(){
+  if(started) return;
+  started=true;
   document.body.classList.add('ready');
   layout();
   var m=location.search.match(/[?&]f=(\d+)/);
   if(m){ var ff=Math.min(VN-1,+m[1]); cur=target=ff; scrollTo(0, ff*PPF); }
   var s=location.search.match(/[?&]still=(\d+)/);
   if(s){ var sf=Math.min(VN-1,+s[1]); cur=target=sf; }
+  lfill.style.width='100%';
+  seekFilm(cur,true);
   tick();
-  setTimeout(wave2, 350);
 }
-function draw(f){
-  var im=nearest(f); if(!im) return;
-  var c=cover();
-  ctx.drawImage(im,c.sx,c.sy,c.sw,c.sh,0,0,cw,ch);
-  drawn=f;
+function flushSeek(force){
+  if(!duration||pendingTime===null||(!force&&film.seeking)) return;
+  var t=pendingTime; pendingTime=null;
+  if(force||Math.abs((film.currentTime||0)-t)>1/120){
+    try{ film.currentTime=t; }catch(e){}
+  }
+}
+function seekFilm(v,force){
+  if(!duration) return;
+  if(reduced) v=0;
+  var p=Math.max(0,Math.min(FILM_END,v))/FILM_END;
+  pendingTime=p*Math.max(0,duration-1/60);
+  flushSeek(!!force);
+}
+var fullObjectUrl='', usingFull=false, fallbackTried=false;
+function activateFallback(){
+  fallbackTried=true;
+  usingFull=false;
+  if(fullObjectUrl){ URL.revokeObjectURL(fullObjectUrl); fullObjectUrl=''; }
+  film.removeAttribute('src');
+  [].slice.call(film.querySelectorAll('source')).forEach(function(s){ s.src=s.dataset.src; });
+  film.dataset.quality='1440p-fallback';
+  film.preload='auto';
+  lcap.textContent='PREPARING VIDEO';
+  film.load();
+}
+function loadFullQuality(){
+  var parts=(film.dataset.fullParts||'').split(',').filter(Boolean);
+  if(!parts.length){ activateFallback(); return; }
+  usingFull=true;
+  var total=+film.dataset.fullBytes||1, loaded=0;
+  function note(n){
+    loaded+=n;
+    var pct=Math.max(0,Math.min(100,Math.round(loaded/total*100)));
+    lfill.style.width=Math.max(8,pct)+'%';
+    lcap.textContent='LOADING · '+pct+'%';
+  }
+  function fetchPart(url){
+    return fetch(url,{cache:'force-cache'}).then(function(res){
+      if(!res.ok) throw new Error('Unable to load '+url);
+      if(!res.body||!res.body.getReader){
+        return res.arrayBuffer().then(function(b){ note(b.byteLength); return new Blob([b]); });
+      }
+      var reader=res.body.getReader(), chunks=[];
+      function pump(){
+        return reader.read().then(function(r){
+          if(r.done) return new Blob(chunks);
+          chunks.push(r.value); note(r.value.byteLength); return pump();
+        });
+      }
+      return pump();
+    });
+  }
+  Promise.all(parts.map(fetchPart)).then(function(blobs){
+    fullObjectUrl=URL.createObjectURL(new Blob(blobs,{type:'video/mp4'}));
+    film.src=fullObjectUrl;
+    film.dataset.quality='original-4k';
+    film.preload='auto';
+    lcap.textContent='PREPARING VIDEO';
+    film.load();
+  }).catch(activateFallback);
+}
+function prepareFilm(){
+  film.muted=true;
+  film.playsInline=true;
+  film.pause();
+  lcap.textContent='PREPARING VIDEO';
+  film.addEventListener('loadedmetadata',function(){
+    duration=isFinite(film.duration)?film.duration:0;
+    updateLoad();
+  });
+  film.addEventListener('progress',updateLoad);
+  film.addEventListener('loadeddata',updateLoad);
+  film.addEventListener('canplay',updateLoad);
+  film.addEventListener('canplaythrough',begin,{once:true});
+  film.addEventListener('seeked',function(){ flushSeek(false); });
+  film.addEventListener('error',function(){
+    if(usingFull&&!fallbackTried){ activateFallback(); return; }
+    lcap.textContent='USING POSTER';
+    begin();
+  });
+  loadFullQuality();
+  setTimeout(function(){ if(!started&&film.readyState>=2) begin(); },10000);
 }
 function setCards(v){
   for(var k=0;k<cards.length;k++){
@@ -334,11 +381,10 @@ function tick(){ if(!raf){ raf=true; requestAnimationFrame(step); } }
 function step(){
   raf=false;
   var gap=target-cur;
-  if(Math.abs(gap)>30) cur=target-(gap>0?30:-30);
+  if(Math.abs(gap)>30){ cur=target-(gap>0?30:-30); gap=target-cur; }
   cur = reduced ? target : cur+gap*0.16;
   if(Math.abs(target-cur)<0.02) cur=target;
-  var f=Math.round(Math.max(0,Math.min(N-1,cur)));
-  if(f!==drawn) draw(f);
+  seekFilm(cur,false);
   setCards(Math.max(0,Math.min(VN-1,cur)));
   pfill.style.width=(Math.max(0,Math.min(VN-1,cur))/(VN-1)*100)+'%';
   if(cur!==target) tick();
@@ -350,11 +396,23 @@ addEventListener('scroll',function(){
 },{passive:true});
 addEventListener('resize',function(){ layout(); tick(); });
 addEventListener('keydown',function(e){
+  if(menu&&menu.classList.contains('open')){
+    if(e.key==='Escape'){ closeMenu(true); e.preventDefault(); return; }
+    if(e.key==='Tab'){
+      var fs=[mclose].concat([].slice.call(menu.querySelectorAll('button,a[href]')));
+      var first=fs[0],last=fs[fs.length-1];
+      if(e.shiftKey&&document.activeElement===first){ last.focus(); e.preventDefault(); }
+      else if(!e.shiftKey&&document.activeElement===last){ first.focus(); e.preventDefault(); }
+    }
+    return;
+  }
   if(e.key==='ArrowRight'){ scrollBy(0,PPF); e.preventDefault(); }
   if(e.key==='ArrowLeft'){ scrollBy(0,-PPF); e.preventDefault(); }
-  if(e.key==='Escape') menu.classList.remove('open');
 });
 var menu=document.getElementById('menu'), rows=document.getElementById('rows');
+var plate=document.getElementById('plate'), mclose=document.getElementById('mclose');
+function openMenu(){ menu.classList.add('open'); plate.setAttribute('aria-expanded','true'); mclose.focus(); }
+function closeMenu(restore){ menu.classList.remove('open'); plate.setAttribute('aria-expanded','false'); if(restore) plate.focus(); }
 var parts=[
   ['··','JOIN THE DISCUSSION',0,'#17130E'],
   ['★','UNITED MARXIST PACT',28,'#B3271E'],
@@ -364,12 +422,13 @@ var parts=[
 parts.forEach(function(p){
   var b=document.createElement('button'); b.className='row'; b.style.setProperty('--rc',p[3]);
   b.innerHTML='<span class="rn">'+p[0]+'</span><span class="rt">'+p[1]+'</span>';
-  b.onclick=function(){ menu.classList.remove('open'); scrollTo(0,(p[2]+9)*PPF); };
+  b.onclick=function(){ closeMenu(false); scrollTo(0,(p[2]+9)*PPF); };
   rows.appendChild(b);
 });
-document.getElementById('idxbtn').onclick=function(){ menu.classList.add('open'); };
-document.getElementById('mclose').onclick=function(){ menu.classList.remove('open'); };
+plate.onclick=openMenu;
+mclose.onclick=function(){ closeMenu(true); };
 layout();
+prepareFilm();
 })();
 </script>
 </body>
