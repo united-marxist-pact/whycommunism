@@ -146,6 +146,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 
 <div id="track"></div>
 <video id="film" poster="poster.jpg" preload="none" muted playsinline tabindex="-1"
+  data-full-url="https://pub-88360a3dfb674137bf1ca013af346792.r2.dev/whycommunism-join-4k-scrub.mp4?v=6de8af6a"
   data-full-parts="film-scrub.part-00,film-scrub.part-01" data-full-bytes="56458537"
   data-master-parts="film-full.part-00,film-full.part-01" data-master-bytes="58516735"
   aria-label="A paper-cut town and assembly moving smoothly toward a red star.">
@@ -257,7 +258,7 @@ var SOURCE_FPS=60;
 var started=false, duration=0, totalFrames=1;
 var pendingTime=null, pendingFrame=-1, issuedFrame=-1;
 var wantedFrame=-1, seekDirection=0;
-var MIN_BUFFER=reduced?0:.12;
+var MIN_BUFFER=reduced?0:.04;
 function updateLoad(){
   if(!duration) return;
   var end=film.buffered.length?film.buffered.end(film.buffered.length-1):0;
@@ -303,10 +304,10 @@ function seekFilm(v,force){
   pendingTime=frame*(duration/totalFrames);
   flushSeek(!!force||reversed);
 }
-var fullObjectUrl='', usingFull=false, fallbackTried=false;
+var fullObjectUrl='', loadMode='', fallbackTried=false;
 function activateFallback(){
   fallbackTried=true;
-  usingFull=false;
+  loadMode='fallback';
   if(fullObjectUrl){ URL.revokeObjectURL(fullObjectUrl); fullObjectUrl=''; }
   film.removeAttribute('src');
   [].slice.call(film.querySelectorAll('source')).forEach(function(s){ s.src=s.dataset.src; });
@@ -315,10 +316,10 @@ function activateFallback(){
   lcap.textContent='PREPARING VIDEO';
   film.load();
 }
-function loadFullQuality(){
+function loadSplitQuality(){
   var parts=(film.dataset.fullParts||'').split(',').filter(Boolean);
   if(!parts.length){ activateFallback(); return; }
-  usingFull=true;
+  loadMode='split-loading';
   var total=+film.dataset.fullBytes||1, loaded=0;
   function note(n){
     loaded+=n;
@@ -344,12 +345,23 @@ function loadFullQuality(){
   }
   Promise.all(parts.map(fetchPart)).then(function(blobs){
     fullObjectUrl=URL.createObjectURL(new Blob(blobs,{type:'video/mp4'}));
+    loadMode='split';
     film.src=fullObjectUrl;
     film.dataset.quality='scrub-4k';
     film.preload='auto';
     lcap.textContent='PREPARING VIDEO';
     film.load();
   }).catch(activateFallback);
+}
+function loadFullQuality(){
+  var url=film.dataset.fullUrl;
+  if(!url){ loadSplitQuality(); return; }
+  loadMode='direct';
+  film.src=url;
+  film.dataset.quality='scrub-4k';
+  film.preload='auto';
+  lcap.textContent='PREPARING VIDEO';
+  film.load();
 }
 function prepareFilm(){
   film.muted=true;
@@ -369,7 +381,9 @@ function prepareFilm(){
   film.addEventListener('canplaythrough',begin,{once:true});
   film.addEventListener('seeked',function(){ flushSeek(false); });
   film.addEventListener('error',function(){
-    if(usingFull&&!fallbackTried){ activateFallback(); return; }
+    if(loadMode==='direct'){ loadSplitQuality(); return; }
+    if(loadMode==='split-loading') return;
+    if(loadMode==='split'&&!fallbackTried){ activateFallback(); return; }
     lcap.textContent='USING POSTER';
     begin();
   });
