@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Why Communism? · Test Homepage</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Scroll the march. Six pillars on the way to the star.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Why Communism? · Test Homepage">
+<meta property="og:description" content="Scroll the march. Six pillars on the way to the star.">
+<meta property="og:url" content="https://whycommunism.com/test/">
+<meta property="og:image" content="https://whycommunism.com/test/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#EBE1CB">
+<link rel="preload" as="font" type="font/woff2" href="/assets/archivo.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/mono.woff2" crossorigin>
+<style>
+/* ============ test homepage · the site runs on a scrolled film ============ */
+@font-face{font-family:'Archivo Black';font-weight:400;font-display:swap;src:url(/assets/archivo.woff2) format('woff2')}
+@font-face{font-family:'Plex Mono';font-weight:500;font-display:swap;src:url(/assets/mono.woff2) format('woff2')}
+@font-face{font-family:'Source Serif';font-weight:400;font-display:swap;src:url(/assets/serif400.woff2) format('woff2')}
+:root{
+  --disp:'Archivo Black','Arial Black',sans-serif;
+  --mono:'Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:'Source Serif',Georgia,serif;
+  --paper:#EBE1CB; --ink:#17130E; --red:#A82519; --site-red:#C2341F;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
+a{color:inherit}
+#track{width:1px}
+#film{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--paper)}
+/* ---- top bar ---- */
+#bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:14px clamp(16px,4vw,46px);pointer-events:none}
+#bar a,#bar button{pointer-events:auto}
+#wordmark{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:7px 11px 6px;border:none}
+#wordmark b{color:#E8B45A;font-weight:500}
+#idxbtn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;cursor:pointer;
+  background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
+#idxbtn:hover{background:var(--ink)}
+/* ---- scroll position counter (also masks the clip's corner mark) ---- */
+#plate{position:fixed;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--paper);
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:9px 14px 9px 16px;min-width:150px;min-height:38px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;white-space:nowrap;
+  border-top:3px solid var(--red)}
+#pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
+#pfill{height:100%;width:0;background:var(--red)}
+/* ---- cards ---- */
+.card{position:fixed;z-index:25;visibility:hidden;opacity:0;max-width:min(600px,88vw);will-change:transform,opacity}
+.card.l{left:clamp(46px,7vw,120px);top:9svh}
+.card.r{right:clamp(46px,7vw,120px);top:9svh;text-align:right}
+.card.c{left:50%;top:0;width:min(720px,92vw);text-align:center}
+.kick{font-family:var(--mono);font-size:clamp(10px,1.4vw,13px);letter-spacing:.24em;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px}
+.card.r .kick{justify-content:flex-end}
+.card.c .kick{justify-content:center}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 8px;
+  background:var(--ac,var(--red));color:var(--paper);font-family:var(--disp);font-size:14px;letter-spacing:.04em}
+.card h2{font-family:var(--disp);font-weight:400;line-height:.94;letter-spacing:-.012em;
+  font-size:clamp(34px,6vw,72px);text-transform:uppercase}
+.card.longt h2{font-size:clamp(26px,4.6vw,54px)}
+.card h2 .u{box-shadow:inset 0 -0.16em 0 var(--ac,var(--red))}
+.cap{font-family:var(--serif);font-size:clamp(15px,2vw,19px);line-height:1.55;margin-top:16px;max-width:44ch}
+.card.r .cap{margin-left:auto}
+.card.c .cap{margin-inline:auto}
+.go{display:inline-flex;align-items:center;gap:12px;margin-top:22px;text-decoration:none;
+  font-family:var(--mono);font-size:clamp(11px,1.5vw,13px);letter-spacing:.2em;
+  background:var(--ink);color:var(--paper);padding:13px 18px;border-left:5px solid var(--ac,var(--red))}
+.go b{font-weight:500;transform:translateY(-1px)}
+.go:hover{background:var(--ac,var(--red))}
+/* hero */
+#hero h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;line-height:.9;
+  font-size:clamp(40px,8.6vw,118px);letter-spacing:-.02em}
+#hero h1 span{display:block}
+#hero h1 .m{color:var(--red)}
+#hero .wedge{width:clamp(140px,24vw,300px);margin:10px auto 0}
+/* nav cards */
+.dests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.dests a{font-family:var(--mono);font-size:clamp(10.5px,1.4vw,13px);letter-spacing:.16em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:15px 10px;border-top:3px solid var(--dc,var(--red))}
+.dests a:hover{background:var(--dc,var(--red));color:var(--ink)}
+.dests a small{display:block;margin-top:5px;font-size:9.5px;letter-spacing:.1em;color:#EBE1CB99}
+.dests a:hover small{color:#17130E99}
+.dests a.wide{grid-column:1/-1;background:var(--red);border-top-color:#17130E;color:var(--paper)}
+.dests a.wide:hover{background:#17130E}
+.cred{font-family:var(--mono);font-size:10px;letter-spacing:.14em;margin-top:26px;opacity:.6;line-height:2}
+@media(max-width:520px){.dests{grid-template-columns:1fr;gap:8px}.dests a{padding:12px 10px}}
+/* scroll cue */
+#cue{position:fixed;left:50%;bottom:46px;transform:translateX(-50%);z-index:26;
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;opacity:0;transition:opacity .6s;
+  color:var(--ink);text-align:center;pointer-events:none}
+#cue .ar{display:block;font-size:18px;margin-top:6px;animation:cuebob 1.4s ease-in-out infinite}
+@keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+body.ready:not(.moved) #cue{opacity:.9}
+/* ---- contents menu ---- */
+#menu{position:fixed;inset:0;z-index:60;background:#EFE6D2;display:none;overflow:auto;
+  border:14px solid var(--red)}
+#menu.open{display:block}
+#menu .inner{max-width:760px;margin:0 auto;padding:8vh 22px 8vh}
+#menu h3{font-family:var(--disp);font-weight:400;font-size:clamp(30px,6vw,56px);text-transform:uppercase;line-height:.95}
+#menu .mh{font-family:var(--mono);font-size:11px;letter-spacing:.26em;margin-bottom:10px}
+#mclose{position:fixed;top:26px;right:30px;z-index:61;background:var(--ink);color:var(--paper);border:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:9px 14px;cursor:pointer;display:none}
+#menu.open~#mclose{display:block}
+.row{display:flex;align-items:baseline;gap:16px;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  border-top:2px solid var(--ink);padding:15px 4px;font-family:inherit}
+.row:hover{background:#17130E0d}
+.row .rn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;min-width:44px;color:var(--rc,var(--red))}
+.row .rt{font-family:var(--disp);font-size:clamp(15px,2.6vw,21px);text-transform:uppercase;letter-spacing:.01em;flex:1}
+#menu .exits{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap}
+#menu .exits a{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:11px 15px}
+#menu .exits a:hover{background:var(--red)}
+/* ---- loading ---- */
+#loader{position:fixed;inset:0;z-index:80;background:var(--paper);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:26px;transition:opacity .7s}
+body.ready #loader{opacity:0;pointer-events:none}
+#loader .lw{font-family:var(--disp);font-size:clamp(28px,6vw,54px);text-transform:uppercase;letter-spacing:-.01em}
+#loader .lw span{color:var(--red)}
+#lbar{width:min(320px,70vw);height:4px;background:#17130E22}
+#lfill{height:100%;width:0;background:var(--red);transition:width .25s}
+#lcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:#17130E99}
+@media (prefers-reduced-motion:reduce){
+  #cue .ar{animation:none}
+}
+#nojs{max-width:640px;margin:0 auto;padding:60px 22px;font-family:var(--serif);line-height:2}
+#nojs a{color:var(--site-red)}
+</style>
+</head>
+<body>
+
+<div id="track"></div>
+<canvas id="film" aria-label="A paper diorama: workers march past factories carrying wheat, books and red banners, then gather as a red star is raised."></canvas>
+
+<header id="bar">
+  <a id="wordmark" href="/">WHYCOMMUNISM<b>.COM</b></a>
+  <button id="idxbtn" aria-haspopup="dialog">INDEX</button>
+</header>
+
+<!-- ============ the homepage, dealt out along the film ============ -->
+<section class="card c" id="hero" data-a="-9" data-b="18">
+  <h1><span>WHY</span><span class="m">COMMUNISM?</span></h1>
+  <svg class="wedge" viewBox="0 0 330 26" aria-hidden="true"><polygon points="0,26 330,0 330,26" fill="#A82519"/></svg>
+</section>
+
+<section class="card r" data-a="22" data-b="44" style="--ac:#1E45C9">
+  <div class="kick">THE FRONT DOOR <span class="chip">→</span></div>
+  <h2>START <span class="u">HERE</span></h2>
+  <p class="cap">New to the site. The shortest path in.</p>
+  <a class="go" href="/start-here/"><span>OPEN START HERE</span><b>→</b></a>
+</section>
+
+<section class="card l" data-a="48" data-b="70" style="--ac:#0E7466">
+  <div class="kick"><span class="chip">01</span> PILLAR ONE · OF SIX</div>
+  <h2>MATERIALISM</h2>
+  <p class="cap">Before anyone can make history, they must eat. The march begins with bread.</p>
+  <a class="go" href="/pillars/materialism/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card r" data-a="74" data-b="96" style="--ac:#C2341F">
+  <div class="kick">PILLAR TWO · OF SIX <span class="chip">02</span></div>
+  <h2>PROLETARIAN <span class="u">GOVERNANCE</span></h2>
+  <p class="cap">The class that does the work learns to rule itself.</p>
+  <a class="go" href="/pillars/proletarian-governance/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card l" data-a="100" data-b="122" style="--ac:#A26A08">
+  <div class="kick"><span class="chip">03</span> PILLAR THREE · OF SIX</div>
+  <h2>COMMUNIST <span class="u">PRODUCTION</span></h2>
+  <p class="cap">The factories behind the march, turned to use instead of profit.</p>
+  <a class="go" href="/pillars/communist-production/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card r longt" data-a="126" data-b="148" style="--ac:#6D28D9">
+  <div class="kick">PILLAR FOUR · OF SIX <span class="chip">04</span></div>
+  <h2>PROLETARIAN ORGANIZATION <span class="u">&amp; PEDAGOGY</span></h2>
+  <p class="cap">Books in marching hands: how a class organizes and teaches itself.</p>
+  <a class="go" href="/pillars/proletarian-organization-and-pedagogy/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card l" data-a="152" data-b="174" style="--ac:#256A3B">
+  <div class="kick"><span class="chip">05</span> PILLAR FIVE · OF SIX</div>
+  <h2>SOCIALISM OR <span class="u">EXTINCTION</span></h2>
+  <p class="cap">The sky is already streaked red. The choice is between futures, not systems.</p>
+  <a class="go" href="/pillars/socialism-or-extinction/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card l" data-a="182" data-b="204" style="--ac:#3A6EA5">
+  <div class="kick"><span class="chip">06</span> PILLAR SIX · OF SIX</div>
+  <h2>SOCIO-ECONOMIC <span class="u">PLANNING</span></h2>
+  <p class="cap">The march halts and turns: millions of steps, one direction, on purpose.</p>
+  <a class="go" href="/pillars/socio-economic-planning/"><span>ENTER THE PILLAR</span><b>→</b></a>
+</section>
+
+<section class="card c longt" data-a="243" data-b="262" style="--ac:#F0846F">
+  <div class="kick">THE FLAGSHIP</div>
+  <h2>THE DICTATORSHIP OF THE <span class="u">PROLETARIAT</span></h2>
+  <p class="cap">The entire theory, explained.</p>
+  <a class="go" href="/dictatorship-of-the-proletariat/"><span>OPEN THE FLAGSHIP</span><b>→</b></a>
+</section>
+
+<section class="card c" id="end" data-a="268" data-b="400">
+  <h2>WHERE TO <span class="u">NEXT</span></h2>
+  <nav class="dests" aria-label="Site navigation">
+    <a href="/start-here/" style="--dc:#7C97F0">START HERE<small>THE FRONT DOOR</small></a>
+    <a href="/essays/" style="--dc:#5FC9B8">THE ESSAYS<small>FOUR OPEN ESSAYS</small></a>
+    <a href="/about/" style="--dc:#E8B45A">ABOUT UMP<small>THE COMMUNITY</small></a>
+    <a href="/" style="--dc:#8FB4E8">THE LIBRARY<small>ALL SIX PILLARS</small></a>
+    <a class="wide" href="join/">JOIN THE DISCUSSION →<small>UNITED MARXIST PACT</small></a>
+  </nav>
+  <p class="cred">SCROLL UP TO GO BACK · ANIMATION GENERATED WITH DOLA AI</p>
+</section>
+
+<div id="cue">SCROLL<span class="ar">↓</span></div>
+
+<div id="plate"><span id="fnum">0001 / 0241</span></div>
+<div id="pbar"><div id="pfill"></div></div>
+
+<div id="menu" role="dialog" aria-label="Contents">
+  <div class="inner">
+    <p class="mh">WHYCOMMUNISM.COM · CONTENTS</p>
+    <h3>Why Communism?</h3>
+    <div id="rows"></div>
+    <div class="exits">
+      <a href="join/">JOIN THE DISCUSSION →</a>
+      <a href="/">THE LIBRARY →</a>
+      <a href="/essays/">THE ESSAYS →</a>
+      <a href="/start-here/">START HERE →</a>
+      <a href="/about/">ABOUT →</a>
+    </div>
+  </div>
+</div>
+<button id="mclose">CLOSE ✕</button>
+
+<div id="loader" aria-hidden="true">
+  <div class="lw">WHY <span>COMMUNISM?</span></div>
+  <div id="lbar"><div id="lfill"></div></div>
+  <div id="lcap">LOADING</div>
+</div>
+
+<noscript>
+  <div id="nojs" style="position:fixed;inset:0;background:#EBE1CB;overflow:auto;z-index:99">
+    <p><strong>This test homepage</strong> needs JavaScript. Everything is still here:</p>
+    <p><a href="/start-here/">Start Here</a><br>
+    <a href="/pillars/materialism/">Materialism</a><br>
+    <a href="/pillars/proletarian-governance/">Proletarian Governance</a><br>
+    <a href="/pillars/communist-production/">Communist Production</a><br>
+    <a href="/pillars/proletarian-organization-and-pedagogy/">Proletarian Organization &amp; Pedagogy</a><br>
+    <a href="/pillars/socialism-or-extinction/">Socialism or Extinction</a><br>
+    <a href="/pillars/socio-economic-planning/">Socio-Economic Planning</a><br>
+    <a href="/dictatorship-of-the-proletariat/">The Dictatorship of the Proletariat</a><br>
+    <a href="/essays/">The Essays</a> · <a href="/about/">About</a> · <a href="/">The Library</a></p>
+  </div>
+</noscript>
+
+<script>
+(function(){
+'use strict';
+var N=241, VN=304, PAD=4;   /* VN: virtual length; scroll past the last frame holds on it */
+var DIR = 'frames/L/';
+var IW = 1920, IH = 1080;
+var WM = {x:1635,y:954};   /* clip corner-mark box, source px */
+var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
+var track=document.getElementById('track');
+var plate=document.getElementById('plate'), fnum=document.getElementById('fnum');
+var pfill=document.getElementById('pfill');
+var lfill=document.getElementById('lfill'), lcap=document.getElementById('lcap');
+var cards=[].slice.call(document.querySelectorAll('.card'));
+cards.forEach(function(c){ c.a=+c.dataset.a; c.b=+c.dataset.b;
+  c.rot=c.classList.contains('c')?0:(c.classList.contains('r')?1.6:-1.8); });
+
+var PPF=46, trackH=0, dpr=1, cw=0, ch=0;
+var cur=0, target=0, drawn=-1;
+
+function layout(){
+  var vh=innerHeight;
+  PPF=Math.max(30, Math.round(vh*0.055));
+  var prog = trackH>0 ? (scrollY/Math.max(1,trackH-vh)) : 0;
+  trackH=(VN-1)*PPF+vh;
+  track.style.height=trackH+'px';
+  dpr=Math.min(devicePixelRatio||1,2);
+  cw=innerWidth; ch=vh;
+  canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
+  canvas.style.width=cw+'px'; canvas.style.height=ch+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.imageSmoothingQuality='high';
+  if(prog>0) scrollTo(0, prog*(trackH-vh));
+  placePlate(); drawn=-1;
+}
+/* cover-crop, biased to keep the marchers in frame */
+function cover(){
+  var s=Math.max(cw/IW, ch/IH);
+  var sw=cw/s, sh=ch/s;
+  var sx=(IW-sw)*0.5, sy=(IH-sh)*0.62;
+  return {s:s,sx:sx,sy:sy,sw:sw,sh:sh};
+}
+/* the counter sits exactly over the clip's corner mark at any viewport */
+function placePlate(){
+  var c=cover();
+  var left=(WM.x-c.sx)*c.s, top=(WM.y-c.sy)*c.s;
+  var need_w=Math.ceil(cw-left)+8, need_h=Math.ceil(ch-top)+6;
+  plate.style.minWidth=Math.max(150,Math.min(need_w,cw*0.7))+'px';
+  plate.style.minHeight=Math.max(38,Math.min(need_h,120))+'px';
+}
+var imgs=new Array(N), tries=new Array(N), okc=0;
+function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
+function load(i,cb){
+  if(imgs[i] && imgs[i]!=='dead') return;
+  var im=new Image();
+  im.onload=function(){ im.ok=true; okc++; if(cb)cb(); tick(); };
+  im.onerror=function(){
+    tries[i]=(tries[i]||0)+1;
+    if(tries[i]<3){ imgs[i]=null; setTimeout(function(){ load(i,cb); }, 400*tries[i]); }
+    else { imgs[i]='dead'; if(cb)cb(); }
+  };
+  im.src=src(i); imgs[i]=im;
+}
+function nearest(i){
+  if(imgs[i]&&imgs[i].ok) return imgs[i];
+  for(var d=1;d<N;d++){
+    if(i-d>=0&&imgs[i-d]&&imgs[i-d].ok) return imgs[i-d];
+    if(i+d<N&&imgs[i+d]&&imgs[i+d].ok) return imgs[i+d];
+  }
+  return null;
+}
+var wave1=[], w1done=0;
+for(var i=0;i<N;i+=6) wave1.push(i);
+if(wave1.indexOf(N-1)<0) wave1.push(N-1);
+function w1cb(){
+  w1done++;
+  lfill.style.width=Math.round(w1done/wave1.length*100)+'%';
+  if(w1done>=wave1.length) begin();
+}
+wave1.forEach(function(i){ load(i,w1cb); });
+function wave2(){
+  var q=[]; for(var i=0;i<N;i++) if(!imgs[i]) q.push(i);
+  var inflight=0;
+  function pump(){
+    while(inflight<6&&q.length){
+      var i=q.shift(); inflight++;
+      load(i,function(){ inflight--; pump(); });
+    }
+  }
+  pump();
+}
+function begin(){
+  document.body.classList.add('ready');
+  layout();
+  var m=location.search.match(/[?&]f=(\d+)/);
+  if(m){ var ff=Math.min(VN-1,+m[1]); cur=target=ff; scrollTo(0, ff*PPF); }
+  var s=location.search.match(/[?&]still=(\d+)/);
+  if(s){ var sf=Math.min(VN-1,+s[1]); cur=target=sf; }
+  tick();
+  setTimeout(wave2, 350);
+}
+function draw(f){
+  var im=nearest(f); if(!im) return;
+  var c=cover();
+  ctx.drawImage(im,c.sx,c.sy,c.sw,c.sh,0,0,cw,ch);
+  drawn=f;
+}
+function setCards(v){
+  for(var k=0;k<cards.length;k++){
+    var c=cards[k], FI=5;
+    var vis=Math.max(0,Math.min((v-c.a)/FI,1,(c.b-v)/FI));
+    if(vis<=0.02){ if(c.style.visibility!=='hidden'){c.style.visibility='hidden';c.style.opacity=0;c.style.pointerEvents='none';} continue; }
+    c.style.visibility='visible';
+    c.style.opacity=vis;
+    c.style.pointerEvents=vis>0.5?'auto':'none';
+    var y=(1-vis)*14;
+    var tx=c.classList.contains('c')?'translate(-50%,'+y+'px) ':'translateY('+y+'px) ';
+    c.style.transform=tx+'rotate('+c.rot+'deg) scale('+(0.985+0.015*vis)+')';
+  }
+}
+/* center-cards vertical placement */
+(function(){
+  var hero=document.getElementById('hero'), end=document.getElementById('end');
+  var mids=[hero, end, document.querySelector('.card.c.longt')];
+  function place(){ mids.forEach(function(el){ if(!el) return;
+    el.style.top='50%'; el.style.marginTop='-'+(el.offsetHeight/2)+'px'; }); }
+  addEventListener('resize',place); setTimeout(place,60); setTimeout(place,900);
+})();
+var raf=false;
+function tick(){ if(!raf){ raf=true; requestAnimationFrame(step); } }
+function step(){
+  raf=false;
+  var gap=target-cur;
+  if(Math.abs(gap)>30) cur=target-(gap>0?30:-30);
+  cur = reduced ? target : cur+gap*0.16;
+  if(Math.abs(target-cur)<0.02) cur=target;
+  var f=Math.round(Math.max(0,Math.min(N-1,cur)));
+  if(f!==drawn) draw(f);
+  setCards(Math.max(0,Math.min(VN-1,cur)));
+  fnum.textContent=String(f+1).padStart(4,'0')+' / 0241';
+  pfill.style.width=(Math.max(0,Math.min(VN-1,cur))/(VN-1)*100)+'%';
+  if(cur!==target) tick();
+}
+addEventListener('scroll',function(){
+  target=Math.max(0,Math.min(VN-1,scrollY/PPF));
+  if(scrollY>50) document.body.classList.add('moved');
+  tick();
+},{passive:true});
+addEventListener('resize',function(){ layout(); tick(); });
+addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'){ scrollBy(0,PPF); e.preventDefault(); }
+  if(e.key==='ArrowLeft'){ scrollBy(0,-PPF); e.preventDefault(); }
+  if(e.key==='Escape') menu.classList.remove('open');
+});
+/* contents menu */
+var menu=document.getElementById('menu'), rows=document.getElementById('rows');
+var parts=[
+  ['··','WHY COMMUNISM?',0,'#17130E'],
+  ['→','START HERE',24,'#1E45C9'],
+  ['01','MATERIALISM',50,'#0E7466'],
+  ['02','PROLETARIAN GOVERNANCE',76,'#C2341F'],
+  ['03','COMMUNIST PRODUCTION',102,'#A26A08'],
+  ['04','PROLETARIAN ORGANIZATION & PEDAGOGY',128,'#6D28D9'],
+  ['05','SOCIALISM OR EXTINCTION',154,'#256A3B'],
+  ['06','SOCIO-ECONOMIC PLANNING',184,'#3A6EA5'],
+  ['★','THE FLAGSHIP',245,'#A82519'],
+  ['··','WHERE TO NEXT',276,'#17130E']
+];
+parts.forEach(function(p){
+  var b=document.createElement('button'); b.className='row'; b.style.setProperty('--rc',p[3]);
+  b.innerHTML='<span class="rn">'+p[0]+'</span><span class="rt">'+p[1]+'</span>';
+  b.onclick=function(){ menu.classList.remove('open'); scrollTo(0,(p[2]+9)*PPF); };
+  rows.appendChild(b);
+});
+document.getElementById('idxbtn').onclick=function(){ menu.classList.add('open'); };
+document.getElementById('mclose').onclick=function(){ menu.classList.remove('open'); };
+layout();
+})();
+</script>
+</body>
+</html>
