@@ -101,15 +101,21 @@ a{color:inherit}
 .f-dots{background-image:radial-gradient(var(--home-cream) 1px,transparent 1.5px);background-size:13px 13px}
 #hero .hm-in{position:relative;z-index:3;max-width:var(--colw);margin:0 auto;width:calc(100% - 44px)}
 #hero .hm-kick{font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--home-dim);
-  margin-bottom:22px;text-shadow:none}
+  margin-bottom:22px;text-shadow:none;opacity:0;transform:translateY(12px)}
 #hero .hm-kick b{color:var(--home-gold);font-weight:500}
 #hero .hm-title{font-family:var(--disp);font-weight:400;line-height:.95;text-transform:uppercase;text-shadow:none}
 #hero .hm-title span{display:block;overflow:hidden}
-#hero .hm-title i{font-style:normal;display:block}
+#hero .hm-title i{font-style:normal;display:block;transform:translateY(110%)}
 #hero .hm-l1{font-size:min(calc((100vw - 44px)/2.66),200px);color:var(--home-cream)}
 #hero .hm-l2{font-size:min(calc((100vw - 44px)/7.95),64px);color:var(--home-gold)}
 #hero .hm-sub{margin-top:26px;max-width:520px;font-size:17px;line-height:1.75;color:var(--home-dim);
-  text-shadow:none}
+  text-shadow:none;opacity:0;transform:translateY(12px)}
+body.ready #hero .hm-kick{animation:heroFade .9s ease .45s forwards}
+body.ready #hero .hm-l1 i{animation:heroRise .9s cubic-bezier(.2,.7,.2,1) .55s forwards}
+body.ready #hero .hm-l2 i{animation:heroRise .9s cubic-bezier(.2,.7,.2,1) .72s forwards}
+body.ready #hero .hm-sub{animation:heroFade 1s ease 1.05s forwards}
+@keyframes heroRise{to{transform:none}}
+@keyframes heroFade{to{opacity:1;transform:none}}
 .orbit{position:absolute;left:50%;top:48%;width:min(145vw,840px);height:min(145vw,840px);
   transform:translate(-50%,-50%);z-index:2;animation:orb 90s linear infinite;pointer-events:none}
 .orbit a{position:absolute;width:clamp(64px,8vw,86px);height:clamp(64px,8vw,86px);
@@ -221,6 +227,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 #lcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--home-dim)}
 @media (prefers-reduced-motion:reduce){
   #cue .ar,.orbit,.orbit a,.dev,.dev i{animation:none!important}
+  #hero .hm-kick,#hero .hm-title i,#hero .hm-sub{animation:none!important;opacity:1;transform:none}
 }
 #nojs{max-width:640px;margin:0 auto;padding:60px 22px;font-family:var(--serif);line-height:2}
 #nojs a{color:var(--site-red)}
