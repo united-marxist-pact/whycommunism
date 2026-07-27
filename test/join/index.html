@@ -38,11 +38,14 @@ a{color:inherit}
 #idxbtn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;cursor:pointer;
   background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
 #idxbtn:hover{background:var(--ink)}
-#plate{position:fixed;right:10px;bottom:8px;z-index:30;color:var(--ink);
-  font-family:var(--disp);font-weight:400;letter-spacing:.01em;white-space:nowrap;
-  text-decoration:none;line-height:1;text-shadow:-2px -2px 0 var(--paper),2px -2px 0 var(--paper),-2px 2px 0 var(--paper),2px 2px 0 var(--paper),-4px 0 0 var(--paper),4px 0 0 var(--paper),0 -4px 0 var(--paper),0 4px 0 var(--paper),-4px -4px 0 var(--paper),4px -4px 0 var(--paper),-4px 4px 0 var(--paper),4px 4px 0 var(--paper),-6px 0 0 var(--paper),6px 0 0 var(--paper),0 6px 0 var(--paper),0 -6px 0 var(--paper)}
+@media(max-width:700px){#plate{display:none}}
+#plate{position:fixed;right:14px;bottom:10px;z-index:30;color:var(--ink);
+  font-family:var(--disp);font-weight:400;font-size:clamp(14px,1.6vw,19px);letter-spacing:.01em;
+  white-space:nowrap;text-decoration:none;line-height:1;
+  text-shadow:-1px -1px 0 var(--paper),1px -1px 0 var(--paper),-1px 1px 0 var(--paper),1px 1px 0 var(--paper),2px 2px 0 rgba(23,19,14,.15)}
 #plate b{color:var(--red);font-weight:400}
 #plate:hover{color:var(--red)}
+
 #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
 #pfill{height:100%;width:0;background:var(--red)}
 .card{position:fixed;z-index:25;visibility:hidden;opacity:0;max-width:min(600px,88vw);will-change:transform,opacity}
@@ -69,11 +72,12 @@ a{color:inherit}
 .expect{list-style:none;margin-top:18px;font-family:var(--mono);font-size:clamp(11px,1.5vw,13.5px);
   letter-spacing:.14em;line-height:2.3}
 .expect li::before{content:"★ ";color:var(--ac,var(--red))}
+#hero{max-width:none;top:8svh}
 #hero h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;line-height:.9;
-  font-size:clamp(36px,6.6vw,84px);letter-spacing:-.02em}
+  font-size:clamp(34px,6vw,78px);letter-spacing:-.02em}
 #hero h1 span{display:block}
 #hero h1 .m{color:var(--red)}
-#hero .wedge{width:clamp(140px,24vw,300px);margin:10px auto 0}
+#hero .wedge{width:clamp(140px,24vw,300px);margin:10px 0 0}
 #hero .sub{font-family:var(--mono);font-size:clamp(10px,1.5vw,13px);letter-spacing:.22em;margin-top:24px}
 #fin{top:auto;bottom:7svh}
 #fin h2{font-size:clamp(30px,5.6vw,64px)}
@@ -131,7 +135,7 @@ body.ready #loader{opacity:0;pointer-events:none}
   <button id="idxbtn" aria-haspopup="dialog">INDEX</button>
 </header>
 
-<section class="card c" id="hero" data-a="-9" data-b="20">
+<section class="card l" id="hero" data-a="-9" data-b="20">
   <h1><span>JOIN THE</span><span class="m">DISCUSSION</span></h1>
   <svg class="wedge" viewBox="0 0 330 26" aria-hidden="true"><polygon points="0,26 330,0 330,26" fill="#B3271E"/></svg>
   <p class="sub">UNITED MARXIST PACT · COMMUNITY</p>
@@ -168,7 +172,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 
 <div id="cue">SCROLL<span class="ar">↓</span></div>
 
-<a id="plate" href="/">WHYCOMMUNISM<b>.COM</b></a>
+<a id="plate" href="/">Why Communism<b>?</b></a>
 <div id="pbar"><div id="pfill"></div></div>
 
 <div id="menu" role="dialog" aria-label="Contents">
@@ -206,12 +210,11 @@ body.ready #loader{opacity:0;pointer-events:none}
 var N=121, VN=160, PAD=4;
 var DIR = 'frames/L/';
 var IW = 1872, IH = 1056;
-var WM = {x1:1638,y1:928,x2:1876,y2:988};
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
 var track=document.getElementById('track');
-var plate=document.getElementById('plate');
+
 var pfill=document.getElementById('pfill');
 var lfill=document.getElementById('lfill');
 var cards=[].slice.call(document.querySelectorAll('.card'));
@@ -235,22 +238,13 @@ function layout(){
   ctx.setTransform(dpr,0,0,dpr,0,0);
   ctx.imageSmoothingQuality='high';
   if(prog>0) scrollTo(0, prog*(trackH-vh));
-  placePlate(); drawn=-1;
+  drawn=-1;
 }
 function cover(){
   var s=Math.max(cw/IW, ch/IH);
   var sw=cw/s, sh=ch/s;
   var sx=(IW-sw)*0.5, sy=(IH-sh)*0.55;
   return {s:s,sx:sx,sy:sy,sw:sw,sh:sh};
-}
-function placePlate(){
-  var c=cover();
-  var mh=(WM.y2-WM.y1)*c.s;
-  var fs=Math.max(14,Math.min(42,mh*0.88));
-  plate.style.fontSize=fs.toFixed(1)+'px';
-  var r=cw-((WM.x2-c.sx)*c.s), b=ch-((WM.y2-c.sy)*c.s);
-  plate.style.right=Math.max(4,r-14).toFixed(0)+'px';
-  plate.style.bottom=Math.max(4,b+(mh-fs)/2).toFixed(0)+'px';
 }
 var imgs=new Array(N), tries=new Array(N), okc=0;
 function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
