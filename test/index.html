@@ -40,13 +40,11 @@ a{color:inherit}
   background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
 #idxbtn:hover{background:var(--ink)}
 /* ---- scroll position counter (also masks the clip's corner mark) ---- */
-#plate{position:fixed;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--paper);
-  display:flex;align-items:flex-end;justify-content:flex-end;
-  padding:10px 14px 10px 16px;min-width:150px;min-height:38px;
-  font-family:var(--mono);font-size:12px;letter-spacing:.14em;white-space:nowrap;
-  border-top:3px solid var(--red);text-decoration:none}
-#plate b{color:#E8B45A;font-weight:500}
-#plate:hover{background:var(--red)}
+#plate{position:fixed;right:10px;bottom:8px;z-index:30;color:var(--ink);
+  font-family:var(--disp);font-weight:400;letter-spacing:.01em;white-space:nowrap;
+  text-decoration:none;line-height:1;text-shadow:-2px -2px 0 var(--paper),2px -2px 0 var(--paper),-2px 2px 0 var(--paper),2px 2px 0 var(--paper),-4px 0 0 var(--paper),4px 0 0 var(--paper),0 -4px 0 var(--paper),0 4px 0 var(--paper),-4px -4px 0 var(--paper),4px -4px 0 var(--paper),-4px 4px 0 var(--paper),4px 4px 0 var(--paper),-6px 0 0 var(--paper),6px 0 0 var(--paper),0 6px 0 var(--paper),0 -6px 0 var(--paper)}
+#plate b{color:var(--red);font-weight:400}
+#plate:hover{color:var(--red)}
 #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
 #pfill{height:100%;width:0;background:var(--red)}
 /* ---- cards ---- */
@@ -145,53 +143,47 @@ body.ready #loader{opacity:0;pointer-events:none}
   <svg class="wedge" viewBox="0 0 330 26" aria-hidden="true"><polygon points="0,26 330,0 330,26" fill="#A82519"/></svg>
 </section>
 
-<section class="card l" data-a="22" data-b="44" style="--ac:#1E45C9">
+<section class="card l" data-a="20" data-b="56" style="--ac:#1E45C9">
   <div class="kick"><span class="chip">→</span> THE FRONT DOOR</div>
   <h2>START <span class="u">HERE</span></h2>
   <p class="cap">New to the site. The shortest path in.</p>
   <a class="go" href="/start-here/"><span>OPEN START HERE</span><b>→</b></a>
 </section>
 
-<section class="card l" data-a="48" data-b="70" style="--ac:#0E7466">
+<section class="card l" data-a="42" data-b="82" style="--ac:#0E7466">
   <div class="kick"><span class="chip">01</span> PILLAR ONE · OF SIX</div>
   <h2>MATERIALISM</h2>
   <a class="go" href="/pillars/materialism/"><span>ENTER THE PILLAR</span><b>→</b></a>
 </section>
 
-<section class="card l" data-a="74" data-b="96" style="--ac:#C2341F">
+<section class="card l" data-a="68" data-b="108" style="--ac:#C2341F">
   <div class="kick"><span class="chip">02</span> PILLAR TWO · OF SIX</div>
   <h2>PROLETARIAN <span class="u">GOVERNANCE</span></h2>
   <a class="go" href="/pillars/proletarian-governance/"><span>ENTER THE PILLAR</span><b>→</b></a>
 </section>
 
-<section class="card l" data-a="100" data-b="122" style="--ac:#A26A08">
+<section class="card l" data-a="94" data-b="134" style="--ac:#A26A08">
   <div class="kick"><span class="chip">03</span> PILLAR THREE · OF SIX</div>
   <h2>COMMUNIST <span class="u">PRODUCTION</span></h2>
   <a class="go" href="/pillars/communist-production/"><span>ENTER THE PILLAR</span><b>→</b></a>
 </section>
 
-<section class="card l longt" data-a="126" data-b="148" style="--ac:#6D28D9">
+<section class="card l longt" data-a="120" data-b="160" style="--ac:#6D28D9">
   <div class="kick"><span class="chip">04</span> PILLAR FOUR · OF SIX</div>
   <h2>PROLETARIAN ORGANIZATION <span class="u">&amp; PEDAGOGY</span></h2>
   <a class="go" href="/pillars/proletarian-organization-and-pedagogy/"><span>ENTER THE PILLAR</span><b>→</b></a>
 </section>
 
-<section class="card l" data-a="152" data-b="174" style="--ac:#256A3B">
+<section class="card l" data-a="146" data-b="186" style="--ac:#256A3B">
   <div class="kick"><span class="chip">05</span> PILLAR FIVE · OF SIX</div>
   <h2>SOCIALISM OR <span class="u">EXTINCTION</span></h2>
   <a class="go" href="/pillars/socialism-or-extinction/"><span>ENTER THE PILLAR</span><b>→</b></a>
 </section>
 
-<section class="card l" data-a="182" data-b="204" style="--ac:#3A6EA5">
+<section class="card l" data-a="172" data-b="210" style="--ac:#3A6EA5">
   <div class="kick"><span class="chip">06</span> PILLAR SIX · OF SIX</div>
   <h2>SOCIO-ECONOMIC <span class="u">PLANNING</span></h2>
   <a class="go" href="/pillars/socio-economic-planning/"><span>ENTER THE PILLAR</span><b>→</b></a>
-</section>
-
-<section class="card c longt" data-a="243" data-b="262" style="--ac:#F0846F">
-  <div class="kick">THE ENTIRE THEORY · EXPLAINED</div>
-  <h2>THE DICTATORSHIP OF THE <span class="u">PROLETARIAT</span></h2>
-  <a class="go" href="/dictatorship-of-the-proletariat/"><span>OPEN THE PAGE</span><b>→</b></a>
 </section>
 
 <section class="card c" id="end" data-a="268" data-b="400">
@@ -254,7 +246,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 var N=241, VN=304, PAD=4;   /* VN: virtual length; scroll past the last frame holds on it */
 var DIR = 'frames/L/';
 var IW = 1920, IH = 1080;
-var WM = {x:1635,y:954};   /* clip corner-mark box, source px */
+var WM = {x1:1680,y1:980,x2:1904,y2:1044};   /* clip corner-mark box, source px */
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
@@ -295,10 +287,12 @@ function cover(){
 /* the counter sits exactly over the clip's corner mark at any viewport */
 function placePlate(){
   var c=cover();
-  var left=(WM.x-c.sx)*c.s, top=(WM.y-c.sy)*c.s;
-  var need_w=Math.ceil(cw-left)+8, need_h=Math.ceil(ch-top)+6;
-  plate.style.minWidth=Math.max(150,Math.min(need_w,cw*0.7))+'px';
-  plate.style.minHeight=Math.max(38,Math.min(need_h,120))+'px';
+  var mh=(WM.y2-WM.y1)*c.s;
+  var fs=Math.max(14,Math.min(42,mh*0.88));
+  plate.style.fontSize=fs.toFixed(1)+'px';
+  var r=cw-((WM.x2-c.sx)*c.s), b=ch-((WM.y2-c.sy)*c.s);
+  plate.style.right=Math.max(4,r-14).toFixed(0)+'px';
+  plate.style.bottom=Math.max(4,b+(mh-fs)/2).toFixed(0)+'px';
 }
 var imgs=new Array(N), tries=new Array(N), okc=0;
 function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
@@ -364,19 +358,16 @@ function setCards(v){
     if(p<=0||p>=1){ if(c.style.visibility!=='hidden'){c.style.visibility='hidden';c.style.opacity=0;c.style.pointerEvents='none';} continue; }
     var x=0,y=0,op=1,pe;
     if(c.mode==='travel'){
-      /* ride the tracking shot: in from the right, slow drift with the scene, out left */
-      var t;
-      if(p<0.22){ t=1-Math.pow(1-p/0.22,2); x=(0.62-0.57*t)*cw; }
-      else if(p<0.78){ t=(p-0.22)/0.56; x=(0.05-0.10*t)*cw; }
-      else { t=Math.pow((p-0.78)/0.22,2); x=(-0.05-0.65*t)*cw; }
-      y=Math.sin(p*18.85)*4;   /* carried at the pace of the march */
-      op=Math.max(0,Math.min(p/0.06,(1-p)/0.06,1));
-      pe=p>0.1&&p<0.9;
+      /* one steady glide, moving with the march */
+      x=(0.55-1.2*p)*cw;
+      y=Math.sin(p*18.85)*4;
+      op=Math.max(0,Math.min(p/0.05,(1-p)/0.05,1));
+      pe=p>0.18&&p<0.82;
     } else if(c.mode==='exitl'){
-      /* the hero stands in the scene, then the march carries it off leftward */
-      if(p>0.6){ var e=Math.pow((p-0.6)/0.4,2); x=-0.95*cw*e; }
+      /* the march carries the title off at the same steady pace */
+      if(p>0.34){ x=-((p-0.34)/0.66)*1.05*cw; }
       op=Math.max(0,Math.min((1-p)/0.05,1));
-      pe=p<0.75;
+      pe=p<0.6;
     } else {
       /* over the held frame the film is still, so the card simply rises in */
       var vis=Math.max(0,Math.min(p/0.18,(1-p)/0.18,1));
@@ -417,14 +408,13 @@ addEventListener('keydown',function(e){
 var menu=document.getElementById('menu'), rows=document.getElementById('rows');
 var parts=[
   ['··','WHY COMMUNISM?',0,'#17130E'],
-  ['→','START HERE',24,'#1E45C9'],
-  ['01','MATERIALISM',50,'#0E7466'],
-  ['02','PROLETARIAN GOVERNANCE',76,'#C2341F'],
-  ['03','COMMUNIST PRODUCTION',102,'#A26A08'],
-  ['04','PROLETARIAN ORGANIZATION & PEDAGOGY',128,'#6D28D9'],
-  ['05','SOCIALISM OR EXTINCTION',154,'#256A3B'],
-  ['06','SOCIO-ECONOMIC PLANNING',184,'#3A6EA5'],
-  ['★','THE DICTATORSHIP OF THE PROLETARIAT',245,'#A82519'],
+  ['→','START HERE',29,'#1E45C9'],
+  ['01','MATERIALISM',53,'#0E7466'],
+  ['02','PROLETARIAN GOVERNANCE',79,'#C2341F'],
+  ['03','COMMUNIST PRODUCTION',105,'#A26A08'],
+  ['04','PROLETARIAN ORGANIZATION & PEDAGOGY',131,'#6D28D9'],
+  ['05','SOCIALISM OR EXTINCTION',157,'#256A3B'],
+  ['06','SOCIO-ECONOMIC PLANNING',182,'#3A6EA5'],
   ['··','WHERE TO NEXT',276,'#17130E']
 ];
 parts.forEach(function(p){

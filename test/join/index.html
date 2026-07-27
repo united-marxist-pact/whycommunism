@@ -38,13 +38,11 @@ a{color:inherit}
 #idxbtn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;cursor:pointer;
   background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
 #idxbtn:hover{background:var(--ink)}
-#plate{position:fixed;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--paper);
-  display:flex;align-items:flex-end;justify-content:flex-end;
-  padding:9px 14px 9px 16px;min-width:150px;min-height:38px;
-  font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;white-space:nowrap;
-  border-top:3px solid var(--red);text-decoration:none}
-#plate b{color:#E8B45A;font-weight:500}
-#plate:hover{background:var(--red)}
+#plate{position:fixed;right:10px;bottom:8px;z-index:30;color:var(--ink);
+  font-family:var(--disp);font-weight:400;letter-spacing:.01em;white-space:nowrap;
+  text-decoration:none;line-height:1;text-shadow:-2px -2px 0 var(--paper),2px -2px 0 var(--paper),-2px 2px 0 var(--paper),2px 2px 0 var(--paper),-4px 0 0 var(--paper),4px 0 0 var(--paper),0 -4px 0 var(--paper),0 4px 0 var(--paper),-4px -4px 0 var(--paper),4px -4px 0 var(--paper),-4px 4px 0 var(--paper),4px 4px 0 var(--paper),-6px 0 0 var(--paper),6px 0 0 var(--paper),0 6px 0 var(--paper),0 -6px 0 var(--paper)}
+#plate b{color:var(--red);font-weight:400}
+#plate:hover{color:var(--red)}
 #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
 #pfill{height:100%;width:0;background:var(--red)}
 .card{position:fixed;z-index:25;visibility:hidden;opacity:0;max-width:min(600px,88vw);will-change:transform,opacity}
@@ -208,7 +206,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 var N=121, VN=160, PAD=4;
 var DIR = 'frames/L/';
 var IW = 1872, IH = 1056;
-var WM = {x:1560,y:915};
+var WM = {x1:1638,y1:928,x2:1876,y2:988};
 var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
@@ -247,10 +245,12 @@ function cover(){
 }
 function placePlate(){
   var c=cover();
-  var left=(WM.x-c.sx)*c.s, top=(WM.y-c.sy)*c.s;
-  var need_w=Math.ceil(cw-left)+8, need_h=Math.ceil(ch-top)+6;
-  plate.style.minWidth=Math.max(150,Math.min(need_w,cw*0.7))+'px';
-  plate.style.minHeight=Math.max(38,Math.min(need_h,120))+'px';
+  var mh=(WM.y2-WM.y1)*c.s;
+  var fs=Math.max(14,Math.min(42,mh*0.88));
+  plate.style.fontSize=fs.toFixed(1)+'px';
+  var r=cw-((WM.x2-c.sx)*c.s), b=ch-((WM.y2-c.sy)*c.s);
+  plate.style.right=Math.max(4,r-14).toFixed(0)+'px';
+  plate.style.bottom=Math.max(4,b+(mh-fs)/2).toFixed(0)+'px';
 }
 var imgs=new Array(N), tries=new Array(N), okc=0;
 function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
