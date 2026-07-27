@@ -45,19 +45,26 @@ a{color:inherit}
   background:var(--home-cream);color:var(--ink);border:2px solid var(--ink);border-right:0;
   border-bottom:0;border-top:7px solid var(--red);box-shadow:-7px -7px 0 rgba(23,19,14,.13);
   text-decoration:none;text-transform:uppercase;text-align:left;appearance:none;cursor:pointer}
-#plate .plate-name{font-family:var(--disp);font-size:clamp(15px,1.55vw,20px);letter-spacing:.01em;line-height:.95}
-#plate .plate-name b{color:var(--red);font-weight:400}
+#plate .plate-name{font-family:var(--disp);font-weight:400;letter-spacing:.01em;line-height:.82}
+#plate .plate-name span{display:block;white-space:nowrap}
+#plate .pn-why{font-size:clamp(32px,3.2vw,42px);color:var(--ink)}
+#plate .pn-communism{font-size:clamp(12px,1.1vw,15px);color:var(--ink)}
+#plate .pn-communism b{color:inherit;font-weight:400}
 #plate .plate-route{font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:#5C5446}
-#plate:hover{background:var(--ink);color:var(--home-cream);border-top-color:var(--home-gold)}
-#plate:hover .plate-route{color:var(--home-gold)}
+#plate .plate-route b{color:var(--red);font-weight:400}
+#plate:hover{background:var(--ink);color:var(--home-cream);border-color:var(--ink);border-right:0;border-bottom:0}
+#plate:hover .pn-why,#plate:hover .pn-communism{color:var(--home-cream)}
+#plate:hover .plate-route{color:var(--home-cream)}
 @media(max-width:700px){
   #plate{width:174px;min-height:64px;padding:10px 12px 9px;border-top-width:5px;box-shadow:-5px -5px 0 rgba(23,19,14,.13)}
-  #plate .plate-name{font-size:14px}
+  #plate .pn-why{font-size:29px}
+  #plate .pn-communism{font-size:11px}
   #plate .plate-route{font-size:8px;letter-spacing:.16em}
 }
 
 #pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
-#pfill{height:100%;width:0;background:var(--red)}
+#pfill{height:100%;width:100%;background:var(--red);transform:scaleX(0);
+  transform-origin:0 50%;will-change:transform}
 /* ---- cards ---- */
 .card{position:fixed;z-index:25;visibility:hidden;opacity:0;max-width:min(600px,88vw);will-change:transform,opacity}
 .card h2{text-shadow:.045em .045em 0 var(--paper),.1em .1em 0 rgba(23,19,14,.16)}
@@ -121,6 +128,14 @@ a{color:inherit}
 @keyframes dg1{from{transform:rotate3d(1,.2,0,0deg)}to{transform:rotate3d(1,.2,0,360deg)}}
 @keyframes dg2{from{transform:rotate3d(.1,1,0,0deg)}to{transform:rotate3d(.1,1,0,360deg)}}
 @keyframes dg3{from{transform:rotate3d(.6,.8,.2,0deg)}to{transform:rotate3d(.6,.8,.2,360deg)}}
+/* Keep the small orbiting Materialism mark circular and legible. */
+.orbit .d-gyro{perspective:none}
+.orbit .d-gyro i:nth-child(1){animation:og1 13s linear infinite}
+.orbit .d-gyro i:nth-child(2){animation:og2 9s linear infinite}
+.orbit .d-gyro i:nth-child(3){animation:og3 7s linear infinite}
+@keyframes og1{from{transform:rotate(12deg) scaleY(.72)}to{transform:rotate(372deg) scaleY(.72)}}
+@keyframes og2{from{transform:rotate(342deg) scaleY(.82)}to{transform:rotate(-18deg) scaleY(.82)}}
+@keyframes og3{from{transform:rotate(118deg) scaleY(.68)}to{transform:rotate(478deg) scaleY(.68)}}
 .d-star{transform-style:preserve-3d;animation:dstar 17s linear infinite}
 .d-star i{position:absolute;inset:14%;background:var(--acl);
   clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
@@ -196,10 +211,12 @@ body.ready:not(.moved) #cue{opacity:.9}
 #loader{position:fixed;inset:0;z-index:80;background:var(--home-dark);color:var(--home-cream);display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:26px;transition:opacity .7s}
 body.ready #loader{opacity:0;pointer-events:none}
-#loader .lw{font-family:var(--disp);font-size:clamp(28px,6vw,54px);text-transform:uppercase;letter-spacing:-.01em}
-#loader .lw span{color:var(--red)}
-#lbar{width:min(320px,70vw);height:4px;background:#F2EDE233}
-#lfill{height:100%;width:0;background:var(--red);transition:width .25s}
+#loader .lw{font-family:var(--disp);font-weight:400;line-height:.86;text-transform:uppercase;letter-spacing:-.01em}
+#loader .lw span{display:block;white-space:nowrap}
+#loader .lw-why{font-size:clamp(88px,18vw,190px);color:var(--home-cream)}
+#loader .lw-communism{font-size:clamp(30px,6vw,64px);color:var(--home-gold)}
+#lbar{width:min(420px,76vw);height:4px;background:#F2EDE233}
+#lfill{height:100%;width:0;background:var(--home-gold);transition:width .25s}
 #lcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:var(--home-dim)}
 @media (prefers-reduced-motion:reduce){
   #cue .ar,.orbit,.orbit a,.dev,.dev i{animation:none!important}
@@ -212,7 +229,8 @@ body.ready #loader{opacity:0;pointer-events:none}
 
 <div id="track"></div>
 <video id="film" poster="poster.jpg" preload="none" muted playsinline tabindex="-1"
-  data-full-parts="film-full.part-00,film-full.part-01,film-full.part-02" data-full-bytes="136866252"
+  data-full-parts="film-scrub.part-00,film-scrub.part-01,film-scrub.part-02,film-scrub.part-03,film-scrub.part-04" data-full-bytes="161578296"
+  data-master-parts="film-full.part-00,film-full.part-01,film-full.part-02" data-master-bytes="136866252"
   aria-label="A paper-cut mural of workers carrying books, wheat, and tools as they move from factories toward a shared assembly.">
   <source data-src="film-1440.mp4" type="video/mp4">
   <source data-src="film.mp4" type="video/mp4">
@@ -306,7 +324,7 @@ body.ready #loader{opacity:0;pointer-events:none}
   <h2>WHERE TO <span class="u">NEXT</span></h2>
   <nav class="dests" aria-label="Site navigation">
     <a href="/start-here/" style="--dc:#7C97F0">START HERE<small>THE FRONT DOOR</small></a>
-    <a href="/essays/" style="--dc:#5FC9B8">THE ESSAYS<small>FOUR OPEN ESSAYS</small></a>
+    <a href="/essays/" style="--dc:#5FC9B8">THE ESSAYS<small>PUBLISHED &amp; OPEN WRITING</small></a>
     <a href="/about/" style="--dc:#E8B45A">ABOUT UMP<small>THE COMMUNITY</small></a>
     <a href="/" style="--dc:#8FB4E8">THE LIBRARY<small>ALL SIX PILLARS</small></a>
     <a class="wide" href="join/">JOIN THE DISCUSSION →<small>UNITED MARXIST PACT</small></a>
@@ -318,8 +336,8 @@ body.ready #loader{opacity:0;pointer-events:none}
 
 <button id="plate" type="button" aria-haspopup="dialog" aria-controls="menu" aria-expanded="false"
   aria-label="Explore Why Communism?">
-  <span class="plate-name">Why Communism<b>?</b></span>
-  <span class="plate-route">EXPLORE&nbsp; →</span>
+  <span class="plate-name"><span class="pn-why">WHY</span><span class="pn-communism">COMMUNISM<b>?</b></span></span>
+  <span class="plate-route">EXPLORE&nbsp; <b>→</b></span>
 </button>
 <div id="pbar"><div id="pfill"></div></div>
 
@@ -340,7 +358,7 @@ body.ready #loader{opacity:0;pointer-events:none}
 <button id="mclose">CLOSE ✕</button>
 
 <div id="loader" aria-hidden="true">
-  <div class="lw">WHY <span>COMMUNISM?</span></div>
+  <div class="lw"><span class="lw-why">WHY</span><span class="lw-communism">COMMUNISM?</span></div>
   <div id="lbar"><div id="lfill"></div></div>
   <div id="lcap">LOADING</div>
 </div>
@@ -388,7 +406,11 @@ function layout(){
   cw=innerWidth;
   if(prog>0) scrollTo(0, prog*(trackH-vh));
 }
-var started=false, duration=0, pendingTime=null, MIN_BUFFER=reduced?0:.12;
+var SOURCE_FPS=60;
+var started=false, duration=0, totalFrames=1;
+var pendingTime=null, pendingFrame=-1, issuedFrame=-1;
+var wantedFrame=-1, seekDirection=0;
+var MIN_BUFFER=reduced?0:.12;
 function updateLoad(){
   if(!duration) return;
   var end=film.buffered.length?film.buffered.end(film.buffered.length-1):0;
@@ -412,18 +434,27 @@ function begin(){
   tick();
 }
 function flushSeek(force){
-  if(!duration||pendingTime===null||(!force&&film.seeking)) return;
-  var t=pendingTime; pendingTime=null;
-  if(force||Math.abs((film.currentTime||0)-t)>1/120){
-    try{ film.currentTime=t; }catch(e){}
+  if(!duration||pendingFrame<0||(!force&&film.seeking)) return;
+  var frame=pendingFrame, t=pendingTime;
+  pendingFrame=-1; pendingTime=null;
+  if(force||frame!==issuedFrame){
+    try{ film.currentTime=t; issuedFrame=frame; }catch(e){}
   }
 }
 function seekFilm(v,force){
   if(!duration) return;
   if(reduced) v=0;
   var p=Math.max(0,Math.min(FILM_END,v))/FILM_END;
-  pendingTime=p*Math.max(0,duration-1/60);
-  flushSeek(!!force);
+  var frame=Math.max(0,Math.min(totalFrames-1,Math.round(p*(totalFrames-1))));
+  if(!force&&frame===wantedFrame) return;
+  var nextDirection=wantedFrame<0?0:Math.sign(frame-wantedFrame);
+  var reversed=nextDirection&&seekDirection&&nextDirection!==seekDirection&&
+    issuedFrame>=0&&Math.abs(frame-issuedFrame)>=2;
+  if(nextDirection) seekDirection=nextDirection;
+  wantedFrame=frame;
+  pendingFrame=frame;
+  pendingTime=frame*(duration/totalFrames);
+  flushSeek(!!force||reversed);
 }
 var fullObjectUrl='', usingFull=false, fallbackTried=false;
 function activateFallback(){
@@ -467,7 +498,7 @@ function loadFullQuality(){
   Promise.all(parts.map(fetchPart)).then(function(blobs){
     fullObjectUrl=URL.createObjectURL(new Blob(blobs,{type:'video/mp4'}));
     film.src=fullObjectUrl;
-    film.dataset.quality='original-4k';
+    film.dataset.quality='scrub-4k';
     film.preload='auto';
     lcap.textContent='PREPARING VIDEO';
     film.load();
@@ -480,7 +511,10 @@ function prepareFilm(){
   lcap.textContent='PREPARING VIDEO';
   film.addEventListener('loadedmetadata',function(){
     duration=isFinite(film.duration)?film.duration:0;
+    totalFrames=Math.max(1,Math.round(duration*SOURCE_FPS));
+    pendingTime=null; pendingFrame=issuedFrame=wantedFrame=-1; seekDirection=0;
     updateLoad();
+    if(started) seekFilm(cur,true);
   });
   film.addEventListener('progress',updateLoad);
   film.addEventListener('loadeddata',updateLoad);
@@ -523,18 +557,29 @@ function setCards(v){
     c.style.transform='translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+c.rot+'deg)';
   }
 }
-var raf=false;
-function tick(){ if(!raf){ raf=true; requestAnimationFrame(step); } }
-function step(){
-  raf=false;
+var raf=0,lastTick=0;
+function tick(){ if(!raf) raf=requestAnimationFrame(step); }
+function step(now){
+  raf=0;
+  var dt=lastTick?Math.min(34,now-lastTick):16.667;
+  lastTick=now;
   var gap=target-cur;
-  if(Math.abs(gap)>30){ cur=target-(gap>0?30:-30); gap=target-cur; }
-  cur = reduced ? target : cur+gap*0.16;
-  if(Math.abs(target-cur)<0.02) cur=target;
+  if(reduced){
+    cur=target;
+  }else{
+    var alpha=1-Math.exp(-dt/90);
+    var delta=gap*alpha;
+    var maxDelta=(1.4+Math.min(2.6,Math.abs(gap)*.011))*(dt/16.667);
+    delta=Math.max(-maxDelta,Math.min(maxDelta,delta));
+    cur+=delta;
+  }
+  if(Math.abs(target-cur)<0.015) cur=target;
   seekFilm(cur,false);
   setCards(Math.max(0,Math.min(VN-1,cur)));
-  pfill.style.width=(Math.max(0,Math.min(VN-1,cur))/(VN-1)*100)+'%';
+  var progress=Math.max(0,Math.min(VN-1,cur))/(VN-1);
+  pfill.style.transform='scaleX('+progress+')';
   if(cur!==target) tick();
+  else lastTick=0;
 }
 addEventListener('scroll',function(){
   target=Math.max(0,Math.min(VN-1,scrollY/PPF));
