@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Join the Discussion · Why Communism?</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="United Marxist Pact: a living international space for study, discussion, contribution, and collective political development.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Join the Discussion · United Marxist Pact">
+<meta property="og:description" content="United Marxist Pact: a living international space for study, discussion, contribution, and collective political development.">
+<meta property="og:url" content="https://whycommunism.com/test/join/">
+<meta property="og:image" content="https://whycommunism.com/test/join/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#E9DFC9">
+<link rel="preload" as="font" type="font/woff2" href="/assets/archivo.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/mono.woff2" crossorigin>
+<style>
+/* ============ join the discussion · the page runs on a scrolled diorama ============ */
+@font-face{font-family:'Archivo Black';font-weight:400;font-display:swap;src:url(/assets/archivo.woff2) format('woff2')}
+@font-face{font-family:'Plex Mono';font-weight:500;font-display:swap;src:url(/assets/mono.woff2) format('woff2')}
+@font-face{font-family:'Source Serif';font-weight:400;font-display:swap;src:url(/assets/serif400.woff2) format('woff2')}
+:root{
+  --disp:'Archivo Black','Arial Black',sans-serif;
+  --mono:'Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --serif:'Source Serif',Georgia,serif;
+  --paper:#E9DFC9; --ink:#17130E; --red:#B3271E;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{overflow-x:hidden;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);overflow-x:hidden}
+a{color:inherit}
+#track{width:1px}
+#film{position:fixed;inset:0;width:100%;height:100%;display:block;background:var(--paper)}
+#bar{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;
+  padding:14px clamp(16px,4vw,46px);pointer-events:none}
+#bar a,#bar button{pointer-events:auto}
+#wordmark{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:7px 11px 6px;border:none}
+#wordmark b{color:#E8B45A;font-weight:500}
+#idxbtn{font-family:var(--mono);font-size:12px;letter-spacing:.18em;cursor:pointer;
+  background:var(--red);color:var(--paper);border:none;padding:7px 13px 6px}
+#idxbtn:hover{background:var(--ink)}
+#plate{position:fixed;right:0;bottom:0;z-index:30;background:var(--ink);color:var(--paper);
+  display:flex;align-items:flex-end;justify-content:flex-end;
+  padding:9px 14px 9px 16px;min-width:150px;min-height:38px;
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.12em;white-space:nowrap;
+  border-top:3px solid var(--red)}
+#pbar{position:fixed;left:0;right:0;bottom:0;height:3px;background:#17130E33;z-index:29}
+#pfill{height:100%;width:0;background:var(--red)}
+.card{position:fixed;z-index:25;visibility:hidden;opacity:0;max-width:min(600px,88vw);will-change:transform,opacity}
+.card.l{left:clamp(46px,7vw,120px);top:9svh}
+.card.r{right:clamp(46px,7vw,120px);top:9svh;text-align:right}
+.card.c{left:50%;top:0;width:min(680px,92vw);text-align:center}
+.kick{font-family:var(--mono);font-size:clamp(10px,1.4vw,13px);letter-spacing:.24em;margin-bottom:14px;
+  display:flex;align-items:center;gap:10px}
+.card.r .kick{justify-content:flex-end}
+.card.c .kick{justify-content:center}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:30px;height:30px;padding:0 8px;
+  background:var(--ac,var(--red));color:var(--paper);font-family:var(--disp);font-size:14px}
+.card h2{font-family:var(--disp);font-weight:400;line-height:.94;letter-spacing:-.012em;
+  font-size:clamp(34px,6.4vw,74px);text-transform:uppercase}
+.card h2 .u{box-shadow:inset 0 -0.16em 0 var(--ac,var(--red))}
+.cap{font-family:var(--serif);font-size:clamp(15px,2vw,19px);line-height:1.55;margin-top:16px;max-width:44ch}
+.card.r .cap{margin-left:auto}
+.card.c .cap{margin-inline:auto}
+.meta{font-family:var(--mono);font-size:clamp(10px,1.3vw,12px);letter-spacing:.18em;margin-top:14px;opacity:.75}
+.go{display:inline-flex;align-items:center;gap:12px;margin-top:22px;text-decoration:none;
+  font-family:var(--mono);font-size:clamp(11px,1.5vw,13px);letter-spacing:.2em;
+  background:var(--ink);color:var(--paper);padding:13px 18px;border-left:5px solid var(--ac,var(--red))}
+.go b{font-weight:500;transform:translateY(-1px)}
+.go:hover{background:var(--ac,var(--red))}
+.expect{list-style:none;margin-top:18px;font-family:var(--mono);font-size:clamp(11px,1.5vw,13.5px);
+  letter-spacing:.14em;line-height:2.3}
+.expect li::before{content:"★ ";color:var(--ac,var(--red))}
+#hero h1{font-family:var(--disp);font-weight:400;text-transform:uppercase;line-height:.9;
+  font-size:clamp(44px,10vw,130px);letter-spacing:-.02em}
+#hero h1 span{display:block}
+#hero h1 .m{color:var(--red)}
+#hero .wedge{width:clamp(140px,24vw,300px);margin:10px auto 0}
+#hero .sub{font-family:var(--mono);font-size:clamp(10px,1.5vw,13px);letter-spacing:.22em;margin-top:24px}
+#fin{top:auto}
+#fin h2{font-size:clamp(30px,5.6vw,64px)}
+.dests{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+.dests a{font-family:var(--mono);font-size:clamp(10.5px,1.4vw,13px);letter-spacing:.16em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:15px 10px;border-top:3px solid var(--dc,var(--red))}
+.dests a:hover{background:var(--dc,var(--red));color:var(--ink)}
+.dests a small{display:block;margin-top:5px;font-size:9.5px;letter-spacing:.1em;color:#EBE1CB99}
+.dests a:hover small{color:#17130E99}
+.dests a.wide{grid-column:1/-1;background:var(--red);border-top-color:#17130E;color:var(--paper)}
+.dests a.wide:hover{background:#17130E}
+@media(max-width:520px){.dests{grid-template-columns:1fr;gap:8px}.dests a{padding:12px 10px}}
+#cue{position:fixed;left:50%;bottom:46px;transform:translateX(-50%);z-index:26;
+  font-family:var(--mono);font-size:11px;letter-spacing:.3em;opacity:0;transition:opacity .6s;
+  color:var(--ink);text-align:center;pointer-events:none}
+#cue .ar{display:block;font-size:18px;margin-top:6px;animation:cuebob 1.4s ease-in-out infinite}
+@keyframes cuebob{0%,100%{transform:translateY(0)}50%{transform:translateY(7px)}}
+body.ready:not(.moved) #cue{opacity:.9}
+#menu{position:fixed;inset:0;z-index:60;background:#EFE6D2;display:none;overflow:auto;
+  border:14px solid var(--red)}
+#menu.open{display:block}
+#menu .inner{max-width:760px;margin:0 auto;padding:8vh 22px 8vh}
+#menu h3{font-family:var(--disp);font-weight:400;font-size:clamp(30px,6vw,56px);text-transform:uppercase;line-height:.95}
+#menu .mh{font-family:var(--mono);font-size:11px;letter-spacing:.26em;margin-bottom:10px}
+#mclose{position:fixed;top:26px;right:30px;z-index:61;background:var(--ink);color:var(--paper);border:none;
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;padding:9px 14px;cursor:pointer;display:none}
+#menu.open~#mclose{display:block}
+.row{display:flex;align-items:baseline;gap:16px;width:100%;text-align:left;background:none;border:none;cursor:pointer;
+  border-top:2px solid var(--ink);padding:15px 4px;font-family:inherit}
+.row:hover{background:#17130E0d}
+.row .rn{font-family:var(--mono);font-size:12px;letter-spacing:.1em;min-width:44px;color:var(--rc,var(--red))}
+.row .rt{font-family:var(--disp);font-size:clamp(15px,2.6vw,21px);text-transform:uppercase;letter-spacing:.01em;flex:1}
+#menu .exits{margin-top:34px;display:flex;gap:10px;flex-wrap:wrap}
+#menu .exits a{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-decoration:none;
+  background:var(--ink);color:var(--paper);padding:11px 15px}
+#menu .exits a:hover{background:var(--red)}
+#loader{position:fixed;inset:0;z-index:80;background:var(--paper);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:26px;transition:opacity .7s}
+body.ready #loader{opacity:0;pointer-events:none}
+#loader .lw{font-family:var(--disp);font-size:clamp(26px,5vw,48px);text-transform:uppercase;letter-spacing:-.01em}
+#loader .lw span{color:var(--red)}
+#lbar{width:min(320px,70vw);height:4px;background:#17130E22}
+#lfill{height:100%;width:0;background:var(--red);transition:width .25s}
+#lcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.3em;color:#17130E99}
+@media (prefers-reduced-motion:reduce){#cue .ar{animation:none}}
+#nojs{max-width:640px;margin:0 auto;padding:60px 22px;font-family:var(--serif);line-height:2}
+</style>
+</head>
+<body>
+
+<div id="track"></div>
+<canvas id="film" aria-label="A paper diorama: black paper figures with red flags gather among houses as the view closes on a red star in a circle."></canvas>
+
+<header id="bar">
+  <a id="wordmark" href="/">WHYCOMMUNISM<b>.COM</b></a>
+  <button id="idxbtn" aria-haspopup="dialog">INDEX</button>
+</header>
+
+<section class="card c" id="hero" data-a="-9" data-b="20">
+  <h1><span>JOIN THE</span><span class="m">DISCUSSION</span></h1>
+  <svg class="wedge" viewBox="0 0 330 26" aria-hidden="true"><polygon points="0,26 330,0 330,26" fill="#B3271E"/></svg>
+  <p class="sub">UNITED MARXIST PACT · COMMUNITY</p>
+</section>
+
+<section class="card l" data-a="26" data-b="56" style="--ac:#B3271E">
+  <div class="kick"><span class="chip">★</span> COMMUNITY · INTERNATIONAL · EST. 2021</div>
+  <h2>UNITED MARXIST <span class="u">PACT</span></h2>
+  <p class="cap">A living international space for study, discussion, contribution, and collective political development.</p>
+  <p class="meta">MORE THAN 3,000 MEMBERS · JULY 2026</p>
+  <a class="go" href="https://discord.com/servers/898568341499838514" rel="noopener"><span>JOIN THE SERVER</span><b>→</b></a>
+</section>
+
+<section class="card r" data-a="62" data-b="90" style="--ac:#0E7466">
+  <div class="kick">INSIDE THE SERVER <span class="chip">✦</span></div>
+  <h2>WHAT TO <span class="u">EXPECT</span></h2>
+  <ul class="expect">
+    <li>STUDY TOGETHER</li>
+    <li>THINK INTERNATIONALLY</li>
+    <li>A PRINCIPLED, MODERATED SPACE</li>
+    <li>JOIN THEORY TO PRAXIS</li>
+  </ul>
+  <a class="go" href="/about/"><span>MORE ABOUT UMP</span><b>→</b></a>
+</section>
+
+<section class="card c" id="fin" data-a="97" data-b="200">
+  <h2>THE DOOR IS <span class="u">OPEN</span></h2>
+  <nav class="dests" aria-label="Destinations">
+    <a class="wide" href="https://discord.com/servers/898568341499838514" rel="noopener">JOIN THE SERVER →<small>UNITED MARXIST PACT ON DISCORD</small></a>
+    <a href="../" style="--dc:#E8B45A">◀ THE HOMEPAGE<small>BACK TO THE MARCH</small></a>
+    <a href="/about/" style="--dc:#5FC9B8">ABOUT UMP<small>THE FULL COMMUNITY PAGE</small></a>
+  </nav>
+</section>
+
+<div id="cue">SCROLL<span class="ar">↓</span></div>
+
+<div id="plate"><span id="fnum">0001 / 0121</span></div>
+<div id="pbar"><div id="pfill"></div></div>
+
+<div id="menu" role="dialog" aria-label="Contents">
+  <div class="inner">
+    <p class="mh">WHYCOMMUNISM.COM · JOIN THE DISCUSSION</p>
+    <h3>Join the Discussion</h3>
+    <div id="rows"></div>
+    <div class="exits">
+      <a href="../">◀ THE HOMEPAGE</a>
+      <a href="/">THE LIBRARY →</a>
+      <a href="/about/">ABOUT UMP →</a>
+    </div>
+  </div>
+</div>
+<button id="mclose">CLOSE ✕</button>
+
+<div id="loader" aria-hidden="true">
+  <div class="lw">JOIN THE <span>DISCUSSION</span></div>
+  <div id="lbar"><div id="lfill"></div></div>
+  <div id="lcap">LOADING</div>
+</div>
+
+<noscript>
+  <div id="nojs" style="position:fixed;inset:0;background:#E9DFC9;overflow:auto;z-index:99">
+    <p><strong>This page</strong> needs JavaScript for the moving diorama. The door is still open:</p>
+    <p><a href="https://discord.com/servers/898568341499838514" rel="noopener">Join United Marxist Pact on Discord</a><br>
+    <a href="/about/">About the community</a><br>
+    <a href="/">The Library</a></p>
+  </div>
+</noscript>
+
+<script>
+(function(){
+'use strict';
+var N=121, VN=160, PAD=4;
+var DIR = 'frames/L/';
+var IW = 1872, IH = 1056;
+var WM = {x:1560,y:915};
+var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+var canvas=document.getElementById('film'), ctx=canvas.getContext('2d');
+var track=document.getElementById('track');
+var plate=document.getElementById('plate'), fnum=document.getElementById('fnum');
+var pfill=document.getElementById('pfill');
+var lfill=document.getElementById('lfill');
+var cards=[].slice.call(document.querySelectorAll('.card'));
+cards.forEach(function(c){ c.a=+c.dataset.a; c.b=+c.dataset.b;
+  c.rot=c.classList.contains('c')?0:(c.classList.contains('r')?1.6:-1.8); });
+
+var PPF=50, trackH=0, dpr=1, cw=0, ch=0;
+var cur=0, target=0, drawn=-1;
+
+function layout(){
+  var vh=innerHeight;
+  PPF=Math.max(34, Math.round(vh*0.062));
+  var prog = trackH>0 ? (scrollY/Math.max(1,trackH-vh)) : 0;
+  trackH=(VN-1)*PPF+vh;
+  track.style.height=trackH+'px';
+  dpr=Math.min(devicePixelRatio||1,2);
+  cw=innerWidth; ch=vh;
+  canvas.width=Math.round(cw*dpr); canvas.height=Math.round(ch*dpr);
+  canvas.style.width=cw+'px'; canvas.style.height=ch+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.imageSmoothingQuality='high';
+  if(prog>0) scrollTo(0, prog*(trackH-vh));
+  placePlate(); drawn=-1;
+}
+function cover(){
+  var s=Math.max(cw/IW, ch/IH);
+  var sw=cw/s, sh=ch/s;
+  var sx=(IW-sw)*0.5, sy=(IH-sh)*0.55;
+  return {s:s,sx:sx,sy:sy,sw:sw,sh:sh};
+}
+function placePlate(){
+  var c=cover();
+  var left=(WM.x-c.sx)*c.s, top=(WM.y-c.sy)*c.s;
+  var need_w=Math.ceil(cw-left)+8, need_h=Math.ceil(ch-top)+6;
+  plate.style.minWidth=Math.max(150,Math.min(need_w,cw*0.7))+'px';
+  plate.style.minHeight=Math.max(38,Math.min(need_h,120))+'px';
+}
+var imgs=new Array(N), tries=new Array(N), okc=0;
+function src(i){ return DIR+'f'+String(i+1).padStart(PAD,'0')+'.webp'; }
+function load(i,cb){
+  if(imgs[i] && imgs[i]!=='dead') return;
+  var im=new Image();
+  im.onload=function(){ im.ok=true; okc++; if(cb)cb(); tick(); };
+  im.onerror=function(){
+    tries[i]=(tries[i]||0)+1;
+    if(tries[i]<3){ imgs[i]=null; setTimeout(function(){ load(i,cb); }, 400*tries[i]); }
+    else { imgs[i]='dead'; if(cb)cb(); }
+  };
+  im.src=src(i); imgs[i]=im;
+}
+function nearest(i){
+  if(imgs[i]&&imgs[i].ok) return imgs[i];
+  for(var d=1;d<N;d++){
+    if(i-d>=0&&imgs[i-d]&&imgs[i-d].ok) return imgs[i-d];
+    if(i+d<N&&imgs[i+d]&&imgs[i+d].ok) return imgs[i+d];
+  }
+  return null;
+}
+var wave1=[], w1done=0;
+for(var i=0;i<N;i+=4) wave1.push(i);
+if(wave1.indexOf(N-1)<0) wave1.push(N-1);
+function w1cb(){
+  w1done++;
+  lfill.style.width=Math.round(w1done/wave1.length*100)+'%';
+  if(w1done>=wave1.length) begin();
+}
+wave1.forEach(function(i){ load(i,w1cb); });
+function wave2(){
+  var q=[]; for(var i=0;i<N;i++) if(!imgs[i]) q.push(i);
+  var inflight=0;
+  function pump(){
+    while(inflight<6&&q.length){
+      var i=q.shift(); inflight++;
+      load(i,function(){ inflight--; pump(); });
+    }
+  }
+  pump();
+}
+function begin(){
+  document.body.classList.add('ready');
+  layout();
+  var m=location.search.match(/[?&]f=(\d+)/);
+  if(m){ var ff=Math.min(VN-1,+m[1]); cur=target=ff; scrollTo(0, ff*PPF); }
+  var s=location.search.match(/[?&]still=(\d+)/);
+  if(s){ var sf=Math.min(VN-1,+s[1]); cur=target=sf; }
+  tick();
+  setTimeout(wave2, 350);
+}
+function draw(f){
+  var im=nearest(f); if(!im) return;
+  var c=cover();
+  ctx.drawImage(im,c.sx,c.sy,c.sw,c.sh,0,0,cw,ch);
+  drawn=f;
+}
+function setCards(v){
+  for(var k=0;k<cards.length;k++){
+    var c=cards[k], FI=5;
+    var vis=Math.max(0,Math.min((v-c.a)/FI,1,(c.b-v)/FI));
+    if(vis<=0.02){ if(c.style.visibility!=='hidden'){c.style.visibility='hidden';c.style.opacity=0;c.style.pointerEvents='none';} continue; }
+    c.style.visibility='visible';
+    c.style.opacity=vis;
+    c.style.pointerEvents=vis>0.5?'auto':'none';
+    var y=(1-vis)*14;
+    var tx=c.classList.contains('c')?'translate(-50%,'+y+'px) ':'translateY('+y+'px) ';
+    c.style.transform=tx+'rotate('+c.rot+'deg) scale('+(0.985+0.015*vis)+')';
+  }
+}
+(function(){
+  var hero=document.getElementById('hero'), fin=document.getElementById('fin');
+  function place(){ fin.style.top='auto'; fin.style.bottom='7svh';
+    hero.style.top='50%'; hero.style.marginTop='-'+(hero.offsetHeight/2)+'px'; }
+  addEventListener('resize',place); setTimeout(place,60); setTimeout(place,900);
+})();
+var raf=false;
+function tick(){ if(!raf){ raf=true; requestAnimationFrame(step); } }
+function step(){
+  raf=false;
+  var gap=target-cur;
+  if(Math.abs(gap)>30) cur=target-(gap>0?30:-30);
+  cur = reduced ? target : cur+gap*0.16;
+  if(Math.abs(target-cur)<0.02) cur=target;
+  var f=Math.round(Math.max(0,Math.min(N-1,cur)));
+  if(f!==drawn) draw(f);
+  setCards(Math.max(0,Math.min(VN-1,cur)));
+  fnum.textContent=String(f+1).padStart(4,'0')+' / 0121';
+  pfill.style.width=(Math.max(0,Math.min(VN-1,cur))/(VN-1)*100)+'%';
+  if(cur!==target) tick();
+}
+addEventListener('scroll',function(){
+  target=Math.max(0,Math.min(VN-1,scrollY/PPF));
+  if(scrollY>50) document.body.classList.add('moved');
+  tick();
+},{passive:true});
+addEventListener('resize',function(){ layout(); tick(); });
+addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'){ scrollBy(0,PPF); e.preventDefault(); }
+  if(e.key==='ArrowLeft'){ scrollBy(0,-PPF); e.preventDefault(); }
+  if(e.key==='Escape') menu.classList.remove('open');
+});
+var menu=document.getElementById('menu'), rows=document.getElementById('rows');
+var parts=[
+  ['··','JOIN THE DISCUSSION',0,'#17130E'],
+  ['★','UNITED MARXIST PACT',28,'#B3271E'],
+  ['✦','WHAT TO EXPECT',64,'#0E7466'],
+  ['→','THE DOOR IS OPEN',99,'#B3271E']
+];
+parts.forEach(function(p){
+  var b=document.createElement('button'); b.className='row'; b.style.setProperty('--rc',p[3]);
+  b.innerHTML='<span class="rn">'+p[0]+'</span><span class="rt">'+p[1]+'</span>';
+  b.onclick=function(){ menu.classList.remove('open'); scrollTo(0,(p[2]+9)*PPF); };
+  rows.appendChild(b);
+});
+document.getElementById('idxbtn').onclick=function(){ menu.classList.add('open'); };
+document.getElementById('mclose').onclick=function(){ menu.classList.remove('open'); };
+layout();
+})();
+</script>
+</body>
+</html>
