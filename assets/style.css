@@ -443,6 +443,7 @@ a:focus-visible,button:focus-visible{outline:3px solid var(--ac);outline-offset:
 
 /* message-by-message source archive */
 .wce-editor[hidden],.wce-editor [hidden]{display:none!important}
+.hero .std[hidden]{display:none!important}
 .wce-archive-tools{display:flex;flex-wrap:wrap;gap:8px;padding:14px 24px;border-bottom:1.5px solid var(--tx);background:var(--bg)}
 .wce-archive-tools button,.wce-paste button,.wce-stream button,.wce-message-edit button{appearance:none;border:1.5px solid currentColor;background:transparent;color:inherit;font-family:var(--mono);font-size:8.5px;letter-spacing:.12em;text-transform:uppercase;padding:9px 11px;cursor:pointer}
 .wce-archive-tools button:hover,.wce-paste button:hover,.wce-stream button:hover,.wce-message-edit button:hover{background:var(--tx);border-color:var(--tx);color:var(--bg)}
