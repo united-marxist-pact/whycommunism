@@ -12,9 +12,20 @@
       "custom_domain": true
     }
   ],
+  "d1_databases": [
+    {
+      "binding": "ARCHIVE_DB",
+      "database_name": "whycommunism-archive-db",
+      "database_id": "304957a4-1ac6-4f74-97ff-fb7b129a45c1"
+    }
+  ],
   "vars": {
-    "GITHUB_OWNER": "unusualathlete",
+    "GITHUB_OWNER": "united-marxist-pact",
     "GITHUB_REPO": "whycommunism-archives",
-    "GITHUB_BRANCH": "main"
+    "GITHUB_BRANCH": "main",
+    "DISCORD_GUILD_ID": "898568341499838514",
+    "DISCORD_CLIENT_ID": "1531504803983785984",
+    "DISCORD_REDIRECT_URI": "https://archive.whycommunism.com/v2/auth/discord/callback",
+    "DISCORD_ADMIN_USER_IDS": "1507759961722192005"
   }
 }
