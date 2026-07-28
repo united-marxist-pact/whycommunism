@@ -10,6 +10,7 @@ const MAX_ATTACHMENT_REQUEST_BYTES = 12 * 1024 * 1024;
 const MAX_MESSAGES = 5_000;
 const MAX_PREVIEW_HTML_BYTES = 1_250_000;
 const MAX_BATCH_SOURCES = 250;
+const MAX_AVATAR_BYTES = 1024 * 1024;
 const GITHUB_API_VERSION = "2022-11-28";
 const SESSION_COOKIE = "__Host-wce_session";
 const OAUTH_STATE_COOKIE = "__Host-wce_oauth_state";
@@ -1023,6 +1024,52 @@ async function getAttachment(request, env, file) {
       "Referrer-Policy": "no-referrer",
       "X-Content-Type-Options": "nosniff",
       "Vary": "Origin"
+    }
+  });
+}
+
+function normalizedDiscordAvatarUrl(value) {
+  let source;
+  try { source = new URL(String(value || "")); }
+  catch (_) { return ""; }
+  const validPath =
+    /^\/avatars\/[0-9]{5,30}\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
+    /^\/guilds\/[0-9]{5,30}\/users\/[0-9]{5,30}\/avatars\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
+    /^\/embed\/avatars\/[0-5]\.png$/.test(source.pathname);
+  if (source.protocol !== "https:" || source.hostname !== "cdn.discordapp.com" || source.port || source.username || source.password || !validPath) return "";
+  source.search = source.pathname.startsWith("/embed/avatars/") ? "" : "?size=128";
+  source.hash = "";
+  return source.toString();
+}
+
+async function getDiscordAvatar(request, value) {
+  const source = normalizedDiscordAvatarUrl(value);
+  if (!source) return json(request, { error: "Invalid Discord avatar URL." }, 400);
+  const response = await fetch(source, {
+    headers: { "Accept": "image/png,image/jpeg,image/webp,image/gif" },
+    redirect: "error"
+  });
+  if (!response.ok) return json(request, { error: "That Discord avatar is unavailable." }, response.status === 404 ? 404 : 502);
+  const contentType = String(response.headers.get("Content-Type") || "").split(";")[0].trim().toLowerCase();
+  if (!["image/png", "image/jpeg", "image/webp", "image/gif"].includes(contentType)) {
+    return json(request, { error: "Discord returned an invalid avatar." }, 502);
+  }
+  const bytes = new Uint8Array(await response.arrayBuffer());
+  if (!bytes.byteLength || bytes.byteLength > MAX_AVATAR_BYTES) {
+    return json(request, { error: "That Discord avatar is too large." }, 502);
+  }
+  const origin = originFor(request);
+  return new Response(bytes, {
+    headers: {
+      ...(origin ? { "Access-Control-Allow-Origin": origin } : {}),
+      "Access-Control-Allow-Credentials": "true",
+      "Cache-Control": "private, max-age=86400",
+      "Content-Length": String(bytes.byteLength),
+      "Content-Type": contentType,
+      "Cross-Origin-Resource-Policy": "same-site",
+      "Referrer-Policy": "no-referrer",
+      "X-Content-Type-Options": "nosniff",
+      "Vary": "Origin, Cookie"
     }
   });
 }
@@ -2940,6 +2987,14 @@ export default {
         return await getLinkPreview(request, url.searchParams.get("url") || "");
       }
       catch (error) { return json(request, { error: error.name === "AbortError" ? "That website took too long to preview." : (error.message || "That website could not be previewed.") }, 422); }
+    }
+    if (url.pathname === "/v2/avatar" && request.method === "GET") {
+      try {
+        const auth = await requireUser(request, env, "read");
+        if (auth.response) return auth.response;
+        return await getDiscordAvatar(request, url.searchParams.get("url") || "");
+      }
+      catch (error) { return json(request, { error: error.message || "The Discord avatar could not be loaded." }, 502); }
     }
     if (!env.GITHUB_TOKEN && !d1ReadSelected(env)) {
       return json(request, { error: "The private archive runtime is not configured." }, 503);
