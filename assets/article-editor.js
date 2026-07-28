@@ -223,7 +223,7 @@
       if (source.protocol !== "https:" || source.hostname !== "cdn.discordapp.com" || source.port || source.username || source.password || !validPath) return "";
       source.search = "";
       source.hash = "";
-      return API_ORIGIN + "/v2/avatar?url=" + encodeURIComponent(source.toString());
+      return API_ORIGIN + "/v2/avatar" + source.pathname;
     } catch (_) {
       return "";
     }
@@ -236,7 +236,9 @@
       var api = new URL(API_ORIGIN);
       if (url.origin !== api.origin) return false;
       if (url.pathname === "/v2/topic/attachment") return Boolean(archivedAttachmentUrl(url.searchParams.get("file")));
-      if (url.pathname === "/v2/avatar") return Boolean(proxiedDiscordAvatarUrl(url.searchParams.get("url")));
+      if (url.pathname.startsWith("/v2/avatar/") && !url.search && !url.hash) {
+        return Boolean(proxiedDiscordAvatarUrl("https://cdn.discordapp.com" + url.pathname.slice("/v2/avatar".length)));
+      }
       return false;
     } catch (_) {
       return false;
