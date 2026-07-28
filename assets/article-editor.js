@@ -95,16 +95,24 @@
     '<article class="wce-final-render wce-preview"></article>' +
     '<section class="wce-final-editor" hidden>' +
       '<div class="wce-word-toolbar" role="toolbar" aria-label="Argument formatting">' +
-        '<button type="button" data-command="bold" aria-label="Bold"><b>B</b></button>' +
-        '<button type="button" data-command="italic" aria-label="Italic"><i>I</i></button>' +
+        '<button type="button" data-command="bold" aria-label="Bold (Ctrl+B)"><b>B</b></button>' +
+        '<button type="button" data-command="italic" aria-label="Italic (Ctrl+I)"><i>I</i></button>' +
+        '<button type="button" data-command="underline" aria-label="Underline (Ctrl+U)"><u>U</u></button>' +
+        '<button type="button" data-command="strike" aria-label="Strikethrough"><s>S</s></button>' +
+        '<button type="button" data-command="code" aria-label="Inline code (Ctrl+E)">&lt;/&gt;</button>' +
+        '<span class="wce-toolbar-sep" aria-hidden="true"></span>' +
         '<button type="button" data-block="p">Body</button>' +
         '<button type="button" data-block="h2">Heading 2</button>' +
         '<button type="button" data-block="h3">Heading 3</button>' +
         '<button type="button" data-command="insertUnorderedList" aria-label="Bulleted list">• List</button>' +
         '<button type="button" data-command="insertOrderedList" aria-label="Numbered list">1. List</button>' +
         '<button type="button" data-block="blockquote">Quote</button>' +
+        '<button type="button" data-command="codeblock" aria-label="Code block">Code block</button>' +
+        '<button type="button" data-command="hr" aria-label="Divider">— Divider</button>' +
+        '<span class="wce-toolbar-sep" aria-hidden="true"></span>' +
         '<button type="button" data-wce-action="final-link">Link</button>' +
         '<button type="button" data-wce-action="citation-open">Insert citation</button>' +
+        '<button type="button" class="wce-preview-toggle" data-wce-action="final-preview" aria-pressed="false">Preview</button>' +
       "</div>" +
       '<textarea class="wce-word-page" rows="24" spellcheck="true" aria-label="Final argument Markdown"></textarea>' +
       '<footer class="wce-final-savebar"><label>Revision note<input class="wce-final-note" type="text" maxlength="160" placeholder="What changed?"></label><span class="wce-final-count"></span><button type="button" data-wce-action="final-cancel">Cancel</button><button class="wce-primary" type="button" data-wce-action="final-save">Save argument</button></footer>' +
@@ -330,9 +338,13 @@
       return safe ? token('<a href="' + escapeHtml(safe) + '"' + noReferrerLinkAttributes() + ">" + escapeHtml(label) + "</a>") : whole;
     });
     text = escapeHtml(text);
+    text = text.replace(/\|\|([^|\n]+)\|\|/g, function (_, hidden) { return '<span class="wce-spoiler" tabindex="0" role="button" aria-label="Spoiler">' + hidden + "</span>"; });
+    text = text.replace(/\*\*\*([^*\n]+)\*\*\*/g, "<strong><em>$1</em></strong>");
     text = text.replace(/\*\*([^*\n]+)\*\*/g, "<strong>$1</strong>");
+    text = text.replace(/__([^_\n]+)__/g, "<u>$1</u>");
     text = text.replace(/~~([^~\n]+)~~/g, "<del>$1</del>");
     text = text.replace(/(^|[^*])\*([^*\n]+)\*/g, "$1<em>$2</em>");
+    text = text.replace(/(^|[^_])_([^_\n]+)_(?!_)/g, "$1<em>$2</em>");
     text = text.replace(/https?:\/\/[^\s<\u0000]+/g, function (raw) {
       var trailing = raw.match(/[.,!?;:]+$/);
       var clean = trailing ? raw.slice(0, -trailing[0].length) : raw;
@@ -372,12 +384,22 @@
   }
 
   function renderMarkdown(source, protectPrivateArchive) {
-    var lines = String(source || "").replace(/\r\n?/g, "\n").split("\n");
+    var fences = [];
+    var prepared = String(source || "").replace(/\r\n?/g, "\n").replace(/```[^\n`]*\n([\s\S]*?)```/g, function (_, code) {
+      fences.push('<pre class="wce-codeblock"><code>' + escapeHtml(code.replace(/\n$/, "")) + "</code></pre>");
+      return "\u0000FENCE" + (fences.length - 1) + "\u0000";
+    });
+    var lines = prepared.split("\n");
     var output = [];
     var list = "";
     function closeList() { if (list) output.push("</" + list + ">"); list = ""; }
     lines.forEach(function (line) {
       if (!line.trim()) { closeList(); return; }
+      var fence = line.match(/^\s*\u0000FENCE(\d+)\u0000\s*$/);
+      if (fence) { closeList(); output.push(fences[Number(fence[1])]); return; }
+      if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { closeList(); output.push("<hr>"); return; }
+      var subtext = line.match(/^\s*-#\s+(.+)$/);
+      if (subtext) { closeList(); output.push('<p class="wce-subtext">' + inlineMarkdown(subtext[1], protectPrivateArchive) + "</p>"); return; }
       var heading = line.match(/^(#{1,3})\s+(.+)$/);
       if (heading) {
         closeList();
@@ -757,6 +779,11 @@
     if (command === "italic") insertAround("*", "*", "italic text");
     if (command === "insertUnorderedList") insertLinePrefix("- ");
     if (command === "insertOrderedList") insertLinePrefix(function (index, line) { return (index + 1) + ". " + line; });
+    if (command === "underline") insertAround("__", "__", "underlined text");
+    if (command === "strike") insertAround("~~", "~~", "struck text");
+    if (command === "code") insertAround("`", "`", "code");
+    if (command === "codeblock") insertAround("\n```\n", "\n```\n", "code");
+    if (command === "hr") { wordPage.setRangeText("\n\n---\n\n", wordPage.selectionStart, wordPage.selectionEnd, "end"); wordPage.focus(); updateWordCount(); }
     if (block === "p") setBlockPrefix("");
     if (block === "h2") setBlockPrefix("## ");
     if (block === "h3") setBlockPrefix("### ");
@@ -1434,6 +1461,20 @@
     }
   }
 
+  function sourceDayLabel(value) {
+    var date = new Date(value);
+    if (isNaN(date)) return "";
+    return date.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+  }
+
+  function sourceDayDivider(label) {
+    var divider = document.createElement("div");
+    divider.className = "wce-day-divider";
+    divider.setAttribute("role", "separator");
+    divider.innerHTML = "<span>" + escapeHtml(label) + "</span>";
+    return divider;
+  }
+
   function renderSources() {
     sourceStream.replaceChildren();
     var shown = filteredSources();
@@ -1455,11 +1496,21 @@
         var heading = document.createElement("h3");
         heading.textContent = "# " + channel;
         section.appendChild(heading);
-        group.forEach(function (message) { section.appendChild(createSourceCard(message, state.sources.indexOf(message))); });
+        var groupDay = "";
+        group.forEach(function (message) {
+          var label = sourceDayLabel(sourceTimestamp(message));
+          if (label && label !== groupDay) { section.appendChild(sourceDayDivider(label)); groupDay = label; }
+          section.appendChild(createSourceCard(message, state.sources.indexOf(message)));
+        });
         sourceStream.appendChild(section);
       });
     } else {
-      shown.forEach(function (message) { sourceStream.appendChild(createSourceCard(message, state.sources.indexOf(message))); });
+      var streamDay = "";
+      shown.forEach(function (message) {
+        var label = sourceDayLabel(sourceTimestamp(message));
+        if (label && label !== streamDay) { sourceStream.appendChild(sourceDayDivider(label)); streamDay = label; }
+        sourceStream.appendChild(createSourceCard(message, state.sources.indexOf(message)));
+      });
     }
   }
 
@@ -1724,6 +1775,7 @@
       if (!historyPanel.hidden) loadFinalHistory();
     }
     if (name === "history-close") historyPanel.hidden = true;
+    if (name === "final-preview") toggleFinalPreview(action);
     if (name === "final-link") {
       var url = prompt("Paste the link address:");
       if (safeUrl(url)) {
@@ -1751,6 +1803,40 @@
     if (!button) return;
     Array.from(citationPicker.querySelectorAll("[data-citation-type]")).forEach(function (item) { item.classList.toggle("is-active", item === button); });
     Array.from(citationPicker.querySelectorAll("[data-citation-panel]")).forEach(function (panel) { panel.hidden = panel.dataset.citationPanel !== button.dataset.citationType; });
+  });
+
+  var wordPreview = null;
+
+  function toggleFinalPreview(button) {
+    if (!wordPreview) {
+      wordPreview = document.createElement("article");
+      wordPreview.className = "wce-preview wce-word-preview";
+      wordPreview.hidden = true;
+      wordPage.insertAdjacentElement("afterend", wordPreview);
+    }
+    var showing = wordPreview.hidden;
+    wordPreview.hidden = !showing;
+    wordPage.classList.toggle("is-previewing", showing);
+    if (button) button.setAttribute("aria-pressed", showing ? "true" : "false");
+    if (showing) wordPreview.innerHTML = renderMarkdown(wordPage.value) || '<p class="wce-subtext">Nothing to preview yet.</p>';
+  }
+
+  wordPage.addEventListener("input", function () {
+    if (wordPreview && !wordPreview.hidden) wordPreview.innerHTML = renderMarkdown(wordPage.value);
+  });
+
+  wordPage.addEventListener("keydown", function (event) {
+    if (!(event.metaKey || event.ctrlKey) || event.altKey) return;
+    var key = String(event.key || "").toLowerCase();
+    if (key === "b") { event.preventDefault(); insertAround("**", "**", "bold text"); }
+    if (key === "i") { event.preventDefault(); insertAround("*", "*", "italic text"); }
+    if (key === "u") { event.preventDefault(); insertAround("__", "__", "underlined text"); }
+    if (key === "e") { event.preventDefault(); insertAround("`", "`", "code"); }
+    if (key === "k") {
+      event.preventDefault();
+      var linkButton = finalWorkspace.querySelector('[data-wce-action="final-link"]');
+      if (linkButton) linkButton.click();
+    }
   });
 
   wordPage.addEventListener("input", updateWordCount);
