@@ -20,6 +20,7 @@ const helperNames = [
   "escapeHtml",
   "safeUrl",
   "archivedAttachmentUrl",
+  "proxiedDiscordAvatarUrl",
   "mayAutoLoadPrivateMedia",
   "noReferrerLinkAttributes",
   "externalMediaCard",
@@ -90,9 +91,25 @@ const youtube = helpers.renderMarkdown("https://www.youtube.com/watch?v=abcdefgh
 assert.doesNotMatch(youtube, /<iframe\b/i, "Private archived Markdown auto-loads a YouTube frame.");
 assert.match(youtube, /External video hidden/, "Private YouTube media does not render as an explicit click-through.");
 
-const avatar = helpers.avatarMarkup("https://cdn.discordapp.com/avatars/1/avatar.png", "Archive Member");
-assert.doesNotMatch(avatar.html, /<img\b/i, "A private source avatar auto-loads from Discord.");
-assert.match(avatar.html, /referrerpolicy="no-referrer"/, "The external-avatar click-through lacks a no-referrer policy.");
+const invalidAvatar = helpers.avatarMarkup("https://cdn.discordapp.com/avatars/1/avatar.png", "Archive Member");
+assert.doesNotMatch(invalidAvatar.html, /<img\b/i, "An invalid Discord avatar path was auto-loaded.");
+assert.match(invalidAvatar.html, /referrerpolicy="no-referrer"/, "The external-avatar click-through lacks a no-referrer policy.");
+
+const avatar = helpers.avatarMarkup(
+  "https://cdn.discordapp.com/avatars/123456789012345678/avatarhash.png?size=4096",
+  "Archive Member"
+);
+assert.match(avatar.html, /<img\b/i, "A validated Discord avatar no longer renders.");
+assert.match(
+  avatar.html,
+  /archive\.whycommunism\.com\/v2\/avatar\?url=/,
+  "A Discord avatar bypassed the authenticated archive proxy."
+);
+assert.doesNotMatch(
+  avatar.html,
+  /src="https:\/\/cdn\.discordapp\.com/i,
+  "A private source avatar still loads directly from Discord."
+);
 
 const reactions = helpers.renderReactions({
   reactions: [{
