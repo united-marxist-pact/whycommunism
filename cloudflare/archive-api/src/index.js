@@ -2988,11 +2988,11 @@ export default {
       }
       catch (error) { return json(request, { error: error.name === "AbortError" ? "That website took too long to preview." : (error.message || "That website could not be previewed.") }, 422); }
     }
-    if (url.pathname === "/v2/avatar" && request.method === "GET") {
+    if (url.pathname.startsWith("/v2/avatar/") && request.method === "GET") {
       try {
         const auth = await requireUser(request, env, "read");
         if (auth.response) return auth.response;
-        return await getDiscordAvatar(request, url.searchParams.get("url") || "");
+        return await getDiscordAvatar(request, "https://cdn.discordapp.com" + url.pathname.slice("/v2/avatar".length));
       }
       catch (error) { return json(request, { error: error.message || "The Discord avatar could not be loaded." }, 502); }
     }

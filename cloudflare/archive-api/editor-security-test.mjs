@@ -102,7 +102,7 @@ const avatar = helpers.avatarMarkup(
 assert.match(avatar.html, /<img\b/i, "A validated Discord avatar no longer renders.");
 assert.match(
   avatar.html,
-  /archive\.whycommunism\.com\/v2\/avatar\?url=/,
+  /archive\.whycommunism\.com\/v2\/avatar\/avatars\/123456789012345678\/avatarhash\.png/,
   "A Discord avatar bypassed the authenticated archive proxy."
 );
 assert.doesNotMatch(
