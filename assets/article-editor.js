@@ -6,7 +6,13 @@
   if (!article || !hero) return;
 
   var articlePath = location.pathname.replace(/\/+$/, "") + "/";
-  var articleTitle = (hero.querySelector("h1") || document.querySelector("title")).textContent.trim();
+  var heroTitle = hero.querySelector("h1");
+  var heroTitleText = heroTitle && (heroTitle.querySelector("b") || heroTitle);
+  var heroSubtitle = hero.querySelector(".std");
+  var draftTitle = (heroTitle || document.querySelector("title")).textContent.trim();
+  var hasEditorTitle = hero.hasAttribute("data-wce-editor-title");
+  var editorTitle = (hero.getAttribute("data-wce-editor-title") || draftTitle).trim();
+  var draftDocumentTitle = document.title;
   var dbPromise;
   var loaded = false;
   var messages = [];
@@ -55,7 +61,7 @@
     '<section class="wce-history" hidden><div class="wce-history-head"><div><span class="wce-eyebrow">Version history</span><h3>Workspace checkpoints</h3></div><button type="button" data-wce-action="history-close">Close</button></div><div class="wce-history-list"></div></section>' +
     '<p class="wce-storage-note"><strong>Saved online:</strong> this shared archive and its revision history are available across devices. A local copy is also retained in this browser for recovery, and backups can be exported at any time.</p>';
 
-  workspace.querySelector(".wce-editor-head h2").textContent = articleTitle;
+  workspace.querySelector(".wce-editor-head h2").textContent = editorTitle;
   hero.insertAdjacentElement("afterend", modebar);
   modebar.insertAdjacentElement("afterend", workspace);
 
@@ -91,6 +97,9 @@
     editButton.setAttribute("aria-pressed", editing ? "true" : "false");
     article.hidden = editing;
     workspace.hidden = !editing;
+    if (heroTitleText) heroTitleText.textContent = editing ? editorTitle : draftTitle;
+    if (heroSubtitle && hasEditorTitle) heroSubtitle.hidden = editing;
+    document.title = editing ? editorTitle + " — Why Communism?" : draftDocumentTitle;
     if (editing) ensureLoaded().then(function () { if (shouldFocus) composerText.focus(); });
   }
 
@@ -137,7 +146,7 @@
 
   async function putDocument(db) {
     var tx = db.transaction("documents", "readwrite");
-    tx.objectStore("documents").put({ path: articlePath, title: articleTitle, messages: messages, sha: remoteSha, updatedAt: Date.now() });
+    tx.objectStore("documents").put({ path: articlePath, title: editorTitle, messages: messages, sha: remoteSha, updatedAt: Date.now() });
     await transactionDone(tx);
   }
 
@@ -145,7 +154,7 @@
     var tx = db.transaction("versions", "readwrite");
     tx.objectStore("versions").add({
       path: articlePath,
-      title: articleTitle,
+      title: editorTitle,
       note: note || "Saved checkpoint",
       savedAt: Date.now(),
       messages: snapshotMessages || messages
@@ -223,7 +232,7 @@
   async function saveRemote(note) {
     var payload = await apiRequest(archiveQuery("/v1/archive"), {
       method: "PUT",
-      body: JSON.stringify({ title: articleTitle, messages: messages, note: note, baseSha: remoteSha })
+      body: JSON.stringify({ title: editorTitle, messages: messages, note: note, baseSha: remoteSha })
     });
     remoteSha = String(payload.sha || remoteSha);
     online = true;
@@ -711,7 +720,7 @@
       if (!remoteSha) await saveRemote("Initial online archive");
       var checkpoint = await apiRequest(archiveQuery("/v1/checkpoint"), {
         method: "POST",
-        body: JSON.stringify({ note: "Manual checkpoint", title: articleTitle, baseSha: remoteSha })
+        body: JSON.stringify({ note: "Manual checkpoint", title: editorTitle, baseSha: remoteSha })
       });
       remoteSha = String(checkpoint.sha || remoteSha);
       online = true;
