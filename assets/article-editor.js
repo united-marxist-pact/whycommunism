@@ -214,14 +214,30 @@
       : "";
   }
 
+  function proxiedDiscordAvatarUrl(value) {
+    try {
+      var source = new URL(String(value || ""));
+      var validPath = /^\/avatars\/[0-9]{5,30}\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
+        /^\/guilds\/[0-9]{5,30}\/users\/[0-9]{5,30}\/avatars\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
+        /^\/embed\/avatars\/[0-5]\.png$/.test(source.pathname);
+      if (source.protocol !== "https:" || source.hostname !== "cdn.discordapp.com" || source.port || source.username || source.password || !validPath) return "";
+      source.search = "";
+      source.hash = "";
+      return API_ORIGIN + "/v2/avatar?url=" + encodeURIComponent(source.toString());
+    } catch (_) {
+      return "";
+    }
+  }
+
   function mayAutoLoadPrivateMedia(value) {
     try {
       var url = new URL(String(value || ""), location.href);
       if (url.origin === location.origin) return true;
       var api = new URL(API_ORIGIN);
-      return url.origin === api.origin &&
-        url.pathname === "/v2/topic/attachment" &&
-        Boolean(archivedAttachmentUrl(url.searchParams.get("file")));
+      if (url.origin !== api.origin) return false;
+      if (url.pathname === "/v2/topic/attachment") return Boolean(archivedAttachmentUrl(url.searchParams.get("file")));
+      if (url.pathname === "/v2/avatar") return Boolean(proxiedDiscordAvatarUrl(url.searchParams.get("url")));
+      return false;
     } catch (_) {
       return false;
     }
@@ -246,7 +262,8 @@
   function avatarMarkup(value, name, fallbackValue) {
     var avatar = value && typeof value === "object" ? value : {};
     var privateUrl = archivedAttachmentUrl(avatar.archivePath);
-    var url = safeUrl(privateUrl || (typeof value === "string" ? value : avatar.sourceUrl || avatar.url || avatar.proxyUrl || avatar.src) || fallbackValue);
+    var sourceUrl = (typeof value === "string" ? value : avatar.sourceUrl || avatar.url || avatar.proxyUrl || avatar.src) || fallbackValue;
+    var url = safeUrl(privateUrl || proxiedDiscordAvatarUrl(sourceUrl) || sourceUrl);
     var fallback = escapeHtml(initials(name));
     if (!url) return { html: fallback, interactive: false };
     if (mayAutoLoadPrivateMedia(url)) {

@@ -10,6 +10,8 @@ let sequence = 0;
 let discordMemberPending = false;
 let discordMemberAvailable = true;
 let discordMembershipFetches = 0;
+let discordAvatarFetches = 0;
+let discordAvatarRequestedSize = "";
 let privatePreviewTargetFetches = 0;
 let previewRedirectMode = "";
 const SESSION_COOKIE = "__Host-wce_session";
@@ -36,6 +38,14 @@ globalThis.fetch = async function (input, options = {}) {
     return discordMemberAvailable
       ? apiResponse({ nick: "Rosa L.", roles: ["ordinary-member-role"], pending: discordMemberPending })
       : apiResponse({ message: "Unknown Member" }, 404);
+  }
+  if (url.hostname === "cdn.discordapp.com") {
+    discordAvatarFetches += 1;
+    discordAvatarRequestedSize = url.searchParams.get("size") || "";
+    return new Response("avatar-image", {
+      status: 200,
+      headers: { "Content-Type": "image/png", "Content-Length": "12" }
+    });
   }
   if (url.hostname === "cloudflare-dns.com" && url.pathname === "/dns-query") {
     const host = url.searchParams.get("name");
@@ -205,10 +215,36 @@ async function discordLogin(returnTo = "https://whycommunism.com/editor/") {
 try {
   const legacySessionCookie = await discordLogin();
   const legacyAuthHeaders = { Cookie: cookieHeader(SESSION_COOKIE, legacySessionCookie) };
+  const avatarSource = "https://cdn.discordapp.com/avatars/123456789012345678/avatarhash.png?size=4096";
+  const avatarEndpoint = "https://archive.whycommunism.com/v2/avatar?url=" + encodeURIComponent(avatarSource);
 
   let response = await worker.fetch(request("https://archive.whycommunism.com/v1/link-preview?url=" + encodeURIComponent("https://example.com/article")), env);
   let payload = await response.json();
   assert(response.status === 401, "Link previewing was exposed without archive authentication.");
+  response = await worker.fetch(request(avatarEndpoint), env);
+  assert(response.status === 401 && discordAvatarFetches === 0, "A Discord avatar was exposed without archive authentication.");
+  response = await worker.fetch(request(avatarEndpoint, { headers: legacyAuthHeaders }), env);
+  assert(
+    response.status === 200 &&
+    response.headers.get("Content-Type") === "image/png" &&
+    response.headers.get("Cache-Control") === "private, max-age=86400" &&
+    await response.text() === "avatar-image" &&
+    discordAvatarFetches === 1 &&
+    discordAvatarRequestedSize === "128",
+    "An authenticated Discord avatar was not safely normalized and proxied."
+  );
+  response = await worker.fetch(request(
+    "https://archive.whycommunism.com/v2/avatar?url=" +
+      encodeURIComponent("https://evil.example/avatars/123456789012345678/avatarhash.png"),
+    { headers: legacyAuthHeaders }
+  ), env);
+  assert(response.status === 400 && discordAvatarFetches === 1, "The avatar proxy accepted an untrusted host.");
+  response = await worker.fetch(request(
+    "https://archive.whycommunism.com/v2/avatar?url=" +
+      encodeURIComponent("https://cdn.discordapp.com/attachments/123456789012345678/file.png"),
+    { headers: legacyAuthHeaders }
+  ), env);
+  assert(response.status === 400 && discordAvatarFetches === 1, "The avatar proxy accepted a non-avatar Discord path.");
   response = await worker.fetch(request(
     "https://archive.whycommunism.com/v1/link-preview?url=" + encodeURIComponent("https://example.com/article"),
     { headers: legacyAuthHeaders }
