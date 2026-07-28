@@ -385,21 +385,32 @@
 
   function renderMarkdown(source, protectPrivateArchive) {
     var fences = [];
-    var prepared = String(source || "").replace(/\r\n?/g, "\n").replace(/```[^\n`]*\n([\s\S]*?)```/g, function (_, code) {
+    var prepared = String(source || "").replace(/\r\n?/g, "\n").replace(/```[^\n`]*\n?([\s\S]*?)```/g, function (_, code) {
       fences.push('<pre class="wce-codeblock"><code>' + escapeHtml(code.replace(/\n$/, "")) + "</code></pre>");
       return "\u0000FENCE" + (fences.length - 1) + "\u0000";
     });
     var lines = prepared.split("\n");
     var output = [];
     var list = "";
+    var quote = null;
+    var quoteAll = false;
     function closeList() { if (list) output.push("</" + list + ">"); list = ""; }
+    function closeQuote() {
+      if (quote) output.push("<blockquote>" + quote.map(function (entry) {
+        return entry ? "<p>" + entry + "</p>" : '<p class="wce-quote-gap"></p>';
+      }).join("") + "</blockquote>");
+      quote = null;
+    }
     lines.forEach(function (line) {
-      if (!line.trim()) { closeList(); return; }
       var fence = line.match(/^\s*\u0000FENCE(\d+)\u0000\s*$/);
-      if (fence) { closeList(); output.push(fences[Number(fence[1])]); return; }
-      if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { closeList(); output.push("<hr>"); return; }
-      var subtext = line.match(/^\s*-#\s+(.+)$/);
-      if (subtext) { closeList(); output.push('<p class="wce-subtext">' + inlineMarkdown(subtext[1], protectPrivateArchive) + "</p>"); return; }
+      if (fence) { closeQuote(); closeList(); output.push(fences[Number(fence[1])]); return; }
+      if (quoteAll) { quote = quote || []; quote.push(inlineMarkdown(line, protectPrivateArchive)); return; }
+      var blockQuoteAll = line.match(/^\s*>>>\s?([\s\S]*)$/);
+      if (blockQuoteAll) { closeList(); quoteAll = true; quote = quote || []; quote.push(inlineMarkdown(blockQuoteAll[1], protectPrivateArchive)); return; }
+      var quoted = line.match(/^\s*>\s?(.*)$/);
+      if (quoted) { closeList(); quote = quote || []; quote.push(inlineMarkdown(quoted[1], protectPrivateArchive)); return; }
+      closeQuote();
+      if (!line.trim()) { closeList(); return; }
       var heading = line.match(/^(#{1,3})\s+(.+)$/);
       if (heading) {
         closeList();
@@ -407,19 +418,25 @@
         output.push("<h" + level + ">" + inlineMarkdown(heading[2], protectPrivateArchive) + "</h" + level + ">");
         return;
       }
-      var quote = line.match(/^\s*>\s?(.*)$/);
-      if (quote) { closeList(); output.push("<blockquote><p>" + inlineMarkdown(quote[1], protectPrivateArchive) + "</p></blockquote>"); return; }
+      if (/^\s*(?:-{3,}|\*{3,}|_{3,})\s*$/.test(line)) { closeList(); output.push("<hr>"); return; }
+      var subtext = line.match(/^\s*-#\s+(.+)$/);
+      if (subtext) { closeList(); output.push('<p class="wce-subtext">' + inlineMarkdown(subtext[1], protectPrivateArchive) + "</p>"); return; }
       var unordered = line.match(/^\s*[-*+]\s+(.+)$/);
-      var ordered = line.match(/^\s*\d+[.)]\s+(.+)$/);
+      var ordered = line.match(/^\s*(\d+)[.)]\s+(.+)$/);
       if (unordered || ordered) {
         var wanted = unordered ? "ul" : "ol";
-        if (list !== wanted) { closeList(); list = wanted; output.push("<" + wanted + ">"); }
-        output.push("<li>" + inlineMarkdown((unordered || ordered)[1], protectPrivateArchive) + "</li>");
+        if (list !== wanted) {
+          closeList();
+          list = wanted;
+          output.push(wanted === "ol" && Number(ordered[1]) > 1 ? '<ol start="' + Number(ordered[1]) + '">' : "<" + wanted + ">");
+        }
+        output.push("<li>" + inlineMarkdown(unordered ? unordered[1] : ordered[2], protectPrivateArchive) + "</li>");
         return;
       }
       closeList();
       output.push(/^\s*https?:\/\/\S+\s*$/.test(line) ? standaloneEmbed(line, protectPrivateArchive) : "<p>" + inlineMarkdown(line, protectPrivateArchive) + "</p>");
     });
+    closeQuote();
     closeList();
     return output.join("");
   }
@@ -882,7 +899,20 @@
 
   function sourceContentHtml(message) {
     var content = message.content;
-    if (content && typeof content === "object" && content.html) return sanitizeRichHtml(content.html, true);
+    if (content && typeof content === "object") {
+      var plain = String(content.markdown || content.text || "");
+      if (plain.trim()) return renderMarkdown(plain, true);
+      if (content.html) {
+        var probe = document.createElement("template");
+        probe.innerHTML = String(content.html);
+        var flatText = probe.content.textContent || "";
+        var alreadyRich = probe.content.querySelector("strong,em,u,s,blockquote,ul,ol,h2,h3,h4,pre,code");
+        var looksRaw = /(^|\n)\s*(?:>|#{1,3}\s|[-*+]\s|\d+[.)]\s)|\*\*|__|~~|\|\|/.test(flatText);
+        if (!alreadyRich && looksRaw) return renderMarkdown(flatText, true);
+        return sanitizeRichHtml(content.html, true);
+      }
+      return "";
+    }
     return renderMarkdown(sourceContent(message), true);
   }
 
@@ -1150,8 +1180,13 @@
 
   function renderClassificationChips(meta) {
     var chips = [];
-    chips.push('<span data-chip="type">' + escapeHtml(meta.primaryTopic ? "primary · " + meta.primaryTopic : "primary · none") + "</span>");
-    meta.secondaryTopics.forEach(function (topic) { chips.push('<span data-chip="secondary">secondary · ' + escapeHtml(topic) + "</span>"); });
+    function topicChip(kind, chipName, topic) {
+      var label = escapeHtml(kind + " · " + topic);
+      if (/^\//.test(topic)) return '<a data-chip="' + chipName + '" href="' + escapeHtml(topic) + '">' + label + "</a>";
+      return '<span data-chip="' + chipName + '">' + label + "</span>";
+    }
+    chips.push(meta.primaryTopic ? topicChip("primary", "type", meta.primaryTopic) : '<span data-chip="type">primary · none</span>');
+    meta.secondaryTopics.forEach(function (topic) { chips.push(topicChip("secondary", "secondary", topic)); });
     chips.push('<span data-chip="confidence">' + escapeHtml(meta.confidence) + " confidence</span>");
     chips.push('<span data-chip="relevance">' + escapeHtml(meta.relevance) + " relevance</span>");
     chips.push('<span data-chip="status">' + escapeHtml(meta.status) + "</span>");
