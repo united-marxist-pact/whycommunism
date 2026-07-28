@@ -1046,10 +1046,16 @@ async function getDiscordAvatar(request, value) {
   const source = normalizedDiscordAvatarUrl(value);
   if (!source) return json(request, { error: "Invalid Discord avatar URL." }, 400);
   const response = await fetch(source, {
-    headers: { "Accept": "image/png,image/jpeg,image/webp,image/gif" },
+    headers: {
+      "Accept": "image/avif,image/webp,image/apng,image/png,image/jpeg,image/gif,*/*;q=0.8",
+      "User-Agent": "Mozilla/5.0 (compatible; WhyCommunismArchive/1.0; +https://whycommunism.com/)"
+    },
     redirect: "error"
   });
-  if (!response.ok) return json(request, { error: "That Discord avatar is unavailable." }, response.status === 404 ? 404 : 502);
+  if (!response.ok) {
+    console.log("Discord avatar fetch failed", response.status, String(response.headers.get("Content-Type") || ""));
+    return json(request, { error: "That Discord avatar is unavailable." }, response.status === 404 ? 404 : 502);
+  }
   const contentType = String(response.headers.get("Content-Type") || "").split(";")[0].trim().toLowerCase();
   if (!["image/png", "image/jpeg", "image/webp", "image/gif"].includes(contentType)) {
     return json(request, { error: "Discord returned an invalid avatar." }, 502);
