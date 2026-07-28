@@ -970,3 +970,15 @@ a.atit:hover i{transform:translateX(4px) scale(1.12)}
 .wce-word-preview{display:block;width:min(760px,100%);margin:14px auto 0;padding:44px 54px;border:1px solid #B8B0A5;background:#fff;color:#27221D;box-shadow:0 5px 18px rgba(29,25,21,.17);font-size:16px;line-height:1.75;max-height:none;overflow:visible;min-height:0}
 .wce-word-preview[hidden]{display:none}
 @media (max-width:760px){.wce-word-toolbar{gap:3px;padding:7px 6px}.wce-word-toolbar button{padding:6px 7px}.wce-word-preview{padding:24px 18px}}
+
+/* ===== md-connect-2026 ===== */
+.wce-source-body blockquote{margin:.5em 0;padding:2px 12px;border-left:4px solid #4e5058;color:#b5bac1}
+.wce-source-body blockquote p{margin:.2em 0}
+.wce-quote-gap{height:.55em;margin:0!important;padding:0}
+.wce-final-render blockquote p{margin:.25em 0}
+.wce-source-body ol,.wce-source-body ul{margin:.35em 0;padding-left:1.6em}
+.wce-source-body li{margin:.18em 0}
+.wce-source-body h2,.wce-source-body h3,.wce-source-body h4{margin:.5em 0 .25em;color:#f2f3f5;font:700 1.14em/1.3 inherit;text-transform:none;letter-spacing:0}
+.wce-source-body h2{font-size:1.3em}
+.wce-source-chips a[data-chip]{text-decoration:none;cursor:pointer}
+.wce-source-chips a[data-chip]:hover{filter:brightness(1.3);text-decoration:underline;text-underline-offset:2px}
