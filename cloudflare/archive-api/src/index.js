@@ -1028,7 +1028,7 @@ async function getAttachment(request, env, file) {
   });
 }
 
-function normalizedDiscordAvatarUrl(value) {
+function normalizedDiscordAvatarUrl(value, allowMediaHost = false) {
   let source;
   try { source = new URL(String(value || "")); }
   catch (_) { return ""; }
@@ -1036,7 +1036,9 @@ function normalizedDiscordAvatarUrl(value) {
     /^\/avatars\/[0-9]{5,30}\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
     /^\/guilds\/[0-9]{5,30}\/users\/[0-9]{5,30}\/avatars\/[a-zA-Z0-9_]+\.(?:png|jpe?g|webp|gif)$/.test(source.pathname) ||
     /^\/embed\/avatars\/[0-5]\.png$/.test(source.pathname);
-  if (source.protocol !== "https:" || source.hostname !== "cdn.discordapp.com" || source.port || source.username || source.password || !validPath) return "";
+  const validHost = source.hostname === "cdn.discordapp.com" ||
+    (allowMediaHost && source.hostname === "media.discordapp.net");
+  if (source.protocol !== "https:" || !validHost || source.port || source.username || source.password || !validPath) return "";
   source.search = source.pathname.startsWith("/embed/avatars/") ? "" : "?size=128";
   source.hash = "";
   return source.toString();
@@ -1045,13 +1047,24 @@ function normalizedDiscordAvatarUrl(value) {
 async function getDiscordAvatar(request, value) {
   const source = normalizedDiscordAvatarUrl(value);
   if (!source) return json(request, { error: "Invalid Discord avatar URL." }, 400);
-  const response = await fetch(source, {
-    headers: {
-      "Accept": "image/avif,image/webp,image/apng,image/png,image/jpeg,image/gif,*/*;q=0.8",
-      "User-Agent": "Mozilla/5.0 (compatible; WhyCommunismArchive/1.0; +https://whycommunism.com/)"
-    },
-    redirect: "error"
-  });
+  const headers = {
+    "Accept": "image/avif,image/webp,image/apng,image/png,image/jpeg,image/gif,*/*;q=0.8",
+    "User-Agent": "Mozilla/5.0 (compatible; WhyCommunismArchive/1.0; +https://whycommunism.com/)"
+  };
+  let response;
+  let current = source;
+  for (let redirects = 0; redirects <= 2; redirects += 1) {
+    response = await fetch(current, { headers, redirect: "manual" });
+    if (response.status < 300 || response.status >= 400) break;
+    if (redirects === 2) return json(request, { error: "Discord redirected that avatar too many times." }, 502);
+    const location = response.headers.get("Location");
+    let target = "";
+    try { target = normalizedDiscordAvatarUrl(new URL(location || "", current).toString(), true); }
+    catch (_) { target = ""; }
+    if (!target) return json(request, { error: "Discord returned an unsafe avatar redirect." }, 502);
+    current = target;
+  }
+  if (!response) return json(request, { error: "That Discord avatar is unavailable." }, 502);
   if (!response.ok) {
     console.log("Discord avatar fetch failed", response.status, String(response.headers.get("Content-Type") || ""));
     return json(request, { error: "That Discord avatar is unavailable." }, response.status === 404 ? 404 : 502);
