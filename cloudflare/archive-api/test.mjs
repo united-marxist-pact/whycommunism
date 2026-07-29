@@ -12,6 +12,8 @@ let discordMemberAvailable = true;
 let discordMembershipFetches = 0;
 let discordAvatarFetches = 0;
 let discordAvatarRequestedSize = "";
+let discordAvatarRedirectTarget = "";
+const discordAvatarFetchHosts = [];
 let privatePreviewTargetFetches = 0;
 let previewRedirectMode = "";
 const SESSION_COOKIE = "__Host-wce_session";
@@ -39,9 +41,16 @@ globalThis.fetch = async function (input, options = {}) {
       ? apiResponse({ nick: "Rosa L.", roles: ["ordinary-member-role"], pending: discordMemberPending })
       : apiResponse({ message: "Unknown Member" }, 404);
   }
-  if (url.hostname === "cdn.discordapp.com") {
+  if (url.hostname === "cdn.discordapp.com" || url.hostname === "media.discordapp.net") {
     discordAvatarFetches += 1;
+    discordAvatarFetchHosts.push(url.hostname);
     discordAvatarRequestedSize = url.searchParams.get("size") || "";
+    if (url.hostname === "cdn.discordapp.com" && discordAvatarRedirectTarget) {
+      return new Response(null, {
+        status: 302,
+        headers: { Location: discordAvatarRedirectTarget }
+      });
+    }
     return new Response("avatar-image", {
       status: 200,
       headers: { "Content-Type": "image/png", "Content-Length": "12" }
@@ -242,6 +251,24 @@ try {
     { headers: legacyAuthHeaders }
   ), env);
   assert(response.status === 400 && discordAvatarFetches === 1, "The avatar proxy accepted a non-avatar Discord path.");
+  discordAvatarRedirectTarget = "https://media.discordapp.net/avatars/123456789012345678/avatarhash.png?size=4096";
+  response = await worker.fetch(request(avatarEndpoint, { headers: legacyAuthHeaders }), env);
+  assert(
+    response.status === 200 &&
+    discordAvatarFetches === 3 &&
+    discordAvatarRequestedSize === "128" &&
+    discordAvatarFetchHosts.slice(-2).join(",") === "cdn.discordapp.com,media.discordapp.net",
+    "A trusted Discord media redirect was not validated and normalized."
+  );
+  discordAvatarRedirectTarget = "https://private.example/avatars/123456789012345678/avatarhash.png";
+  response = await worker.fetch(request(avatarEndpoint, { headers: legacyAuthHeaders }), env);
+  assert(
+    response.status === 502 &&
+    discordAvatarFetches === 4 &&
+    privatePreviewTargetFetches === 0,
+    "An untrusted Discord avatar redirect was followed."
+  );
+  discordAvatarRedirectTarget = "";
   response = await worker.fetch(request(
     "https://archive.whycommunism.com/v1/link-preview?url=" + encodeURIComponent("https://example.com/article"),
     { headers: legacyAuthHeaders }
