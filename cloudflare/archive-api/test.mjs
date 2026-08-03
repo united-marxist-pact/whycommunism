@@ -7,8 +7,13 @@ const blobs = new Map();
 const commitFiles = new Map();
 const commits = [];
 let sequence = 0;
+const TEST_USER_ID = "123456789012345678";
+const TUTOR_ROLE_ID = "902946431160188968";
+const DAEMON_SULTAN_ID = "260169476417388546";
 let discordMemberPending = false;
 let discordMemberAvailable = true;
+let discordUserId = TEST_USER_ID;
+let discordMemberRoles = [TUTOR_ROLE_ID];
 let discordMembershipFetches = 0;
 let discordAvatarFetches = 0;
 let discordAvatarRequestedSize = "";
@@ -33,12 +38,12 @@ globalThis.fetch = async function (input, options = {}) {
     return apiResponse({ access_token: "short-lived-discord-token", token_type: "Bearer" });
   }
   if (url.hostname === "discord.com" && url.pathname === "/api/v10/users/@me" && method === "GET") {
-    return apiResponse({ id: "123456789012345678", username: "rosa", global_name: "Rosa Luxemburg", avatar: "avatarhash", discriminator: "0" });
+    return apiResponse({ id: discordUserId, username: "rosa", global_name: "Rosa Luxemburg", avatar: "avatarhash", discriminator: "0" });
   }
   if (url.hostname === "discord.com" && url.pathname === "/api/v10/users/@me/guilds/898568341499838514/member" && method === "GET") {
     discordMembershipFetches += 1;
     return discordMemberAvailable
-      ? apiResponse({ nick: "Rosa L.", roles: ["ordinary-member-role"], pending: discordMemberPending })
+      ? apiResponse({ nick: "Rosa L.", roles: [...discordMemberRoles], pending: discordMemberPending })
       : apiResponse({ message: "Unknown Member" }, 404);
   }
   if (url.hostname === "cdn.discordapp.com" || url.hostname === "media.discordapp.net") {
@@ -133,6 +138,8 @@ const env = {
   DISCORD_CLIENT_SECRET: "discord-secret",
   DISCORD_REDIRECT_URI: "https://archive.whycommunism.com/v2/auth/discord/callback",
   DISCORD_GUILD_ID: "898568341499838514",
+  DISCORD_EDITOR_ROLE_IDS: TUTOR_ROLE_ID,
+  DISCORD_EDITOR_USER_IDS: DAEMON_SULTAN_ID,
   DISCORD_ADMIN_USER_IDS: "",
   SESSION_SECRET: "test-session-secret-that-is-long-enough"
 };
@@ -416,7 +423,7 @@ try {
     headers: { Cookie: cookieHeader(SESSION_COOKIE, sessionCookie) }
   }), env);
   payload = await response.json();
-  assert(payload.authenticated && payload.user.discordId === "123456789012345678" && payload.user.canEdit, "A verified guild member did not receive archive edit access.");
+  assert(payload.authenticated && payload.user.discordId === TEST_USER_ID && payload.user.canReadArchive && payload.user.canEdit, "A Tutor did not receive archive edit access.");
   const signedClaims = JSON.parse(Buffer.from(sessionCookie.split(".")[0], "base64url").toString("utf8"));
   assert(
     Number.isFinite(signedClaims.membershipVerifiedAt) &&
@@ -424,6 +431,48 @@ try {
     !signedClaims.membershipToken.includes("short-lived-discord-token"),
     "The short membership assertion did not preserve an encrypted live-verification credential."
   );
+
+  const roleRefreshFetches = discordMembershipFetches;
+  discordMemberRoles = ["ordinary-member-role"];
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/final?path=" + encodeURIComponent(path), {
+    method: "PUT",
+    headers: { Cookie: cookieHeader(SESSION_COOKIE, sessionCookie) },
+    body: JSON.stringify({ title: "Revoked Tutor write", bodyMarkdown: "No", citations: [], baseSha: "" })
+  }), env);
+  assert(response.status === 403 && discordMembershipFetches > roleRefreshFetches, "A removed Tutor retained edit access without a live Discord role check.");
+
+  env.DISCORD_EDITOR_ROLE_IDS = "ordinary-member-role";
+  const prePolicySessionCookie = await discordLogin();
+  env.DISCORD_EDITOR_ROLE_IDS = TUTOR_ROLE_ID;
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/session", {
+    headers: { Cookie: cookieHeader(SESSION_COOKIE, prePolicySessionCookie) }
+  }), env);
+  payload = await response.json();
+  assert(payload.authenticated && payload.user.canReadArchive && !payload.user.canEdit, "A pre-policy session retained its signed editor claim after the role policy changed.");
+
+  const ordinarySessionCookie = await discordLogin();
+  const ordinaryAuthHeaders = { Cookie: cookieHeader(SESSION_COOKIE, ordinarySessionCookie) };
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/session", { headers: ordinaryAuthHeaders }), env);
+  payload = await response.json();
+  assert(payload.authenticated && payload.user.canReadArchive && !payload.user.canEdit, "An ordinary server member did not receive read-only access.");
+  response = await worker.fetch(request(endpoint, { headers: ordinaryAuthHeaders }), env);
+  assert(response.status === 200, "An ordinary server member could not read the private archive.");
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/final?path=" + encodeURIComponent(path), {
+    method: "PUT",
+    headers: ordinaryAuthHeaders,
+    body: JSON.stringify({ title: "Blocked write", bodyMarkdown: "No", citations: [], baseSha: "" })
+  }), env);
+  assert(response.status === 403, "An ordinary server member received editor access.");
+
+  discordUserId = DAEMON_SULTAN_ID;
+  const daemonSessionCookie = await discordLogin();
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/session", {
+    headers: { Cookie: cookieHeader(SESSION_COOKIE, daemonSessionCookie) }
+  }), env);
+  payload = await response.json();
+  assert(payload.authenticated && payload.user.canReadArchive && payload.user.canEdit, "Daemon Sultan did not receive explicit editor access.");
+  discordUserId = TEST_USER_ID;
+  discordMemberRoles = [TUTOR_ROLE_ID];
 
   discordMemberPending = true;
   response = await worker.fetch(request(
@@ -451,12 +500,14 @@ try {
     "A stale membership assertion was not rechecked against Discord after the member left."
   );
   discordMemberAvailable = true;
+  discordMemberRoles = ["ordinary-member-role"];
   Date.now = () => membershipClock + 12 * 60 * 1000;
   response = await worker.fetch(request("https://archive.whycommunism.com/v2/session", {
     headers: { Cookie: cookieHeader(SESSION_COOKIE, sessionCookie) }
   }), env);
   payload = await response.json();
-  assert(payload.authenticated, "A current Discord member could not recover through live membership verification.");
+  assert(payload.authenticated && payload.user.canReadArchive && !payload.user.canEdit, "A current ordinary member did not recover with read-only access after Tutor removal.");
+  discordMemberRoles = [TUTOR_ROLE_ID];
   Date.now = originalDateNow;
 
   const tamperedSession = tamperSignature(sessionCookie);
@@ -822,6 +873,12 @@ try {
   assert(!manualClassifications.assignments && !manualClassifications.classifications, "Posting a member message recreated a duplicate classification container.");
   const manualReferences = storedJson("topic-references/" + pathKey(path) + ".json");
   assert(manualReferences.references.some((entry) => entry.recordId === manualRecord.id), "The topic reference list did not include the new contribution.");
+
+  response = await worker.fetch(request("https://archive.whycommunism.com/v2/topic/message/history?id=" + encodeURIComponent(manualRecord.id) + "&path=" + encodeURIComponent(path), {
+    headers: ordinaryAuthHeaders
+  }), env);
+  payload = await response.json();
+  assert(response.status === 200 && payload.versions.length === 1 && !payload.canEdit, "A read-only author could not view message history without receiving edit permission.");
 
   const manualAttachmentUrl = "https://archive.whycommunism.com/v2/topic/attachment?file=" + encodeURIComponent(manualRecord.attachments[0].archivePath);
   response = await worker.fetch(request(manualAttachmentUrl), env);
