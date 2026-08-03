@@ -200,7 +200,7 @@ function cookieValue(request, name) {
   return "";
 }
 
-async function sessionUser(request, env) {
+async function sessionUser(request, env, refreshDiscordMembership = false) {
   const token = cookieValue(request, SESSION_COOKIE);
   const [payload, signature, extra] = token.split(".");
   if (!payload || !signature || extra) return null;
@@ -216,21 +216,26 @@ async function sessionUser(request, env) {
   if (!Number.isFinite(claims?.exp) || claims.exp <= now || !claims.displayName) return null;
   if (claims.v === 2 && claims.provider === "discord" && /^\d{5,30}$/.test(String(claims.discordId || ""))) {
     const discordId = String(claims.discordId);
+    let membership;
     try {
       if (await discordUserDenied(env, discordId)) return null;
-      if (!await discordMembershipCurrent(env, discordId, claims)) return null;
+      membership = await discordMembershipCurrent(env, discordId, claims, refreshDiscordMembership);
+      if (!membership.active) return null;
     } catch (_) {
       return null;
     }
+    const roles = membership.roles;
     return {
       provider: "discord",
       discordId,
       username: String(claims.username || ""),
       displayName: String(claims.displayName),
       avatar: String(claims.avatar || ""),
-      roles: Array.isArray(claims.roles) ? claims.roles.map(String) : [],
+      roles,
       canReadArchive: Boolean(claims.canReadArchive),
-      canEdit: Boolean(claims.canEdit),
+      // Editor authority is deliberately recomputed from the current Worker
+      // configuration and the freshest Discord role snapshot available.
+      canEdit: discordCanEdit(env, discordId, roles),
       // Administrator authority is deliberately recomputed from the Worker
       // environment on every request. A signed session never grants it.
       admin: csvSet(env.DISCORD_ADMIN_USER_IDS).has(discordId)
@@ -282,7 +287,7 @@ function sessionPayload(user) {
 }
 
 async function requireUser(request, env, capability = "read") {
-  const user = await sessionUser(request, env);
+  const user = await sessionUser(request, env, capability === "edit" || capability === "admin");
   if (!user) return { response: json(request, { error: "Authentication required." }, 401), user: null };
   if (capability === "read" && !user.canReadArchive) {
     return { response: json(request, { error: "Your Discord account does not have archive access." }, 403), user: null };
@@ -1097,6 +1102,12 @@ function csvSet(value) {
   return new Set(String(value || "").split(",").map((item) => item.trim()).filter(Boolean));
 }
 
+function discordCanEdit(env, discordId, roles) {
+  if (csvSet(env.DISCORD_EDITOR_USER_IDS).has(String(discordId || ""))) return true;
+  const editorRoles = csvSet(env.DISCORD_EDITOR_ROLE_IDS);
+  return Array.isArray(roles) && roles.some((role) => editorRoles.has(String(role)));
+}
+
 function oauthStateCookie(value, maximumAge = OAUTH_STATE_SECONDS) {
   return [
     OAUTH_STATE_COOKIE + "=" + value,
@@ -1179,27 +1190,29 @@ async function discordJson(endpoint, accessToken) {
   return payload;
 }
 
-async function discordMembershipCurrent(env, discordId, claims) {
-  if (claims.memberPending === true) return false;
+async function discordMembershipCurrent(env, discordId, claims, forceRefresh = false) {
+  if (claims.memberPending === true) return { active: false, roles: [] };
   const now = Math.floor(Date.now() / 1000);
+  const assertedRoles = Array.isArray(claims.roles) ? claims.roles.map(String) : [];
   const assertedAt = Number(claims.membershipVerifiedAt);
-  if (Number.isFinite(assertedAt) && assertedAt <= now && now - assertedAt <= MEMBERSHIP_ASSERTION_SECONDS) {
-    return true;
+  if (!forceRefresh && Number.isFinite(assertedAt) && assertedAt <= now && now - assertedAt <= MEMBERSHIP_ASSERTION_SECONDS) {
+    return { active: true, roles: assertedRoles };
   }
   const cached = discordMembershipCache.get(discordId);
-  if (cached && cached.checkedAt <= now && now - cached.checkedAt <= MEMBERSHIP_ASSERTION_SECONDS) {
-    return cached.active;
+  if (!forceRefresh && cached && cached.checkedAt <= now && now - cached.checkedAt <= MEMBERSHIP_ASSERTION_SECONDS) {
+    return { active: cached.active, roles: cached.roles };
   }
   const accessToken = await decryptSessionValue(env, claims.membershipToken);
-  if (!accessToken) return false;
+  if (!accessToken) return { active: false, roles: [] };
   const guildId = String(env.DISCORD_GUILD_ID || "898568341499838514");
   const [discordUser, member] = await Promise.all([
     discordJson("/users/@me", accessToken),
     discordJson("/users/@me/guilds/" + encodeURIComponent(guildId) + "/member", accessToken)
   ]);
   const active = String(discordUser?.id || "") === discordId && member?.pending !== true;
-  discordMembershipCache.set(discordId, { active, checkedAt: now });
-  return active;
+  const roles = Array.isArray(member?.roles) ? member.roles.map(String) : [];
+  discordMembershipCache.set(discordId, { active, roles, checkedAt: now });
+  return { active, roles };
 }
 
 function discordAvatar(user, member, guildId) {
@@ -1251,11 +1264,11 @@ async function finishDiscordAuth(request, env, url) {
   const admin = adminUsers.has(String(discordUser.id));
   const denied = await discordUserDenied(env, String(discordUser.id));
   const canReadArchive = !denied;
-  const canEdit = !denied;
+  const canEdit = !denied && discordCanEdit(env, discordUser.id, roles);
   const displayName = String(member.nick || discordUser.global_name || discordUser.username || "Discord member").trim().slice(0, 160);
   const now = Math.floor(Date.now() / 1000);
   const membershipToken = await encryptSessionValue(env, token.access_token);
-  discordMembershipCache.set(String(discordUser.id), { active: true, checkedAt: now });
+  discordMembershipCache.set(String(discordUser.id), { active: true, roles, checkedAt: now });
   const session = await signedToken(env, {
     v: 2,
     provider: "discord",
@@ -2753,7 +2766,7 @@ async function getTopicMessageHistory(request, env, recordId, user) {
   const originalContent = sourceContentValues(original);
   return json(request, {
     recordId,
-    canEdit: isAuthor,
+    canEdit: isAuthor && user.canEdit,
     originalImmutableHash: String(original.immutableHash || ""),
     versions: [
       {
