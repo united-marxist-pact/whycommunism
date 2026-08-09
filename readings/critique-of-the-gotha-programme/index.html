@@ -264,18 +264,13 @@ justify-content:center;padding:22px;background:rgba(38,32,22,.48)}
 #ainote[hidden]{display:none}
 .ancard{background:var(--sheet);border:1px solid var(--rule);max-width:480px;
 padding:30px 32px 26px;box-shadow:0 12px 48px rgba(20,14,6,.35)}
-.antag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
-color:var(--red);text-align:center;line-height:1.8}
-.anbody{margin-top:14px;font-size:16.5px;line-height:1.7;color:var(--ink)}
+.anbody{font-size:16.5px;line-height:1.7;color:var(--ink)}
+.antriad{margin-top:14px}
 .anbtns{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.anbtns #anok{border:none;background:var(--red);color:var(--sheet);cursor:pointer;
-font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;padding:11px 22px;
-border-radius:2px}
-.anbtns #anok:hover{background:#8f1d16}
-.anbtns .anexit{display:inline-block;border:1px solid var(--rule);color:var(--faded);
-text-decoration:none;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;
-padding:10px 20px;border-radius:2px}
-.anbtns .anexit:hover{color:var(--red);border-color:var(--red)}
+.anbtn{display:inline-block;border:1px solid var(--faded);background:none;
+color:var(--ink);cursor:pointer;text-decoration:none;font-family:var(--mono);
+font-size:12.5px;letter-spacing:.08em;padding:10px 20px;border-radius:2px}
+.anbtn:hover{color:var(--red);border-color:var(--red)}
 body.anopen{overflow:hidden}
 
 /* ————— reveals ————— */
@@ -503,11 +498,11 @@ body{transition:none}
 
 <div id="ainote" role="dialog" aria-modal="true" aria-labelledby="anbody" hidden>
   <div class="ancard">
-    <p class="antag">Human-written. Human-reviewed. AI-assisted web design.</p>
     <p id="anbody" class="anbody">Everything you read here is written and reviewed by people. We use AI as a tool for building parts of the website, never as a substitute for human political thought.</p>
+    <p class="anbody antriad">Human-written. Human-reviewed. AI-assisted web design.</p>
     <div class="anbtns">
-      <button id="anok" type="button">I understand</button>
-      <a class="anexit" href="https://www.google.com">Exit site</a>
+      <button id="anok" class="anbtn" type="button">I understand</button>
+      <a class="anbtn" href="https://www.google.com">Exit site</a>
     </div>
   </div>
 </div>
