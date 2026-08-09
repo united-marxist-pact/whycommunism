@@ -744,7 +744,7 @@ var an=document.getElementById('ainote'),anok=document.getElementById('anok');
 if(an){
 an.hidden=false;body.classList.add('anopen');
 var anClose=function(){an.hidden=true;body.classList.remove('anopen')};
-if(anok){anok.focus();anok.addEventListener('click',anClose)}
+if(anok)anok.addEventListener('click',anClose);
 addEventListener('keydown',function(e){if(e.key==='Escape'&&!an.hidden)anClose()})}
 
 render(0);
