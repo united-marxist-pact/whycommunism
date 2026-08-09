@@ -737,15 +737,11 @@ f.addEventListener('pointerleave',function(){
 s.style.transition='transform .6s';s.style.transform='';
 setTimeout(function(){s.style.transition=''},650)})})}
 
-/* the authorship note: shown until acknowledged */
+/* the authorship note: shown on every load, for now */
 var an=document.getElementById('ainote'),anok=document.getElementById('anok');
-var anSeen=false;
-try{anSeen=!!localStorage.getItem('wc-ai-note')}catch(e){}
-if(an&&!anSeen){
+if(an){
 an.hidden=false;body.classList.add('anopen');
-var anClose=function(){
-try{localStorage.setItem('wc-ai-note','1')}catch(e){}
-an.hidden=true;body.classList.remove('anopen')};
+var anClose=function(){an.hidden=true;body.classList.remove('anopen')};
 if(anok){anok.focus();anok.addEventListener('click',anClose)}
 addEventListener('keydown',function(e){if(e.key==='Escape'&&!an.hidden)anClose()})}
 
