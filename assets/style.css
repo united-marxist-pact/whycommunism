@@ -266,7 +266,7 @@ html.js tbody tr{opacity:0;transform:translateX(-8px);transition:opacity .5s eas
 @media (min-width:768px){
   .hm-hero{padding:100px 34px 60px}
   .grid{grid-template-columns:repeat(3,1fr)}
-  .rail{grid-template-columns:repeat(3,1fr)}
+  .rail{grid-template-columns:repeat(auto-fit,minmax(280px,460px));justify-content:center}
   .pb .pdev{width:54px;height:54px}
 }
 @media (min-width:1100px){
