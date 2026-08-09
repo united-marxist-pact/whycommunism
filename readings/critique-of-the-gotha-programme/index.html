@@ -254,8 +254,9 @@ background:var(--red)}
 body.js{padding-bottom:64px}
 
 /* ————— the authorship note ————— */
-.hnote{padding:9px 16px 8px;text-align:center;font-family:var(--mono);
-font-size:10.5px;letter-spacing:.18em;text-indent:.18em;color:var(--faded);
+.hnote{padding:9px 10px 8px;text-align:center;font-family:var(--mono);
+font-size:min(10.5px,2.2vw);letter-spacing:.18em;text-indent:.18em;color:var(--faded);
+white-space:nowrap;overflow:hidden;
 border-bottom:1px solid rgba(217,205,178,.6);position:relative;z-index:2}
 .hnote.fnote{border-bottom:none;border-top:1px solid rgba(217,205,178,.6);
 margin-top:22px;padding-top:16px}
@@ -265,7 +266,7 @@ justify-content:center;padding:22px;background:rgba(38,32,22,.48)}
 .ancard{background:var(--sheet);border:1px solid var(--rule);max-width:480px;
 padding:30px 32px 26px;box-shadow:0 12px 48px rgba(20,14,6,.35)}
 .anbody{font-size:16.5px;line-height:1.7;color:var(--ink)}
-.antriad{margin-top:14px}
+.antriad{margin-top:14px;white-space:nowrap;font-size:min(16.5px,2.75vw)}
 .anbtns{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .anbtn{display:inline-block;border:1px solid var(--faded);background:none;
 color:var(--ink);cursor:pointer;text-decoration:none;font-family:var(--mono);
