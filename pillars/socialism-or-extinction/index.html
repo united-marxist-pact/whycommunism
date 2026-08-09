@@ -37,4 +37,5 @@
 if(!('IntersectionObserver'in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){e.forEach(function(x){x.classList.add('in')});return}
 var io=new IntersectionObserver(function(es){var k=0;es.forEach(function(en){if(en.isIntersecting){en.target.style.transitionDelay=Math.min(k++,4)*60+'ms';en.target.classList.add('in');io.unobserve(en.target)}})},{rootMargin:'0px 0px -6% 0px'});
 e.forEach(function(x){io.observe(x)})})();</script>
+<script src="/assets/authorship.js" defer></script>
 </body></html>
