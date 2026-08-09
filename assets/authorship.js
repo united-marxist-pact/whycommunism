@@ -28,16 +28,16 @@
   var lum = (0.2126 * bg.r + 0.7152 * bg.g + 0.0722 * bg.b) / 255;
   var dark = lum < 0.5;
   var white = { r: 255, g: 255, b: 255 }, black = { r: 24, g: 20, b: 14 };
-  var card = str(dark ? mix(bg, white, 0.07) : mix(bg, white, 0.55));
+  var card = "#faf6ea";
   var text = dark ? "rgba(244,240,230,.96)" : "rgba(38,32,22,.96)";
   var muted = dark ? "rgba(244,240,230,.6)" : "rgba(90,80,64,.75)";
   var line = dark ? "rgba(244,240,230,.28)" : "rgba(90,80,64,.32)";
-  var cardText = text, cardBorder = dark ? "rgba(244,240,230,.35)" : "rgba(90,80,64,.4)";
+  var cardText = "rgba(38,32,22,.96)", cardBorder = "rgba(90,80,64,.45)";
 
   var css = "" +
     ".an-strip{padding:9px 10px 8px;text-align:center;font-family:" + MONO + ";" +
     "font-size:min(10.5px,2.2vw);letter-spacing:.18em;text-indent:.18em;color:" + muted + ";" +
-    "white-space:nowrap;overflow:hidden;background:" + str(bg) + ";position:relative;z-index:2147482000}" +
+    "white-space:nowrap;overflow:hidden;background:" + str(bg) + ";position:relative;z-index:1}" +
     ".an-strip.an-top{border-bottom:1px solid " + line + "}" +
     ".an-strip.an-foot{border-top:1px solid " + line + "}" +
     "#an-note{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;" +
@@ -51,7 +51,7 @@
     ".an-btn{display:inline-block;border:1px solid " + cardBorder + ";background:none;" +
     "color:" + cardText + ";cursor:pointer;text-decoration:none;font-family:" + MONO + ";" +
     "font-size:12.5px;letter-spacing:.08em;padding:10px 20px}" +
-    ".an-btn:hover{background:" + cardText + ";color:" + card + "}" +
+    ".an-btn:hover{color:#a5231d;border-color:#a5231d}" +
     ".an-btn:focus,.an-btn:focus-visible{outline:none;box-shadow:none}";
 
   var style = document.createElement("style");
