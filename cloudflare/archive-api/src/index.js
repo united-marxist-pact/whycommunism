@@ -3121,9 +3121,10 @@ export default {
           : await updateTopicMessage(request, env, path, auth.user);
       }
       if (url.pathname === "/v2/topic" && (request.method === "GET" || request.method === "PUT")) {
-        const auth = await requireUser(request, env, request.method === "PUT" ? "edit" : "read");
+        if (request.method === "GET") return await getTopic(request, env, path);
+        const auth = await requireUser(request, env, "edit");
         if (auth.response) return auth.response;
-        return request.method === "GET" ? await getTopic(request, env, path) : await saveTopicNotes(request, env, path, auth.user);
+        return await saveTopicNotes(request, env, path, auth.user);
       }
       if (url.pathname === "/v1/archive" && request.method === "GET") {
         const auth = await requireUser(request, env, "read");
