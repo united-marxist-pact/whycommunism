@@ -253,6 +253,31 @@ border-radius:50%;background:var(--red);margin-top:-5px}
 background:var(--red)}
 body.js{padding-bottom:64px}
 
+/* ————— the authorship note ————— */
+.hnote{padding:9px 16px 8px;text-align:center;font-family:var(--mono);
+font-size:10.5px;letter-spacing:.18em;text-indent:.18em;color:var(--faded);
+border-bottom:1px solid rgba(217,205,178,.6);position:relative;z-index:2}
+.hnote.fnote{border-bottom:none;border-top:1px solid rgba(217,205,178,.6);
+margin-top:22px;padding-top:16px}
+#ainote{position:fixed;inset:0;z-index:120;display:flex;align-items:center;
+justify-content:center;padding:22px;background:rgba(38,32,22,.48)}
+#ainote[hidden]{display:none}
+.ancard{background:var(--sheet);border:1px solid var(--rule);max-width:480px;
+padding:30px 32px 26px;box-shadow:0 12px 48px rgba(20,14,6,.35)}
+.antag{font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+color:var(--red);text-align:center;line-height:1.8}
+.anbody{margin-top:14px;font-size:16.5px;line-height:1.7;color:var(--ink)}
+.anbtns{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.anbtns #anok{border:none;background:var(--red);color:var(--sheet);cursor:pointer;
+font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;padding:11px 22px;
+border-radius:2px}
+.anbtns #anok:hover{background:#8f1d16}
+.anbtns .anexit{display:inline-block;border:1px solid var(--rule);color:var(--faded);
+text-decoration:none;font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;
+padding:10px 20px;border-radius:2px}
+.anbtns .anexit:hover{color:var(--red);border-color:var(--red)}
+body.anopen{overflow:hidden}
+
 /* ————— reveals ————— */
 .js .rv{opacity:0;transform:translateY(14px);
 transition:opacity .8s ease,transform .8s ease}
@@ -336,6 +361,7 @@ body{transition:none}
 <div id="dawn" aria-hidden="true"></div>
 <div id="bloom" aria-hidden="true"></div>
 <div id="inkrule" aria-hidden="true"></div>
+<p class="hnote">Human-written. Human-reviewed. AI-assisted web design.</p>
 <nav class="topnav"><a href="../../">why communism?</a><span aria-hidden="true">·</span><a href="../">readings</a></nav>
 
 <header class="cover">
@@ -472,7 +498,19 @@ body{transition:none}
 <footer class="foot">
   <div class="credit"><b>summarized and read aloud by <span class="nb">daemon sultan.</span></b> <span>from his reading series on the communist mode of production · 8 august 2026</span></div>
   <p class="flinks"><a href="../../">why communism?</a> · <a href="../">readings</a> · <a href="https://discord.com/servers/898568341499838514" rel="noopener">united marxist pact on discord</a> · <a href="https://www.youtube.com/@daemonsultanump" rel="noopener">daemon sultan on youtube</a></p>
+  <p class="hnote fnote">Human-written. Human-reviewed. AI-assisted web design.</p>
 </footer>
+
+<div id="ainote" role="dialog" aria-modal="true" aria-labelledby="anbody" hidden>
+  <div class="ancard">
+    <p class="antag">Human-written. Human-reviewed. AI-assisted web design.</p>
+    <p id="anbody" class="anbody">Everything you read here is written and reviewed by people. We use AI as a tool for building parts of the website, never as a substitute for human political thought.</p>
+    <div class="anbtns">
+      <button id="anok" type="button">I understand</button>
+      <a class="anexit" href="https://www.google.com">Exit site</a>
+    </div>
+  </div>
+</div>
 
 <audio id="au" preload="metadata" src="audio.m4a"></audio>
 <script src="three.min.js"></script>
@@ -702,6 +740,18 @@ s.style.transform='perspective(900px) rotateY('+(dx*5).toFixed(2)+'deg) rotateX(
 f.addEventListener('pointerleave',function(){
 s.style.transition='transform .6s';s.style.transform='';
 setTimeout(function(){s.style.transition=''},650)})})}
+
+/* the authorship note: shown until acknowledged */
+var an=document.getElementById('ainote'),anok=document.getElementById('anok');
+var anSeen=false;
+try{anSeen=!!localStorage.getItem('wc-ai-note')}catch(e){}
+if(an&&!anSeen){
+an.hidden=false;body.classList.add('anopen');
+var anClose=function(){
+try{localStorage.setItem('wc-ai-note','1')}catch(e){}
+an.hidden=true;body.classList.remove('anopen')};
+if(anok){anok.focus();anok.addEventListener('click',anClose)}
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!an.hidden)anClose()})}
 
 render(0);
 })();
