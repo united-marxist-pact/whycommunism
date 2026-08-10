@@ -308,6 +308,7 @@ h1{margin-top:16px;font-size:clamp(32px,10.5vw,44px);letter-spacing:0}
 .cue{margin-top:auto;padding-top:26px}
 #sheet{padding:40px 22px 48px 46px}
 .u::before{left:-22px}
+.fig3d .cv{height:58vw !important}
 li.u .n{left:-28px}
 li.u::before{left:-42px}
 ol.clauses{padding-left:28px}
@@ -844,7 +845,7 @@ st.t+=dt;
 var o=st.opts;
 var ang=o.orbit?st.t*(reduced?0:o.orbit)+(o.ry0||0)
 :(o.ry0||0)+(reduced?0:Math.sin(st.t*.22)*(o.sway||.22));
-var fit=Math.min(1.9,Math.max(1,(o.aspectRef||1.55)/st.cam.aspect));
+var fit=Math.min(1.15,Math.max(1,(o.aspectRef||1.55)/st.cam.aspect));
 var R=(o.dist||8)*fit,Y=o.camY||4.6;
 st.cam.position.set(Math.sin(ang)*R,Y,Math.cos(ang)*R);
 st.cam.lookAt(o.look?o.look[0]:0,o.look?o.look[1]:.8,o.look?o.look[2]:0);
