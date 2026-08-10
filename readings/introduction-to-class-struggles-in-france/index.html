@@ -580,7 +580,19 @@ var anClose=function(){an.hidden=true;body.classList.remove('anopen')};
 if(anok)anok.addEventListener('click',anClose);
 addEventListener('keydown',function(e){if(e.key==='Escape'&&!an.hidden)anClose()})}
 
+/* keep the screen awake while the reading plays */
+var wl=null;
+function wlGet(){if(!('wakeLock'in navigator))return;
+navigator.wakeLock.request('screen').then(function(l){wl=l}).catch(function(){})}
+function wlDrop(){if(wl){wl.release().catch(function(){});wl=null}}
+au.addEventListener('play',wlGet);
+au.addEventListener('pause',wlDrop);
+au.addEventListener('ended',wlDrop);
+document.addEventListener('visibilitychange',function(){
+if(document.visibilityState==='visible'&&!au.paused)wlGet()});
+
 render(0);
+
 })();
 /* the authorship note: shown on every load */
 (function(){
