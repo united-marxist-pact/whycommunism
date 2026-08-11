@@ -240,11 +240,11 @@ justify-content:center;padding:22px;background:rgba(0,0,0,.6)}
 .ancard{background:#faf6ea;border:1px solid #d9cdb2;max-width:480px;
 padding:30px 32px 26px;box-shadow:0 12px 48px rgba(0,0,0,.55)}
 .anbody{font-size:16.5px;line-height:1.7;color:#262016}
-.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}
-.anbtns{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}.antriad+.anbody{margin-top:14px}
+.anbtns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}
 .anbtn{display:inline-block;border:1px solid #6d6353;background:none;
 color:#262016;cursor:pointer;text-decoration:none;font-family:var(--mono);
-font-size:12.5px;letter-spacing:.08em;padding:10px 20px}
+font-size:min(12.5px,3.3vw);letter-spacing:.08em;padding:10px min(20px,3vw);white-space:nowrap}
 .anbtn:hover{color:#a5231d;border-color:#a5231d}
 .anbtn:focus,.anbtn:focus-visible{outline:none;box-shadow:none}
 body.anopen{overflow:hidden}
@@ -371,8 +371,9 @@ aside.sp{transition:none}
 
 <div id="ainote" role="dialog" aria-modal="true" aria-labelledby="anbody" hidden>
   <div class="ancard">
-    <p id="anbody" class="anbody">Everything you read here is written and reviewed by people. We use AI as a tool for building parts of the website, never as a substitute for human political thought.</p>
+    <p id="anbody" class="anbody">Everything you read and hear here is written and reviewed by people.</p>
     <p class="anbody antriad">Human-written. Human-reviewed. AI-assisted web design.</p>
+    <p class="anbody">We use AI as a tool for building parts of the website. Our political thought is entirely human.</p>
     <div class="anbtns">
       <a class="anbtn" href="https://www.google.com">Exit site</a>
       <button id="anok" class="anbtn" type="button">I understand</button>
