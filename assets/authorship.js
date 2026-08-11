@@ -1,9 +1,9 @@
 (function () {
   "use strict";
   var TRIAD = "Human-written. Human-reviewed. AI-assisted web design.";
-  var STATEMENT = "Everything you read here is written and reviewed by people. " +
-    "We use AI as a tool for building parts of the website, never as a " +
-    "substitute for human political thought.";
+  var STATEMENT1 = "Everything you read and hear here is written and reviewed by people.";
+  var STATEMENT2 = "We use AI as a tool for building parts of the website. " +
+    "Our political thought is entirely human.";
   var MONO = '"IBM Plex Mono","Plex Mono",ui-monospace,Menlo,monospace';
   var SERIF = '"Source Serif","Source Serif 4",Georgia,serif';
 
@@ -47,10 +47,11 @@
     "padding:30px 32px 26px;box-shadow:0 12px 48px rgba(0,0,0,.4)}" +
     ".an-body{font-family:" + SERIF + ";font-size:16.5px;line-height:1.7;color:" + cardText + ";margin:0}" +
     ".an-triad{margin:14px 0 0;white-space:nowrap;font-size:min(13.5px,2.6vw)}" +
-    ".an-btns{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}" +
+    ".an-triad+.an-body{margin-top:14px}" +
+    ".an-btns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}" +
     ".an-btn{display:inline-block;border:1px solid " + cardBorder + ";background:none;" +
     "color:" + cardText + ";cursor:pointer;text-decoration:none;font-family:" + MONO + ";" +
-    "font-size:12.5px;letter-spacing:.08em;padding:10px 20px}" +
+    "font-size:min(12.5px,3.3vw);letter-spacing:.08em;padding:10px min(20px,3vw);white-space:nowrap}" +
     ".an-btn:hover{color:#a5231d;border-color:#a5231d}" +
     ".an-btn:focus,.an-btn:focus-visible{outline:none;box-shadow:none}";
 
@@ -73,14 +74,16 @@
   wrap.setAttribute("aria-modal", "true");
   wrap.innerHTML =
     '<div class="an-card">' +
-    '<p class="an-body"></p>' +
+    '<p class="an-body an-s1"></p>' +
     '<p class="an-body an-triad"></p>' +
+    '<p class="an-body an-s2"></p>' +
     '<div class="an-btns">' +
     '<a class="an-btn" href="https://www.google.com">Exit site</a>' +
     '<button class="an-btn" type="button">I understand</button>' +
     "</div></div>";
-  wrap.querySelector(".an-body").textContent = STATEMENT;
+  wrap.querySelector(".an-s1").textContent = STATEMENT1;
   wrap.querySelector(".an-triad").textContent = TRIAD;
+  wrap.querySelector(".an-s2").textContent = STATEMENT2;
   document.body.appendChild(wrap);
   function close() { wrap.hidden = true; }
   wrap.querySelector("button.an-btn").addEventListener("click", close);
