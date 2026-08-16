@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
 <title>Introduction to Class Struggles in France — Why Communism?</title>
 <meta name="description" content="A 3-minute summary of Engels’ introduction to The Class Struggles in France: how revolution learns from defeat and changes with history.">
 <link rel="canonical" href="https://whycommunism.com/readings/introduction-to-class-struggles-in-france/">
@@ -240,7 +239,8 @@ justify-content:center;padding:22px;background:rgba(0,0,0,.6)}
 .ancard{background:#faf6ea;border:1px solid #d9cdb2;max-width:480px;
 padding:30px 32px 26px;box-shadow:0 12px 48px rgba(0,0,0,.55)}
 .anbody{font-size:16.5px;line-height:1.7;color:#262016}
-.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}.antriad+.anbody{margin-top:14px}
+.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}
+.antriad+.anbody{margin-top:14px}
 .anbtns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}
 .anbtn{display:inline-block;border:1px solid #6d6353;background:none;
 color:#262016;cursor:pointer;text-decoration:none;font-family:var(--mono);
@@ -535,7 +535,7 @@ else if(started&&e.key==='ArrowRight'){au.currentTime=Math.min(DUR,au.currentTim
 
 if('mediaSession'in navigator){try{
 navigator.mediaSession.metadata=new MediaMetadata({
-title:'Critique of the Gotha Programme',artist:'Daemon Sultan',
+title:document.title.split(' \u2014 ')[0],artist:'Daemon Sultan',
 album:'Why Communism? readings',
 artwork:[{src:'/favicon-192.png',sizes:'192x192',type:'image/png'}]});
 navigator.mediaSession.setActionHandler('play',play);

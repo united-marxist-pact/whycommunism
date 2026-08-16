@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex">
 <title>Critique of the Gotha Programme — Why Communism?</title>
 <meta name="description" content="How does communism grow beyond the birthmarks of capitalism? A close, spoken reading of Marx’s Critique of the Gotha Programme.">
 <link rel="canonical" href="https://whycommunism.com/readings/critique-of-the-gotha-programme/">
@@ -266,7 +265,8 @@ justify-content:center;padding:22px;background:rgba(38,32,22,.48)}
 .ancard{background:var(--sheet);border:1px solid var(--rule);max-width:480px;
 padding:30px 32px 26px;box-shadow:0 12px 48px rgba(20,14,6,.35)}
 .anbody{font-size:16.5px;line-height:1.7;color:var(--ink)}
-.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}.antriad+.anbody{margin-top:14px}
+.antriad{margin-top:14px;white-space:nowrap;font-size:min(13.5px,2.6vw)}
+.antriad+.anbody{margin-top:14px}
 .anbtns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}
 .anbtn{display:inline-block;border:1px solid var(--faded);background:none;
 color:var(--ink);cursor:pointer;text-decoration:none;font-family:var(--mono);
@@ -681,7 +681,7 @@ else if(started&&e.key==='ArrowRight'){au.currentTime=Math.min(DUR,au.currentTim
 
 if('mediaSession'in navigator){try{
 navigator.mediaSession.metadata=new MediaMetadata({
-title:'Critique of the Gotha Programme',artist:'Daemon Sultan',
+title:document.title.split(' \u2014 ')[0],artist:'Daemon Sultan',
 album:'Why Communism? readings',
 artwork:[{src:'/favicon-192.png',sizes:'192x192',type:'image/png'}]});
 navigator.mediaSession.setActionHandler('play',play);
