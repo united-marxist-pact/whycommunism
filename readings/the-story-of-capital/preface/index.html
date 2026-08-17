@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Preface — The Story of Capital</title>
+<style>
+@font-face{font-family:'Plex Mono';font-weight:500;font-display:swap;src:url(../assets/mono.woff2) format('woff2')}
+@font-face{font-family:'Source Serif';font-weight:400;font-display:swap;src:url(../assets/serif400.woff2) format('woff2')}
+@font-face{font-family:'Source Serif';font-weight:600;font-display:swap;src:url(../assets/serif600.woff2) format('woff2')}
+:root{--paper:#efe8d8;--sheet:#faf6ea;--ink:#262016;--faded:#6d6353;
+--red:#a5231d;--dried:#a3392f;--rule:#d9cdb2;
+--serif:'Source Serif',Georgia,serif;--mono:'Plex Mono',ui-monospace,monospace}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--serif);
+font-size:19px;line-height:1.82;overflow-x:hidden}
+a{color:inherit}
+::selection{background:rgba(165,35,29,.18)}
+#inkrule{position:fixed;top:0;left:0;right:0;height:3px;z-index:50;
+background:var(--red);transform:scaleX(0);transform-origin:0 50%}
+.topnav{display:flex;gap:10px;align-items:center;padding:16px 20px;
+font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;color:var(--faded)}
+.topnav a{color:var(--faded);text-decoration:none;border-bottom:1px solid var(--rule)}
+.topnav a:hover{color:var(--red);border-color:var(--red)}
+.topnav .sp{flex:1}
+.cover{text-align:center;padding:6vh 20px 5vh;max-width:900px;margin:0 auto}
+.mast{font-family:var(--mono);font-size:11.5px;letter-spacing:.34em;
+text-indent:.34em;color:var(--faded)}
+h1{margin-top:22px;font-weight:600;font-size:clamp(30px,4.6vw,52px);
+line-height:1.12;letter-spacing:.01em}
+.drule{width:min(360px,64%);margin:22px auto 0;border-top:3px solid var(--red);
+border-bottom:1px solid var(--red);height:5px;opacity:.85}
+.byline{margin-top:16px;font-family:var(--mono);font-size:12px;
+letter-spacing:.18em;color:var(--faded)}
+.sealwrap{margin-top:36px}
+#seal{position:relative;width:96px;height:96px;border-radius:50%;cursor:pointer;
+border:none;background:transparent;color:var(--red);display:none}
+.js #seal{display:inline-block}
+#seal .ring{position:absolute;inset:0;border-radius:50%;
+border:3px solid var(--red);box-shadow:inset 0 0 0 2px var(--sheet),
+inset 0 0 0 4px var(--red)}
+#seal .glyph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#seal svg{width:40px;height:40px}
+#seal .gpause{display:none}
+body.playing #seal .gplay{display:none}
+body.playing #seal .gpause{display:flex}
+#seal:hover .ring{background:rgba(165,35,29,.07)}
+body.playing #seal .ring{animation:sealspin 14s linear infinite;border-style:dashed}
+@keyframes sealspin{to{transform:rotate(360deg)}}
+.sealcap{margin-top:14px;font-style:italic;font-size:16px;color:var(--ink)}
+.sealmeta{margin-top:6px;font-family:var(--mono);font-size:11.5px;
+letter-spacing:.14em;color:var(--faded)}
+.nsc{margin-top:26px;font-size:15px;color:var(--faded)}
+.nsc audio{margin-top:10px;width:min(420px,90%)}
+.proof{max-width:980px;margin:0 auto;padding:0 14px 30px}
+#sheet{position:relative;background:var(--sheet);border:1px solid var(--rule);
+box-shadow:0 2px 24px rgba(84,66,37,.14);
+padding:60px 60px 68px 84px;max-width:764px;margin:0 auto}
+.tx{position:relative;max-width:620px}
+.tx .u{margin-top:28px}
+.tx>:first-child{margin-top:0}
+.tx h2.u{font-weight:600;font-size:24px;line-height:1.3;margin-top:44px}
+.tx blockquote.u{padding-left:22px;border-left:3px solid var(--rule);
+font-size:17.5px;color:#3d3426}
+.tx li.u{list-style:none;padding-left:20px;position:relative}
+.tx li.u::marker{content:''}
+.tx i{font-style:inherit;border-radius:1px;cursor:default;
+background-repeat:no-repeat;background-position:0 100%;background-size:100% 100%}
+.js .tx i{cursor:pointer}
+.tx i.done{background-image:linear-gradient(to top,rgba(165,35,29,.30) 2px,transparent 2px)}
+.tx i.on{color:var(--red);
+background-image:linear-gradient(to top,rgba(165,35,29,.55) 3px,transparent 3px)}
+.tx i:hover{background-color:rgba(165,35,29,.08)}
+.u{position:relative}
+.u::before{content:'';position:absolute;left:-34px;top:6px;bottom:6px;width:3px;
+border-radius:2px;background:var(--red);opacity:0;transform:scaleY(0);
+transform-origin:50% 0}
+.u.ua::before{opacity:.8;transform:scaleY(var(--p,0))}
+.u.ur::before{opacity:.22;transform:none}
+.endnav{max-width:764px;margin:34px auto 0;display:flex;justify-content:space-between;
+font-family:var(--mono);font-size:12.5px;letter-spacing:.1em;padding:0 8px}
+.endnav a{color:var(--faded);text-decoration:none;border-bottom:1px solid var(--rule)}
+.endnav a:hover{color:var(--red);border-color:var(--red)}
+#followpill{position:fixed;left:50%;bottom:74px;transform:translateX(-50%);
+z-index:60;border:1px solid var(--red);background:var(--sheet);color:var(--red);
+font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;padding:8px 16px;
+border-radius:999px;cursor:pointer;box-shadow:0 2px 12px rgba(84,66,37,.25)}
+#rail{position:fixed;left:0;right:0;bottom:0;z-index:55;display:none;
+align-items:center;gap:12px;padding:10px 16px;
+background:rgba(250,246,234,.94);border-top:1px solid var(--rule);
+backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.js #rail{display:flex}
+#rail button{border:none;background:none;color:var(--ink);cursor:pointer;
+width:34px;height:34px;padding:5px;flex:none}
+#rail button:hover{color:var(--red)}
+#rail button svg{width:100%;height:100%}
+#rplay .gpause{display:none}
+body.playing #rplay .gplay{display:none}
+body.playing #rplay .gpause{display:block}
+#rtime{font-family:var(--mono);font-size:12px;letter-spacing:.06em;
+color:var(--faded);flex:none;min-width:110px;text-align:center}
+#rrate{font-family:var(--mono);font-size:12.5px;letter-spacing:.04em;width:44px}
+#rseek{flex:1;-webkit-appearance:none;appearance:none;height:22px;
+background:transparent;cursor:pointer;min-width:60px}
+#rseek::-webkit-slider-runnable-track{height:3px;border-radius:2px;
+background:linear-gradient(var(--red) 0 0) 0/var(--sp,0%) 100% no-repeat var(--rule)}
+#rseek::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;
+border-radius:50%;background:var(--red);margin-top:-5px}
+#rseek::-moz-range-track{height:3px;border-radius:2px;background:var(--rule)}
+#rseek::-moz-range-progress{height:3px;border-radius:2px;background:var(--red)}
+#rseek::-moz-range-thumb{width:13px;height:13px;border:none;border-radius:50%;
+background:var(--red)}
+body.js{padding-bottom:64px}
+@media(max-width:760px){
+body{font-size:17.5px}
+h1{font-size:clamp(24px,7vw,36px)}
+#sheet{padding:40px 22px 48px 46px}
+.u::before{left:-22px}
+#rtime{min-width:92px;font-size:11px}
+.tx h2.u{font-size:20px}
+}
+@media(prefers-reduced-motion:reduce){
+body.playing #seal .ring{animation:none}
+.tx i{transition:none}
+}
+</style>
+</head>
+<body>
+<script>document.documentElement.classList.add("js");document.body.classList.add("js")</script>
+<div id="inkrule" aria-hidden="true"></div>
+<nav class="topnav"><a href="../">contents</a><span class="sp"></span></nav>
+<header class="cover">
+  <p class="mast">THE STORY OF CAPITAL · A PRIVATE READ-ALONG</p>
+  <h1>Preface</h1>
+  <div class="drule" aria-hidden="true"></div>
+  <p class="byline">david harvey · read by the audiobook narrator</p>
+  <div class="sealwrap">
+    <button id="seal" type="button" aria-label="play">
+      <span class="ring" aria-hidden="true"></span>
+      <span class="glyph gplay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
+      <span class="glyph gpause"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6 L8 18.4 M16 5.6 L16 18.4" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg></span>
+    </button>
+    <p class="sealcap">press play · the ink follows the voice</p>
+    <p class="sealmeta">8 min</p>
+  </div>
+  <noscript><div class="nsc"><p>the read-along needs javascript; the audio still plays:</p>
+  <audio controls preload="none" src="audio.m4a"></audio></div></noscript>
+</header>
+<main id="main">
+<div class="proof">
+  <div id="sheet"><div class="tx">
+<h2 class="u" data-u="0"><i>Preface</i></h2>
+<p class="u" data-u="1"><i>For</i> <i>the</i> <i>last</i> <i>three</i> <i>decades,</i> <i>I</i> <i>have</i> <i>been</i> <i>involved</i> <i>in</i> <i>what</i> <i>I</i> <i>retrospectively</i> <i>call</i> <i>my</i> <i>‘Marx</i> <i>Project’.</i> <i>I</i> <i>say</i> <i>‘retrospectively’</i> <i>because</i> <i>I</i> <i>never</i> <i>planned</i> <i>it.</i> <i>The</i> <i>project</i> <i>has</i> <i>just</i> <i>evolved,</i> <i>and</i> <i>it</i> <i>is</i> <i>only</i> <i>recently</i> <i>that</i> <i>I</i> <i>can</i> <i>look</i> <i>back</i> <i>and</i> <i>appreciate</i> <i>its</i> <i>changing</i> <i>shape,</i> <i>growth</i> <i>and</i> <i>content.</i> <i>The</i> <i>beginning</i> <i>point</i> <i>was</i> <i>the</i> <i>Clinton</i> <i>years,</i> <i>when</i> <i>the</i> <i>US</i> <i>political</i> <i>establishment</i> <i>was</i> <i>celebrating</i> <i>victory</i> <i>in</i> <i>the</i> <i>Cold</i> <i>War.</i> <i>Actually</i> <i>existing</i> <i>communism</i> <i>was</i> <i>dead,</i> <i>and</i> <i>Francis</i> <i>Fukuyama</i> <i>could</i> <i>even</i> <i>declare</i> <i>the</i> <i>end</i> <i>of</i> <i>history</i> <i>with</i> <i>the</i> <i>total</i> <i>triumph</i> <i>of</i> <i>the</i> <i>bourgeoisie</i> <i>on</i> <i>the</i> <i>world</i> <i>stage.</i> <i>I</i> <i>was</i> <i>repeatedly</i> <i>told</i> <i>during</i> <i>those</i> <i>years</i> <i>that</i> <i>the</i> <i>Marx</i> <i>texts</i> <i>that</i> <i>I</i> <i>had</i> <i>been</i> <i>teaching</i> <i>since</i> <i>1970</i> <i>or</i> <i>so</i> <i>were</i> <i>totally</i> <i>irrelevant</i> <i>as</i> <i>guides</i> <i>to</i> <i>action</i> <i>in</i> <i>today’s</i> <i>world.</i> <i>Enrolment</i> <i>in</i> <i>my</i> <i>Marx</i> <i>class</i> <i>was</i> <i>way</i> <i>down.</i> <i>Even</i> <i>those</i> <i>who</i> <i>did</i> <i>take</i> <i>it</i> <i>did</i> <i>so</i> <i>in</i> <i>a</i> <i>far</i> <i>more</i> <i>sceptical</i> <i>frame</i> <i>of</i> <i>mind.</i></p>
+<p class="u" data-u="2"><i>But</i> <i>there</i> <i>was</i> <i>something</i> <i>badly</i> <i>wrong</i> <i>with</i> <i>this</i> <i>1990s</i> <i>vision</i> <i>of</i> <i>a</i> <i>troglodyte</i> <i>Marxism.</i> <i>The</i> <i>collapse</i> <i>of</i> <i>the</i> <i>Soviet</i> <i>Union</i> <i>opened</i> <i>up</i> <i>a</i> <i>space</i> <i>for</i> <i>a</i> <i>renewed</i> <i>exploration</i> <i>of</i> <i>Marx’s</i> <i>texts</i> <i>as</i> <i>the</i> <i>basis</i> <i>for</i> <i>a</i> <i>better</i> <i>understanding</i> <i>of</i> <i>how</i> <i>capital</i> <i>works</i> <i>today</i> <i>and</i> <i>what</i> <i>an</i> <i>anticapitalist</i> <i>alternative</i> <i>might</i> <i>look</i> <i>like.</i> <i>I</i> <i>did</i> <i>not</i> <i>have</i> <i>to</i> <i>explain</i> <i>away</i> <i>the</i> <i>particularities</i> <i>of</i> <i>Soviet</i> <i>and</i> <i>world</i> <i>communist</i> <i>history.</i> <i>The</i> <i>mainstream</i> <i>press</i> <i>in</i> <i>the</i> <i>1990s</i> <i>also</i> <i>uncovered</i> <i>a</i> <i>raft</i> <i>of</i> <i>unseemly</i> <i>if</i> <i>not</i> <i>vicious</i> <i>labour</i> <i>practices</i> <i>in</i> <i>the</i> <i>sweatshops</i> <i>of</i> <i>the</i> <i>world</i> <i>that</i> <i>fed</i> <i>the</i> <i>booming</i> <i>demand</i> <i>for</i> <i>fashionable</i> <i>clothing</i> <i>in</i> <i>metropolitan</i> <i>centres.</i> <i>Such</i> <i>accounts,</i> <i>I</i> <i>pointed</i> <i>out</i> <i>to</i> <i>students,</i> <i>could</i> <i>fit</i> <i>all</i> <i>too</i> <i>well</i> <i>into</i> <i>Marx’s</i> <i>chapter</i> <i>‘The</i> <i>Working</i> <i>Day’</i> <i>in</i> <i>Volume</i> <i>1</i> <i>of</i> <i>Capital.</i> <i>President</i> <i>Clinton,</i> <i>who</i> <i>had</i> <i>dreams</i> <i>of</i> <i>extending</i> <i>the</i> <i>Great</i> <i>Society</i> <i>into</i> <i>health</i> <i>care</i> <i>and</i> <i>other</i> <i>socially</i> <i>desirable</i> <i>causes,</i> <i>was</i> <i>quickly</i> <i>advised</i> <i>by</i> <i>newly</i> <i>appointed</i> <i>Treasury</i> <i>Secretary</i> <i>Robert</i> <i>Rubin</i> <i>(from</i> <i>Goldman</i> <i>Sachs)</i> <i>that</i> <i>the</i> <i>Wall</i> <i>Street</i> <i>bondholders</i> <i>would</i> <i>have</i> <i>xnone</i> <i>of</i> <i>that.</i> <i>So</i> <i>Clinton</i> <i>staked</i> <i>his</i> <i>legacy</i> <i>on</i> <i>supporting</i> <i>every</i> <i>good</i> <i>neoliberal</i> <i>cause</i> <i>he</i> <i>could</i> <i>find,</i> <i>from</i> <i>the</i> <i>punitive</i> <i>refashioning</i> <i>of</i> <i>welfare</i> <i>‘as</i> <i>we</i> <i>know</i> <i>it’</i> <i>to</i> <i>NAFTA.</i> <i>The</i> <i>Volume</i> <i>1</i> <i>theory</i> <i>of</i> <i>Capital,</i> <i>it</i> <i>turned</i> <i>out,</i> <i>was</i> <i>most</i> <i>relevant</i> <i>in</i> <i>the</i> <i>1990s,</i> <i>precisely</i> <i>in</i> <i>the</i> <i>years</i> <i>when</i> <i>it</i> <i>was</i> <i>almost</i> <i>totally</i> <i>ignored</i> <i>if</i> <i>not</i> <i>derided.</i> <i>Clinton’s</i> <i>hope</i> <i>of</i> <i>reaping</i> <i>a</i> <i>‘peace</i> <i>dividend’</i> <i>from</i> <i>cutting</i> <i>back</i> <i>on</i> <i>military</i> <i>expenditures</i> <i>was</i> <i>likewise</i> <i>thwarted</i> <i>by</i> <i>the</i> <i>political</i> <i>decision</i> <i>to</i> <i>expand</i> <i>NATO,</i> <i>even</i> <i>though</i> <i>the</i> <i>enemy</i> <i>that</i> <i>NATO</i> <i>was</i> <i>supposed</i> <i>to</i> <i>contain</i> <i>had</i> <i>disappeared</i> <i>(this</i> <i>policy</i> <i>decision</i> <i>was</i> <i>to</i> <i>bear</i> <i>bitter</i> <i>fruit</i> <i>many</i> <i>years</i> <i>later</i> <i>in</i> <i>the</i> <i>Ukraine</i> <i>War).</i></p>
+<p class="u" data-u="3"><i>It</i> <i>seemed</i> <i>to</i> <i>me</i> <i>that</i> <i>there</i> <i>was</i> <i>a</i> <i>strong</i> <i>case</i> <i>for</i> <i>going</i> <i>back</i> <i>to</i> <i>Marx’s</i> <i>original</i> <i>texts</i> <i>and</i> <i>exploring</i> <i>their</i> <i>utility</i> <i>in</i> <i>explicating</i> <i>the</i> <i>changing</i> <i>paths</i> <i>of</i> <i>capital</i> <i>accumulation.</i> <i>Step</i> <i>by</i> <i>step,</i> <i>I</i> <i>found</i> <i>myself</i> <i>losing</i> <i>interest</i> <i>in</i> <i>the</i> <i>mass</i> <i>of</i> <i>different</i> <i>interpretations</i> <i>and</i> <i>even</i> <i>whole</i> <i>schools</i> <i>of</i> <i>thought</i> <i>on</i> <i>how</i> <i>to</i> <i>interpret</i> <i>Marx’s</i> <i>political</i> <i>economy.</i> <i>I</i> <i>became</i> <i>increasingly</i> <i>absorbed</i> <i>(some</i> <i>would</i> <i>say</i> <i>obsessed)</i> <i>with</i> <i>a</i> <i>close</i> <i>reading</i> <i>of</i> <i>Marx’s</i> <i>texts,</i> <i>many</i> <i>of</i> <i>which</i> <i>were</i> <i>coming</i> <i>online</i> <i>for</i> <i>the</i> <i>first</i> <i>time.</i> <i>It</i> <i>is</i> <i>a</i> <i>valid</i> <i>criticism</i> <i>of</i> <i>my</i> <i>work</i> <i>that</i> <i>I</i> <i>do</i> <i>not</i> <i>pay</i> <i>sufficient</i> <i>attention</i> <i>to</i> <i>the</i> <i>very</i> <i>good</i> <i>output</i> <i>of</i> <i>many</i> <i>talented</i> <i>commentators</i> <i>on</i> <i>Marx.</i> <i>I</i> <i>leave</i> <i>the</i> <i>mass</i> <i>of</i> <i>critical</i> <i>commentaries</i> <i>to</i> <i>one</i> <i>side</i> <i>as</i> <i>simply</i> <i>unmanageable.</i></p>
+<p class="u" data-u="4"><i>But</i> <i>how</i> <i>to</i> <i>present</i> <i>my</i> <i>findings</i> <i>was</i> <i>a</i> <i>problem.</i> <i>The</i> <i>difficulty</i> <i>was</i> <i>fortuitously</i> <i>resolved</i> <i>by</i> <i>my</i> <i>move</i> <i>from</i> <i>Johns</i> <i>Hopkins</i> <i>to</i> <i>the</i> <i>CUNY</i> <i>Graduate</i> <i>Center</i> <i>in</i> <i>New</i> <i>York</i> <i>in</i> <i>2001.</i> <i>In</i> <i>the</i> <i>Graduate</i> <i>Center,</i> <i>I</i> <i>found</i> <i>a</i> <i>cohort</i> <i>of</i> <i>politicized</i> <i>graduate</i> <i>students.</i> <i>My</i> <i>Capital</i> <i>class</i> <i>in</i> <i>some</i> <i>years</i> <i>was</i> <i>so</i> <i>large</i> <i>we</i> <i>had</i> <i>to</i> <i>commandeer</i> <i>the</i> <i>dining</i> <i>room</i> <i>to</i> <i>teach</i> <i>it.</i> <i>I</i> <i>was</i> <i>eventually</i> <i>persuaded</i> <i>by</i> <i>my</i> <i>graduate</i> <i>students,</i> <i>Chris</i> <i>Caruso</i> <i>in</i> <i>particular,</i> <i>to</i> <i>put</i> <i>the</i> <i>classes</i> <i>on</i> <i>the</i> <i>web</i> <i>–</i> <i>so</i> <i>began</i> <i>a</i> <i>long-standing</i> <i>collaboration</i> <i>between</i> <i>my</i> <i>content</i> <i>and</i> <i>Chris’s</i> <i>media</i> <i>and</i> <i>communication</i> <i>skills.</i> <i>Together,</i> <i>we</i> <i>created</i> <i>a</i> <i>library</i> <i>of</i> <i>freely</i> <i>accessible</i> <i>materials</i> <i>for</i> <i>opening</i> <i>up</i> <i>Marx’s</i> <i>political</i> <i>economy</i> <i>for</i> <i>popular</i> <i>consumption.</i></p>
+<p class="u" data-u="5"><i>My</i> <i>aim</i> <i>in</i> <i>developing</i> <i>the</i> <i>Companions</i> <i>to</i> <i>Marx’s</i> <i>Capital</i> <i>and</i> <i>the</i> <i>Grundrisse</i> <i>in</i> <i>both</i> <i>the</i> <i>video</i> <i>and</i> <i>the</i> <i>Verso</i> <i>book</i> <i>version</i> <i>was</i> <i>to</i> <i>simplify</i> <i>Marx’s</i> <i>arguments</i> <i>as</i> <i>far</i> <i>as</i> <i>possible</i> <i>without</i> <i>being</i> <i>simplistic.</i> <i>This</i> <i>was</i> <i>not</i> <i>always</i> <i>easy.</i> <i>I</i> <i>preferred</i> <i>the</i> <i>idea</i> <i>of</i> <i>a</i> <i>companion</i> <i>(in</i> <i>which</i> <i>the</i> <i>reader</i> <i>could</i> <i>be</i> <i>an</i> <i>active</i> <i>participant)</i> <i>rather</i> <i>than</i> <i>guide,</i> <i>since</i> <i>the</i> <i>latter</i> <i>presumes</i> <i>that</i> <i>the</i> <i>final</i> <i>destination</i> <i>is</i> <i>fixed</i> <i>and</i> <i>known.</i> <i>I</i> <i>sought</i> <i>for</i> <i>an</i> <i>open,</i> <i>creative</i> <i>and</i> <i>nondogmatic</i> <i>reading.</i> <i>Over</i> <i>time,</i> <i>my</i> <i>own</i> <i>interpretations</i> <i>were</i> <i>also</i> <i>evolving,</i> <i>and</i> <i>they</i> <i>remain</i> <i>open</i> <i>to</i> <i>this</i> <i>day.</i> <i>In</i> <i>this</i> <i>respect,</i> <i>the</i> <i>companion</i> <i>to</i> <i>the</i> <i>Grundrisse</i> <i>was,</i> <i>for</i> <i>me,</i> <i>of</i> <i>major</i> <i>significance,</i> <i>because</i> <i>there</i> <i>Marx</i> <i>introduces</i> <i>the</i> <i>idea</i> <i>of</i> <i>capital’s</i> <i>mode</i> <i>of</i> <i>production</i> <i>as</i> <i>a</i> <i>whole,</i> <i>as</i> <i>a</i> <i>working</i> <i>totality</i> <i>in</i> <i>formation</i> <i>in</i> <i>which</i> <i>different</i> <i>circulation</i> <i>processes</i> <i>xi(of</i> <i>labour</i> <i>power,</i> <i>of</i> <i>capital,</i> <i>of</i> <i>credit)</i> <i>work</i> <i>together</i> <i>in</i> <i>a</i> <i>world</i> <i>where</i> <i>all</i> <i>manner</i> <i>of</i> <i>contradictions</i> <i>flourish.</i> <i>This</i> <i>led</i> <i>me</i> <i>to</i> <i>the</i> <i>idea</i> <i>to</i> <i>use</i> <i>all</i> <i>of</i> <i>the</i> <i>materials</i> <i>assembled</i> <i>both</i> <i>in</i> <i>the</i> <i>Companions</i> <i>and</i> <i>in</i> <i>the</i> <i>ancillary</i> <i>books</i> <i>such</i> <i>as</i> <i>A</i> <i>Brief</i> <i>History</i> <i>of</i> <i>Neoliberalism,</i> <i>The</i> <i>New</i> <i>Imperialism,</i> <i>The</i> <i>Enigma</i> <i>of</i> <i>Capital</i> <i>and</i> <i>The</i> <i>Madness</i> <i>of</i> <i>Economic</i> <i>Reason,</i> <i>along</i> <i>with</i> <i>several</i> <i>more</i> <i>practical</i> <i>works</i> <i>on</i> <i>urbanization</i> <i>and</i> <i>uneven</i> <i>geographical</i> <i>development.</i> <i>My</i> <i>aim</i> <i>was</i> <i>to</i> <i>look</i> <i>at</i> <i>Marx’s</i> <i>political</i> <i>economy</i> <i>through</i> <i>the</i> <i>lens</i> <i>of</i> <i>a</i> <i>totality</i> <i>in</i> <i>the</i> <i>course</i> <i>of</i> <i>construction</i> <i>through</i> <i>multiple</i> <i>circulation</i> <i>processes</i> <i>all</i> <i>in</i> <i>contradictory</i> <i>motion.</i> <i>That</i> <i>is</i> <i>the</i> <i>story</i> <i>that</i> <i>this</i> <i>book</i> <i>tries</i> <i>to</i> <i>tell.</i> <i>It</i> <i>rests</i> <i>on</i> <i>thirty</i> <i>years</i> <i>of</i> <i>working</i> <i>on</i> <i>the</i> <i>Marx</i> <i>Project,</i> <i>including</i> <i>a</i> <i>couple</i> <i>of</i> <i>dry</i> <i>runs</i> <i>of</i> <i>the</i> <i>material</i> <i>in</i> <i>courses</i> <i>taught</i> <i>at</i> <i>the</i> <i>Graduate</i> <i>Center</i> <i>and</i> <i>the</i> <i>People’s</i> <i>Forum</i> <i>in</i> <i>New</i> <i>York.</i> <i>But,</i> <i>as</i> <i>the</i> <i>coda</i> <i>on</i> <i>the</i> <i>work</i> <i>of</i> <i>Piero</i> <i>Sraffa</i> <i>illustrates,</i> <i>the</i> <i>project</i> <i>is</i> <i>ongoing,</i> <i>indeed</i> <i>never</i> <i>ending.</i> <i>The</i> <i>world</i> <i>is</i> <i>perpetually</i> <i>changing.</i> <i>Likewise,</i> <i>our</i> <i>understanding</i> <i>of</i> <i>it</i> <i>is</i> <i>also</i> <i>constantly</i> <i>evolving</i> <i>in</i> <i>both</i> <i>positive</i> <i>and</i> <i>negative</i> <i>ways.</i> <i>This</i> <i>book</i> <i>is</i> <i>one</i> <i>more</i> <i>step</i> <i>in</i> <i>telling</i> <i>the</i> <i>story</i> <i>of</i> <i>capital</i> <i>in</i> <i>a</i> <i>way</i> <i>that</i> <i>people</i> <i>can,</i> <i>I</i> <i>hope,</i> <i>understand</i> <i>and</i> <i>use</i> <i>both</i> <i>personally</i> <i>and</i> <i>politically.</i> <i>Collectively,</i> <i>we</i> <i>can</i> <i>indeed</i> <i>change</i> <i>this</i> <i>world,</i> <i>even</i> <i>though,</i> <i>as</i> <i>Marx</i> <i>points</i> <i>out,</i> <i>this</i> <i>is</i> <i>never</i> <i>under</i> <i>conditions</i> <i>of</i> <i>our</i> <i>own</i> <i>choosing.</i> <i>But</i> <i>the</i> <i>theoretical</i> <i>dissection</i> <i>of</i> <i>those</i> <i>conditions</i> <i>is</i> <i>a</i> <i>vital</i> <i>precursor</i> <i>towards</i> <i>changing</i> <i>them,</i> <i>and,</i> <i>on</i> <i>that</i> <i>basis,</i> <i>I</i> <i>offer</i> <i>this</i> <i>text</i> <i>in</i> <i>the</i> <i>quest</i> <i>to</i> <i>build</i> <i>a</i> <i>more</i> <i>humane</i> <i>and</i> <i>ecologically</i> <i>sensitive</i> <i>alternative.</i></p>
+<p class="u" data-u="6"><i>Acknowledgements</i> <i>and</i> <i>thanks</i> <i>to</i> <i>Chris</i> <i>Caruso</i> <i>for</i> <i>editing</i> <i>the</i> <i>text</i> <i>and</i> <i>to</i> <i>Miguel</i> <i>Robles-Duran</i> <i>for</i> <i>providing</i> <i>the</i> <i>figures.xii</i> <i>is</i> <i>blank</i></p>
+  </div></div>
+  <nav class="endnav"><span></span><span></span><span></span></nav>
+</div>
+</main>
+<button id="followpill" type="button" hidden>follow the voice ↓</button>
+<div id="rail" role="group" aria-label="player">
+  <button id="rplay" type="button" aria-label="play or pause">
+    <span class="glyph gplay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span><span class="glyph gpause"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.6 L8 18.4 M16 5.6 L16 18.4" stroke="currentColor" stroke-width="3.1" stroke-linecap="round"/></svg></span>
+  </button>
+  <button id="rback" type="button" aria-label="back fifteen seconds"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z" fill="currentColor"/><text x="12.2" y="15.1" text-anchor="middle" font-size="5.9" font-weight="600" font-family="ui-monospace,monospace" fill="currentColor">15</text></svg></button>
+  <span id="rtime">0:00 / 7:33</span>
+  <input id="rseek" type="range" min="0" max="453.69" step="0.5" value="0" aria-label="seek">
+  <button id="rrate" type="button" aria-label="playback speed">1×</button>
+</div>
+<audio id="au" preload="metadata" src="audio.m4a"></audio>
+<script>
+var W0=[0.06,2.92,3.02,3.12,3.64,4.04,5.34,5.42,5.58,5.74,6.50,6.72,7.14,7.36,8.26,8.64,9.00,9.48,11.02,11.10,11.62,13.06,13.40,13.46,13.64,13.96,14.90,15.00,15.48,15.74,15.96,17.18,17.32,17.42,17.54,17.80,18.32,18.54,18.60,18.86,19.06,19.58,19.78,20.62,20.86,21.45,22.20,22.79,23.05,24.66,24.77,25.09,25.59,25.81,25.91,26.29,27.05,27.19,27.35,27.67,28.11,28.91,29.15,29.75,30.43,30.53,30.63,30.95,32.29,32.71,33.37,33.97,34.15,35.05,35.21,35.69,36.59,36.79,36.97,37.31,37.43,37.59,37.67,38.47,38.61,38.73,39.13,39.61,39.71,39.83,40.63,40.71,40.83,41.15,42.79,42.85,43.01,43.59,44.11,44.47,44.79,45.61,45.75,45.85,46.27,46.87,47.17,47.23,47.37,47.57,48.17,48.65,49.65,49.79,50.13,50.33,50.83,51.55,51.77,52.16,52.30,52.72,52.82,53.30,54.52,55.12,55.26,55.44,55.78,56.22,56.54,56.80,57.96,58.12,58.28,58.40,58.64,58.92,59.38,59.58,59.86,59.94,60.14,60.40,60.62,61.16,61.42,61.54,63.09,63.19,63.29,63.43,63.99,64.43,65.15,65.29,66.69,66.79,67.21,67.33,67.47,68.25,70.03,70.13,70.50,70.56,70.67,71.16,71.82,72.08,72.18,72.28,72.68,72.86,72.98,73.56,74.30,74.42,74.80,75.72,75.86,75.98,76.62,76.78,76.90,77.24,77.90,78.04,78.34,78.92,79.44,80.52,80.76,81.00,81.12,81.96,82.84,83.06,83.26,84.56,84.64,84.82,85.04,85.32,85.50,85.98,86.36,86.48,87.52,87.74,88.34,88.66,89.16,89.68,91.16,91.24,91.72,92.14,92.22,93.18,93.64,94.10,94.58,94.74,95.32,95.60,96.72,96.94,97.32,97.96,98.26,98.96,99.04,99.20,99.82,99.92,100.02,100.88,101.10,101.42,101.56,101.94,102.36,102.52,103.10,103.62,103.78,104.54,106.10,106.30,107.16,107.30,107.68,107.92,108.06,109.11,109.31,109.62,109.78,110.00,110.31,110.53,111.05,111.81,112.06,112.42,113.06,113.27,113.83,114.31,114.59,116.41,116.89,117.89,118.05,118.23,118.63,118.71,119.29,119.41,119.69,120.33,120.55,120.81,121.41,121.55,121.95,122.39,122.99,123.75,123.93,124.31,124.95,125.27,125.59,126.07,126.55,127.09,127.37,128.13,128.51,128.95,129.91,130.03,130.15,130.43,130.81,131.65,131.85,132.25,132.50,132.59,133.81,134.19,134.66,134.96,135.14,135.62,135.76,136.34,136.88,137.28,137.92,138.30,138.40,138.56,139.48,139.68,139.82,140.40,141.14,141.30,142.16,142.40,142.56,142.80,143.40,143.52,145.34,145.44,145.92,146.24,146.68,146.86,147.60,147.74,148.10,148.50,148.78,149.16,149.62,149.70,150.62,151.16,152.06,152.18,152.32,152.72,152.86,152.94,153.10,153.82,154.28,155.28,155.46,155.64,157.37,157.81,158.15,158.38,158.97,159.29,159.69,160.43,160.77,161.09,161.41,161.55,161.97,163.05,163.19,163.81,164.33,164.51,164.63,165.05,165.49,165.59,166.15,167.29,167.47,167.59,167.73,168.07,168.37,168.79,168.97,169.33,169.39,170.27,170.43,172.01,172.17,172.55,173.01,173.25,173.35,173.71,174.05,174.67,174.95,175.29,175.95,176.07,176.29,176.75,178.53,178.65,178.85,178.95,179.11,179.27,179.45,179.61,179.73,180.15,180.61,180.73,180.99,181.19,181.33,181.77,182.25,183.31,183.41,184.11,184.39,185.21,185.59,186.31,186.47,186.95,187.43,187.59,187.99,189.97,190.21,190.41,191.49,191.57,191.83,192.25,192.55,193.21,193.33,193.49,193.93,194.17,194.61,195.79,195.93,196.35,196.67,197.09,197.25,197.93,198.07,198.29,198.43,199.09,199.67,200.19,201.77,201.83,202.25,202.93,204.17,204.33,204.49,204.67,205.63,205.78,205.85,206.31,206.66,206.79,207.28,208.34,208.57,208.72,209.16,209.35,209.63,210.14,210.24,210.34,210.68,212.34,212.44,212.56,212.64,213.04,213.92,214.16,214.42,215.26,215.48,215.64,215.88,216.10,216.36,216.80,217.40,217.50,217.60,217.92,218.30,218.92,219.12,219.48,220.00,220.68,220.84,222.20,222.26,222.70,222.76,222.98,223.20,223.62,224.42,224.60,224.82,225.70,226.28,226.60,228.43,228.56,228.76,228.88,229.53,229.73,230.59,230.75,230.81,232.13,232.23,232.87,233.17,234.03,234.61,234.81,235.05,235.37,235.61,235.93,236.55,236.65,236.79,237.22,237.72,238.24,238.38,238.57,239.13,239.28,241.30,241.42,241.52,242.00,242.88,242.96,243.22,243.28,243.90,244.08,244.92,245.44,246.86,247.40,248.02,248.56,248.78,249.02,249.42,249.64,249.94,250.76,250.88,251.02,251.12,251.56,251.66,252.04,252.26,252.38,252.68,253.98,254.02,254.14,254.54,255.12,255.34,255.56,256.04,256.80,257.04,257.68,257.82,258.76,258.88,259.04,259.16,259.58,259.68,259.82,260.10,261.24,261.40,261.90,262.08,262.90,263.82,264.22,264.50,265.46,265.72,266.24,266.74,267.02,267.78,269.08,269.99,270.14,270.64,270.76,271.45,271.63,272.09,272.65,273.49,273.73,274.15,274.41,274.97,275.47,276.25,276.43,276.89,278.85,279.09,279.75,279.99,280.59,280.81,281.63,281.81,282.29,282.87,283.11,283.29,284.51,284.71,284.97,285.09,285.59,285.85,285.97,286.49,286.75,287.59,287.79,288.01,288.88,289.31,289.80,289.95,290.18,290.32,291.02,291.62,292.06,293.80,294.30,294.46,294.62,295.00,296.16,296.22,296.58,296.80,297.12,297.24,297.34,298.50,298.70,298.94,299.08,299.36,299.52,299.64,299.84,300.32,301.50,301.92,302.20,303.20,303.43,303.52,303.91,304.41,304.53,304.65,304.99,305.85,306.27,306.97,307.09,308.73,308.79,309.05,309.23,309.47,310.09,311.55,311.61,312.45,314.05,314.23,314.75,314.99,315.15,316.09,316.29,316.59,317.65,317.83,318.01,318.35,318.65,318.73,318.95,320.33,320.44,320.62,321.33,321.50,322.04,322.13,322.27,323.16,323.76,323.92,324.54,324.76,325.20,326.22,326.74,327.28,327.64,328.26,328.48,328.80,328.92,329.50,329.78,329.90,330.78,330.96,331.06,332.10,332.22,332.34,332.84,333.92,334.10,335.16,335.30,335.62,336.08,336.84,337.98,338.50,338.76,339.34,339.46,340.04,340.18,341.04,341.32,341.99,342.11,342.20,342.64,342.91,343.23,343.59,343.73,344.59,346.49,346.71,346.91,347.03,347.11,347.31,347.59,347.81,348.19,348.75,348.87,348.99,349.59,350.37,350.79,350.95,351.15,351.97,352.23,352.31,352.49,353.13,353.59,353.91,354.36,354.44,354.75,355.21,355.36,356.66,356.78,356.96,358.28,358.40,358.82,358.94,359.62,360.04,360.18,360.62,360.74,361.20,362.12,362.36,362.52,362.86,363.12,363.66,364.14,364.50,365.66,365.98,366.46,367.12,368.96,369.26,369.62,369.82,369.98,370.18,370.32,370.88,371.42,372.08,372.32,372.46,372.93,373.05,373.14,374.26,374.37,374.46,374.75,374.87,375.73,375.99,376.57,377.23,378.33,378.59,378.79,379.53,381.03,381.23,381.43,381.59,382.33,382.49,382.73,382.97,383.31,383.43,384.87,384.99,385.43,385.69,386.13,386.75,386.93,387.35,387.43,387.53,387.93,388.95,389.41,389.49,389.73,389.89,390.21,390.57,390.65,390.75,391.39,391.59,392.19,392.45,392.51,392.63,393.05,393.73,393.89,393.99,394.37,394.69,394.83,395.01,396.11,396.87,397.07,397.19,397.65,397.77,397.91,398.19,398.35,398.77,399.43,400.67,400.77,401.39,401.73,402.91,403.59,403.87,405.17,405.31,405.75,405.95,406.75,408.27,408.97,409.27,409.93,410.07,410.39,410.69,411.19,411.83,412.57,412.67,412.91,413.55,413.97,414.43,416.17,416.39,416.89,417.45,417.63,417.89,418.53,418.73,419.05,419.19,419.65,419.77,420.51,420.61,420.69,420.99,421.13,421.41,422.27,422.35,423.09,424.21,424.42,424.68,424.98,425.94,426.27,428.06,429.13,429.30,429.80,430.46,430.98,431.20,432.26,432.48,433.00,433.28,433.66,434.04,434.76,434.98,435.14,435.44,435.64,436.12,436.24,436.42,436.64,438.16,438.30,438.44,439.04,440.04,440.16,440.48,441.24,441.36,441.54,442.00,442.88,443.52,443.94,444.56,445.14,445.26,445.48,446.66,446.74,446.98,447.20,447.82,447.90,448.02,448.61,448.75,449.05,449.13,449.45,449.83,449.93,450.41,450.59,450.91,451.39,451.45,451.57,451.61,451.71,451.83,451.89,452.13,452.19,452.27,452.33,452.37,452.53,452.79,452.89,453.13,453.19,453.53,453.59],W1=[0.40,3.04,3.12,3.50,3.94,4.62,5.40,5.56,5.72,6.38,6.62,6.94,7.18,8.24,8.54,8.90,9.34,10.88,11.06,11.30,13.06,13.34,13.44,13.64,13.96,14.08,15.00,15.44,15.66,15.96,16.44,17.30,17.42,17.52,17.74,18.28,18.46,18.58,18.76,19.02,19.36,19.76,20.48,20.80,21.32,21.79,22.59,22.96,23.52,24.77,25.07,25.37,25.79,25.89,26.27,26.57,27.19,27.29,27.61,28.09,28.81,29.07,29.73,30.13,30.53,30.61,30.91,31.17,32.67,33.31,33.91,34.11,34.43,35.17,35.67,36.23,36.77,36.95,37.31,37.41,37.59,37.67,38.03,38.61,38.69,39.09,39.59,39.71,39.81,40.55,40.71,40.81,41.11,41.55,42.85,42.97,43.55,43.93,44.45,44.77,45.11,45.75,45.85,46.13,46.83,47.03,47.21,47.35,47.53,48.05,48.51,49.57,49.75,49.91,50.29,50.79,51.38,51.72,52.13,52.23,52.66,52.80,53.24,53.68,55.06,55.22,55.40,55.68,56.14,56.40,56.72,57.08,58.12,58.30,58.36,58.58,58.90,59.04,59.54,59.70,59.92,59.98,60.38,60.58,61.12,61.42,61.50,61.86,63.19,63.31,63.41,63.77,64.35,64.75,65.29,65.53,66.73,67.13,67.31,67.37,68.21,68.83,70.13,70.47,70.56,70.66,71.08,71.44,72.08,72.18,72.22,72.66,72.82,72.90,73.50,74.28,74.40,74.76,75.30,75.82,75.96,76.48,76.76,76.82,77.20,77.90,78.00,78.26,78.82,79.38,79.78,80.72,80.96,81.08,81.92,82.64,83.04,83.22,83.50,84.60,84.78,84.98,85.28,85.40,85.96,86.26,86.46,87.48,87.62,88.28,88.52,89.10,89.66,90.02,91.26,91.70,92.08,92.22,92.32,93.22,93.94,94.56,94.62,95.26,95.46,96.32,96.86,97.12,97.78,98.26,98.90,99.04,99.16,99.80,99.90,100.02,100.36,101.04,101.36,101.52,101.92,102.32,102.48,103.08,103.58,103.74,104.48,104.96,106.30,106.78,107.20,107.64,107.86,108.00,108.58,109.27,109.53,109.75,109.98,110.27,110.48,110.97,111.44,111.91,112.39,112.72,113.19,113.67,114.03,114.49,115.03,116.83,117.29,117.99,118.21,118.61,118.71,119.29,119.39,119.63,120.23,120.51,120.79,121.05,121.53,121.75,122.37,122.97,123.39,123.87,124.27,124.89,125.11,125.55,126.03,126.47,127.01,127.35,127.67,128.35,128.89,129.33,130.03,130.13,130.35,130.73,131.57,131.83,132.11,132.50,132.57,132.85,133.94,134.57,134.96,135.08,135.50,135.72,136.22,136.70,137.12,137.88,138.30,138.38,138.56,138.92,139.66,139.78,140.38,141.12,141.24,141.86,142.34,142.50,142.76,143.42,143.48,143.86,145.44,145.80,146.12,146.60,146.78,147.30,147.72,148.06,148.32,148.70,149.08,149.58,149.70,149.78,150.66,151.92,152.16,152.28,152.70,152.86,152.94,153.06,153.56,154.24,154.76,155.40,155.60,156.16,157.76,158.10,158.25,158.83,159.01,159.55,160.27,160.63,161.07,161.37,161.51,161.93,162.59,163.17,163.77,164.27,164.49,164.61,165.03,165.45,165.55,166.07,166.49,167.47,167.61,167.69,167.97,168.23,168.67,168.93,169.33,169.39,169.91,170.41,171.05,172.15,172.51,172.91,173.21,173.33,173.57,173.99,174.39,174.87,175.25,175.57,176.05,176.19,176.73,176.99,178.63,178.85,178.93,179.03,179.25,179.47,179.59,179.65,180.11,180.55,180.73,180.97,181.17,181.27,181.75,182.23,182.77,183.41,184.07,184.29,184.87,185.35,186.31,186.41,186.93,187.39,187.53,187.97,188.73,190.17,190.35,190.73,191.53,191.81,192.19,192.53,193.07,193.31,193.45,193.85,194.07,194.57,195.53,195.91,196.13,196.61,197.07,197.17,197.61,198.03,198.25,198.37,199.03,199.55,200.15,200.63,201.81,202.23,202.91,203.35,204.35,204.49,204.65,205.18,205.78,205.81,206.25,206.63,206.74,207.24,207.79,208.51,208.68,209.03,209.34,209.62,210.10,210.24,210.34,210.64,210.98,212.44,212.54,212.60,212.98,213.62,214.08,214.34,214.76,215.40,215.52,215.76,216.06,216.28,216.78,217.30,217.48,217.60,217.80,218.16,218.74,219.04,219.32,219.98,220.64,220.80,221.14,222.24,222.48,222.78,222.94,223.10,223.58,224.36,224.50,224.76,225.16,225.92,226.56,227.24,228.53,228.72,228.84,229.33,229.67,230.33,230.73,230.79,231.19,232.21,232.75,233.09,233.97,234.55,234.77,234.99,235.33,235.55,235.91,236.47,236.63,236.75,237.15,237.69,238.03,238.34,238.53,238.90,239.24,240.22,241.40,241.52,241.98,242.30,242.92,243.20,243.26,243.86,244.00,244.88,245.42,245.96,247.12,247.90,248.42,248.68,249.00,249.36,249.58,249.76,250.36,250.84,251.02,251.10,251.56,251.66,252.02,252.20,252.36,252.66,252.80,254.02,254.14,254.52,255.08,255.30,255.50,256.02,256.50,257.02,257.48,257.78,258.30,258.84,259.04,259.14,259.56,259.68,259.78,260.10,261.24,261.32,261.74,261.94,262.88,263.60,264.16,264.42,265.00,265.64,266.16,266.58,266.96,267.72,268.12,269.49,270.08,270.62,270.69,271.17,271.55,272.01,272.65,273.29,273.63,274.11,274.29,274.89,275.43,275.85,276.37,276.89,277.43,279.01,279.27,279.89,280.55,280.71,281.59,281.73,282.25,282.71,283.05,283.21,283.97,284.63,284.95,285.07,285.37,285.79,285.95,286.35,286.69,287.07,287.75,287.89,288.61,289.27,289.75,289.89,290.18,290.28,290.76,291.38,291.96,292.72,294.04,294.42,294.60,294.94,295.22,296.20,296.58,296.68,297.06,297.22,297.28,297.98,298.62,298.92,299.04,299.34,299.52,299.60,299.74,300.28,301.02,301.86,302.10,302.61,303.43,303.52,303.85,304.39,304.53,304.63,304.97,305.71,306.05,306.73,307.09,307.41,308.77,309.03,309.19,309.31,309.79,310.77,311.63,312.25,312.79,314.23,314.55,314.93,315.13,316.03,316.27,316.53,317.03,317.77,317.95,318.31,318.59,318.71,318.91,319.17,320.42,320.60,321.10,321.45,322.00,322.12,322.24,322.92,323.44,323.90,324.02,324.64,325.14,325.84,326.54,327.02,327.54,328.24,328.36,328.74,328.88,329.42,329.78,329.86,330.46,330.94,331.00,331.38,332.20,332.26,332.76,333.54,334.04,334.66,335.26,335.50,335.98,336.76,337.50,338.20,338.78,339.12,339.42,339.92,340.14,340.50,341.26,341.67,342.08,342.14,342.61,342.82,343.11,343.55,343.67,344.55,344.99,346.67,346.87,346.97,347.11,347.21,347.55,347.67,348.03,348.43,348.85,348.97,349.55,350.09,350.67,350.91,351.07,351.87,352.19,352.31,352.43,353.07,353.51,353.85,354.07,354.39,354.71,355.18,355.31,356.14,356.76,356.94,357.76,358.38,358.78,358.90,359.34,359.84,360.14,360.60,360.70,361.14,361.52,362.36,362.50,362.86,363.06,363.62,364.08,364.32,365.28,365.86,366.40,367.10,367.68,369.16,369.46,369.78,369.90,370.16,370.26,370.78,371.40,371.82,372.32,372.43,372.88,373.02,373.08,373.81,374.35,374.46,374.75,374.82,375.44,375.96,376.51,377.19,377.87,378.55,378.71,379.47,379.89,381.21,381.39,381.55,381.93,382.49,382.69,382.91,383.29,383.39,383.67,384.97,385.39,385.55,386.03,386.55,386.87,387.31,387.43,387.53,387.83,388.43,389.41,389.45,389.73,389.83,390.17,390.55,390.65,390.75,391.27,391.51,392.09,392.43,392.51,393.17,393.05,393.37,393.89,393.99,394.33,394.67,394.79,394.97,395.29,396.37,397.05,397.17,397.51,397.75,397.87,398.15,398.27,398.67,399.17,400.03,400.77,401.21,401.59,402.21,403.25,403.83,404.17,405.27,405.65,405.87,406.71,407.17,408.87,409.23,409.89,410.03,410.19,410.55,410.99,411.79,412.33,412.65,412.89,413.41,413.77,414.41,414.77,416.35,416.61,417.09,417.63,417.83,418.15,418.65,419.03,419.15,419.57,419.73,420.17,420.61,420.65,420.91,421.11,421.41,421.67,422.31,422.63,423.65,424.33,424.63,424.92,425.51,426.15,426.80,428.65,429.24,429.60,430.24,430.92,431.16,431.50,432.46,432.72,433.20,433.54,433.98,434.22,434.94,435.10,435.40,435.64,436.12,436.20,436.38,436.56,437.06,438.30,438.40,439.02,439.72,440.14,440.48,441.10,441.34,441.40,441.94,442.68,443.44,443.96,444.10,444.80,445.26,445.46,445.92,446.70,446.96,447.16,447.58,447.90,448.00,448.46,448.69,449.03,449.09,449.37,449.85,449.95,450.37,450.61,450.89,451.41,451.47,451.59,451.63,451.73,451.85,451.91,452.15,452.21,452.29,452.35,452.39,452.55,452.81,452.87,453.15,453.21,453.53,453.61,453.71],UT=[[0.06,0.40],[2.92,61.86],[63.09,176.99],[178.53,227.24],[228.43,277.43],[278.85,450.89],[450.91,453.71]];
+var DUR=453.69,NW=1066;
+(function(){
+"use strict";
+var au=document.getElementById('au');
+var body=document.body;
+var sheet=document.getElementById('sheet');
+var words=Array.prototype.slice.call(sheet.querySelectorAll('.tx i'));
+if(words.length!==NW&&window.console)console.warn('word count mismatch',words.length,NW);
+var unitEls=[];
+Array.prototype.forEach.call(sheet.querySelectorAll('[data-u]'),function(el){
+unitEls[+el.getAttribute('data-u')]=el});
+var inkrule=document.getElementById('inkrule');
+var seal=document.getElementById('seal');
+var rplay=document.getElementById('rplay');
+var rback=document.getElementById('rback');
+var rtime=document.getElementById('rtime');
+var rseek=document.getElementById('rseek');
+var rrate=document.getElementById('rrate');
+var pill=document.getElementById('followpill');
+var reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var wmap=new Map();words.forEach(function(el,i){wmap.set(el,i)});
+words.forEach(function(el){if(el.querySelector('.mt'))el.classList.add('mtw')});
+var pieces=[];
+Array.prototype.forEach.call(document.querySelectorAll('[data-piece][data-st]'),function(el){
+try{pieces.push({el:el,st:JSON.parse(el.getAttribute('data-st'))})}catch(e){}});
+
+var started=false,follow=false,cur=-1,doneTo=-1,seekDrag=false,curUnit=-1;
+
+function fmt(t){t=Math.max(0,Math.round(t));var m=Math.floor(t/60),s=t%60;
+return m+':'+(s<10?'0':'')+s}
+var durH=fmt(DUR);
+
+function idxAt(t){var lo=0,hi=W0.length-1,r=-1;
+while(lo<=hi){var mid=(lo+hi)>>1;if(W0[mid]<=t){r=mid;lo=mid+1}else hi=mid-1}
+return r}
+
+function setDone(n){
+if(n<doneTo){for(var i=n+1;i<=doneTo&&i<words.length;i++)words[i].classList.remove('done','on');doneTo=n}
+for(var j=doneTo+1;j<=n;j++)words[j].classList.add('done');
+if(n>doneTo)doneTo=n}
+
+function setWord(i){
+if(cur>=0&&cur!==i&&words[cur]){words[cur].classList.remove('on');words[cur].style.backgroundSize=''}
+cur=i;
+if(i<0)return;
+var el=words[i];el.classList.add('on');el.classList.remove('done');
+if(!reduced){var d=Math.max(.12,W1[i]-W0[i]);
+el.style.transition='none';el.style.backgroundSize='0% 100%';
+void el.offsetWidth;
+el.style.transition='background-size '+d.toFixed(2)+'s linear';
+el.style.backgroundSize='100% 100%'}
+}
+
+function setUnit(t){
+var ui=-1;
+for(var k=0;k<UT.length;k++){if(t>=UT[k][0]-.15&&t<UT[k][1]+.3){ui=k;break}}
+if(ui!==curUnit){unitEls.forEach(function(el,k){
+if(!el)return;
+el.classList.toggle('ua',k===ui);
+el.classList.toggle('ur',k!==ui&&t>=UT[k][1])});curUnit=ui}
+if(ui>=0&&unitEls[ui]){var p=(t-UT[ui][0])/(UT[ui][1]-UT[ui][0]);
+unitEls[ui].style.setProperty('--p',Math.max(0,Math.min(1,p)).toFixed(3))}}
+
+function setPieces(t){
+for(var p=0;p<pieces.length;p++){var pc=pieces[p];
+for(var q=0;q<pc.st.length;q++)pc.el.classList.toggle(pc.st[q][0],t>=pc.st[q][1])}
+if(started)body.style.setProperty('--dawn',Math.max(0,Math.min(1,t/DUR)).toFixed(3))}
+
+function render(t){
+inkrule.style.transform='scaleX('+(t/DUR)+')';
+if(!seekDrag){rseek.value=t;rseek.style.setProperty('--sp',(t/DUR*100)+'%')}
+rtime.textContent=fmt(t)+' / '+durH;
+var i=idxAt(t);
+setDone(i-1<0?-1:i-1);
+if(i!==cur)setWord(i);
+setUnit(t);
+setPieces(t)}
+
+/* gentle chase: keep the current line in the reading band */
+var raf=null;
+function loop(){
+var t=au.currentTime;
+render(t);
+if(follow&&started&&cur>=0){
+var r=words[cur].getBoundingClientRect();
+var want=innerHeight*.42;var err=r.top-want;
+if(Math.abs(err)>4)scrollBy(0,reduced?err:err*.09)}
+if(!au.paused)raf=requestAnimationFrame(loop);else raf=null}
+
+function kick(){if(!raf)raf=requestAnimationFrame(loop)}
+
+function play(){au.play()}
+function toggle(){if(au.paused)play();else au.pause()}
+
+au.addEventListener('play',function(){
+started=true;body.classList.add('started','playing');follow=true;pill.hidden=true;kick()});
+au.addEventListener('pause',function(){body.classList.remove('playing');updPill()});
+au.addEventListener('seeking',function(){render(au.currentTime);kick()});
+au.addEventListener('ended',function(){body.classList.remove('playing');follow=false;updPill()});
+
+function updPill(){pill.hidden=!(started&&!au.paused&&!follow)}
+
+['wheel','touchmove','pointerdown'].forEach(function(ev){
+addEventListener(ev,function(e){
+if(e.target&&(e.target.closest&&e.target.closest('#rail,#followpill')))return;
+if(follow){follow=false;updPill()}},{passive:true})});
+addEventListener('keydown',function(e){
+if(['PageUp','PageDown','Home','End','ArrowUp','ArrowDown'].indexOf(e.key)>=0){
+if(follow){follow=false;updPill()}}});
+pill.addEventListener('click',function(){follow=true;pill.hidden=true;kick()});
+
+/* click a word: point the pen there; skip buttons jump past a slip */
+sheet.addEventListener('click',function(e){
+var b=e.target.closest&&e.target.closest('.skipbtn');
+if(b){au.currentTime=+b.getAttribute('data-skip');
+if(au.paused)play();else render(au.currentTime);return}
+var el=e.target.closest&&e.target.closest('i');
+if(!el||!wmap.has(el))return;
+var sel=getSelection&&getSelection();
+if(sel&&!sel.isCollapsed)return;
+var i=wmap.get(el);
+au.currentTime=Math.max(0,W0[i]-.05);
+follow=true;pill.hidden=true;
+if(au.paused)play();else render(au.currentTime)});
+
+seal.addEventListener('click',toggle);
+rplay.addEventListener('click',toggle);
+rback.addEventListener('click',function(){au.currentTime=Math.max(0,au.currentTime-15);render(au.currentTime)});
+
+rseek.addEventListener('input',function(){seekDrag=true;
+rseek.style.setProperty('--sp',(rseek.value/DUR*100)+'%');
+rtime.textContent=fmt(+rseek.value)+' / '+durH});
+rseek.addEventListener('change',function(){seekDrag=false;
+au.currentTime=+rseek.value;render(au.currentTime);kick()});
+
+var rates=[1,1.25,1.5],ri=0;
+rrate.addEventListener('click',function(){ri=(ri+1)%rates.length;
+au.playbackRate=rates[ri];
+rrate.textContent=(rates[ri]===1?'1':rates[ri]===1.25?'1¼':'1½')+'×'});
+
+addEventListener('keydown',function(e){
+if(e.altKey||e.ctrlKey||e.metaKey)return;
+var tag=(e.target.tagName||'').toLowerCase();
+if(tag==='input'||tag==='button'||tag==='textarea'||tag==='select')return;
+if(e.key===' '||e.key==='k'){e.preventDefault();toggle()}
+else if(started&&e.key==='ArrowLeft'){au.currentTime=Math.max(0,au.currentTime-10);render(au.currentTime)}
+else if(started&&e.key==='ArrowRight'){au.currentTime=Math.min(DUR,au.currentTime+10);render(au.currentTime)}});
+
+if('mediaSession'in navigator){try{
+navigator.mediaSession.metadata=new MediaMetadata({
+title:document.title.split(' \u2014 ')[0],artist:'Daemon Sultan',
+album:'Why Communism? readings',
+artwork:[{src:'/favicon-192.png',sizes:'192x192',type:'image/png'}]});
+navigator.mediaSession.setActionHandler('play',play);
+navigator.mediaSession.setActionHandler('pause',function(){au.pause()});
+navigator.mediaSession.setActionHandler('seekbackward',function(){au.currentTime=Math.max(0,au.currentTime-15)});
+navigator.mediaSession.setActionHandler('seekforward',function(){au.currentTime=Math.min(DUR,au.currentTime+15)});
+navigator.mediaSession.setActionHandler('seekto',function(d){if(d.seekTime!=null)au.currentTime=d.seekTime});
+}catch(e){}}
+
+/* scroll reveals; pieces play their completed state for scroll-only readers */
+var io=new IntersectionObserver(function(es){es.forEach(function(en){
+if(!en.isIntersecting)return;
+var el=en.target;
+el.classList.add('in');
+var st=null;
+if(el.hasAttribute&&el.hasAttribute('data-st')){
+try{st=JSON.parse(el.getAttribute('data-st'))}catch(e){}}
+if(!started){
+if(st){st.forEach(function(s,k){
+setTimeout(function(){if(!started)el.classList.add(s[0])},420+k*750)})}}
+else if(st&&st.length&&au.currentTime+2<st[0][1]){
+/* audio running but the voice is not here yet: pencil under-drawing */
+el.classList.add('pencil')}
+io.unobserve(el)})},{threshold:.05,rootMargin:'0px 0px -8% 0px'});
+Array.prototype.forEach.call(document.querySelectorAll('.rv,[data-piece]'),function(el){io.observe(el)});
+unitEls.forEach(function(el){if(el)io.observe(el)});
+
+/* dawn by scroll, until the voice takes over */
+var dTick=false;
+function scrollDawn(){dTick=false;
+if(started)return;
+var h=document.documentElement.scrollHeight-innerHeight;
+body.style.setProperty('--dawn',(h>0?Math.max(0,Math.min(1,scrollY/h)):0).toFixed(3))}
+addEventListener('scroll',function(){
+if(!dTick){dTick=true;requestAnimationFrame(scrollDawn)}},{passive:true});
+scrollDawn();
+
+/* the authorship note: shown on every load, for now */
+var an=document.getElementById('ainote'),anok=document.getElementById('anok');
+if(an){
+an.hidden=false;body.classList.add('anopen');
+var anClose=function(){an.hidden=true;body.classList.remove('anopen')};
+if(anok)anok.addEventListener('click',anClose);
+addEventListener('keydown',function(e){if(e.key==='Escape'&&!an.hidden)anClose()})}
+
+/* keep the screen awake while the reading plays */
+var wl=null;
+function wlGet(){if(!('wakeLock'in navigator))return;
+navigator.wakeLock.request('screen').then(function(l){wl=l}).catch(function(){})}
+function wlDrop(){if(wl){wl.release().catch(function(){});wl=null}}
+au.addEventListener('play',wlGet);
+au.addEventListener('pause',wlDrop);
+au.addEventListener('ended',wlDrop);
+document.addEventListener('visibilitychange',function(){
+if(document.visibilityState==='visible'&&!au.paused)wlGet()});
+
+render(0);
+
+})();
+</script>
+</body>
+</html>
