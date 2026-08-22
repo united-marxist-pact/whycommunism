@@ -131,6 +131,8 @@
     var strips = document.querySelectorAll(".an-strip");
     for (var i = 0; i < strips.length; i++) fitLine(strips[i], true);
     fitLine(wrap.querySelector(".an-triad"), false);
+    var top = document.querySelector(".an-strip.an-top");
+    if (top) document.documentElement.style.setProperty("--an-top-h", top.offsetHeight + "px");
   }
   var raf = 0;
   function schedule() {
