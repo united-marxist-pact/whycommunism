@@ -1,9 +1,13 @@
 (function () {
   "use strict";
-  var TRIAD = "Human-written. Human-reviewed. AI-assisted web design.";
-  var STATEMENT1 = "Everything you read and hear here is written and reviewed by people.";
-  var STATEMENT2 = "We use AI as a tool for building parts of the website. " +
-    "Our political thought is entirely human.";
+  var SCRIPT = document.currentScript;
+  function copy(name, fallback) {
+    return SCRIPT && SCRIPT.getAttribute(name) || fallback;
+  }
+  var TRIAD = copy("data-triad", "Human-written. Human-reviewed. AI-assisted web design.");
+  var STATEMENT1 = copy("data-statement-1", "Everything you read and hear here is written and reviewed by people.");
+  var STATEMENT2 = copy("data-statement-2", "We use AI as a tool for building parts of the website. " +
+    "Our political thought is entirely human.");
   var MONO = '"IBM Plex Mono","Plex Mono",ui-monospace,Menlo,monospace';
   var SERIF = '"Source Serif","Source Serif 4",Georgia,serif';
 
@@ -46,7 +50,7 @@
     ".an-card{background:" + card + ";border:1px solid " + cardBorder + ";max-width:480px;" +
     "padding:30px 32px 26px;box-shadow:0 12px 48px rgba(0,0,0,.4)}" +
     ".an-body{font-family:" + SERIF + ";font-size:16.5px;line-height:1.7;color:" + cardText + ";margin:0}" +
-    ".an-triad{margin:14px 0 0;white-space:nowrap;font-size:min(13.5px,2.6vw)}" +
+    ".an-triad{margin:14px 0 0;text-align:center;font-size:min(13.5px,2.6vw)}" +
     ".an-triad+.an-body{margin-top:14px}" +
     ".an-btns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}" +
     ".an-btn{display:inline-block;border:1px solid " + cardBorder + ";background:none;" +
