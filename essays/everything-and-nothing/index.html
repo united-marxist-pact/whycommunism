@@ -175,6 +175,9 @@ border-radius:50%;background:var(--acc,#f0a05a);box-shadow:0 0 12px var(--acc,#f
 .flinks a{color:#b3ac99;text-decoration:none;border-bottom:1px solid rgba(179,172,153,.3)}
 .flinks a:hover{color:var(--ink)}
 .tm{display:block;height:0}
+@media(max-width:960px){
+#tape,.topnav{top:calc(14px + var(--an-top-h,37px))}
+}
 @media(max-width:720px){
 body{font-size:18px}
 :root{--colw:600px}
@@ -1100,7 +1103,7 @@ setTimeout(layout,600);setTimeout(layout,2000);
 requestAnimationFrame(frame);
 })();
 </script>
-<script src="/assets/authorship.js?v=20260823-2"
+<script src="/assets/authorship.js?v=20260823-3"
   data-statement-1="Everything you read here is written and reviewed by people."
   data-triad="Human-written. Human-reviewed. AI-assisted web design and polishing."
   data-statement-2="We use AI as a tool for building parts of the website. For this essay, I used AI for polishing the voice recording transcript. Our political thought is entirely human."
