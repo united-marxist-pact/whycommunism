@@ -47,10 +47,10 @@
     "#an-note{position:fixed;inset:0;z-index:2147483000;display:flex;align-items:center;" +
     "justify-content:center;padding:22px;background:rgba(8,6,3,.55)}" +
     "#an-note[hidden]{display:none}" +
-    ".an-card{background:" + card + ";border:1px solid " + cardBorder + ";max-width:480px;" +
+    ".an-card{background:" + card + ";border:1px solid " + cardBorder + ";max-width:480px;min-width:0;" +
     "padding:30px 32px 26px;box-shadow:0 12px 48px rgba(0,0,0,.4)}" +
     ".an-body{font-family:" + SERIF + ";font-size:16.5px;line-height:1.7;color:" + cardText + ";margin:0}" +
-    ".an-triad{margin:14px 0 0;text-align:center;font-size:min(13.5px,2.6vw)}" +
+    ".an-triad{margin:14px 0 0;text-align:center;font-size:min(13.5px,2.6vw);white-space:nowrap}" +
     ".an-triad+.an-body{margin-top:14px}" +
     ".an-btns{margin-top:22px;display:flex;gap:min(12px,2.4vw);justify-content:center}" +
     ".an-btn{display:inline-block;border:1px solid " + cardBorder + ";background:none;" +
@@ -89,6 +89,60 @@
   wrap.querySelector(".an-triad").textContent = TRIAD;
   wrap.querySelector(".an-s2").textContent = STATEMENT2;
   document.body.appendChild(wrap);
+  /* Keep every copy of the triad on a single line. The stylesheet sizes are only a
+     starting point: measure the rendered text, tighten the tracking first (down to
+     MIN_TRACK), then scale the type until it fits the width its container really has. */
+  var TRACK = 0.18, MIN_TRACK = 0.04;
+  function lineWidth(el) {
+    var r = document.createRange();
+    r.selectNodeContents(el);
+    return r.getBoundingClientRect().width;
+  }
+  function fitLine(el, tracked) {
+    el.style.fontSize = "";
+    el.style.letterSpacing = "";
+    el.style.textIndent = "";
+    var cs = getComputedStyle(el);
+    var avail = el.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    if (!(avail > 0)) return;
+    var size = parseFloat(cs.fontSize);
+    var slots = el.textContent.length + 1;   // spacing after each glyph, plus the matching indent
+    var track = tracked ? TRACK : 0;
+    var width = lineWidth(el) + track * size;
+    if (width <= avail) return;
+    if (tracked) {
+      var glyphs = width - slots * track * size;
+      track = Math.max(MIN_TRACK, Math.min(TRACK, (avail - glyphs) / (slots * size)));
+      el.style.letterSpacing = track + "em";
+      el.style.textIndent = track + "em";
+      width = lineWidth(el) + track * size;
+      if (width <= avail) return;
+    }
+    size = size * avail / width;
+    for (var i = 0; i < 4; i++) {
+      el.style.fontSize = (Math.floor(size * 100) / 100) + "px";
+      size = parseFloat(getComputedStyle(el).fontSize);
+      width = lineWidth(el) + track * size;
+      if (width <= avail) return;
+      size *= 0.985;
+    }
+  }
+  function fitAll() {
+    var strips = document.querySelectorAll(".an-strip");
+    for (var i = 0; i < strips.length; i++) fitLine(strips[i], true);
+    fitLine(wrap.querySelector(".an-triad"), false);
+  }
+  var raf = 0;
+  function schedule() {
+    if (raf) return;
+    raf = requestAnimationFrame(function () { raf = 0; fitAll(); });
+  }
+  fitAll();
+  window.addEventListener("resize", schedule);
+  window.addEventListener("orientationchange", schedule);
+  window.addEventListener("load", schedule);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+
   function close() { wrap.hidden = true; }
   wrap.querySelector("button.an-btn").addEventListener("click", close);
   window.addEventListener("keydown", function (e) {
