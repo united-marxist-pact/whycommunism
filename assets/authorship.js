@@ -89,6 +89,7 @@
   wrap.querySelector(".an-triad").textContent = TRIAD;
   wrap.querySelector(".an-s2").textContent = STATEMENT2;
   document.body.appendChild(wrap);
+  document.documentElement.classList.add("an-open");
   /* Keep every copy of the triad on a single line. The stylesheet sizes are only a
      starting point: measure the rendered text, tighten the tracking first (down to
      MIN_TRACK), then scale the type until it fits the width its container really has. */
@@ -145,7 +146,7 @@
   window.addEventListener("load", schedule);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
 
-  function close() { wrap.hidden = true; }
+  function close() { wrap.hidden = true; document.documentElement.classList.remove("an-open"); }
   wrap.querySelector("button.an-btn").addEventListener("click", close);
   window.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !wrap.hidden) close();

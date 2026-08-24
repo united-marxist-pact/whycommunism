@@ -81,6 +81,8 @@ html.js .sub,html.js .by{opacity:0;animation:rise 1.1s 2.15s cubic-bezier(.2,.8,
 .cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);
 font-family:var(--mono);font-size:10px;letter-spacing:.3em;color:var(--dim)}
 html.js .cue{animation:cueblink 2.6s ease-in-out .8s infinite}
+/* while the authorship notice is up, the intro waits; it plays on release */
+html.js.an-open .wv b,html.js.an-open .tE,html.js.an-open .tA,html.js.an-open .tN,html.js.an-open .sub,html.js.an-open .by,html.js.an-open .cue{animation-play-state:paused}
 @keyframes cueblink{0%,100%{opacity:.75}50%{opacity:.2}}
 /* ————— the voice column ————— */
 main{position:relative;z-index:1}
@@ -1117,7 +1119,7 @@ setTimeout(layout,600);setTimeout(layout,2000);
 requestAnimationFrame(frame);
 })();
 </script>
-<script src="/assets/authorship.js?v=20260823-3"
+<script src="/assets/authorship.js?v=20260824-1"
   data-statement-1="Everything you read here is written and reviewed by people."
   data-triad="Human-written. Human-reviewed. AI-assisted web design and polishing."
   data-statement-2="We use AI as a tool for building parts of the website. For this essay, I used AI for polishing the voice recording transcript. Our political thought is entirely human."
