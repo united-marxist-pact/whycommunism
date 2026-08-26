@@ -639,29 +639,36 @@ if(started&&st&&st.length&&au.currentTime+2<st[0][1]){
 el.classList.add('pencil')}
 io.unobserve(el)})},{threshold:.05,rootMargin:'0px 0px -8% 0px'});
 /* scenes for scroll-only readers: play from the beginning only once truly
-   reached, hold, and loop — until the voice takes over */
-var loopers=new Map();
+   reached, hold, and loop — whenever the voice is not playing */
+var loopers=new Map(),inview=new Set();
 function stopLoop(el){var L=loopers.get(el);
 if(L){L.forEach(clearTimeout);loopers.delete(el)}}
+function pieceSt(el){try{var s=JSON.parse(el.getAttribute('data-st'));
+return (s&&s.length)?s:null}catch(e){return null}}
 function playLoop(el,st,once){
 stopLoop(el);
 var T=[];loopers.set(el,T);
 if(!once)st.forEach(function(s){el.classList.remove(s[0])});
 st.forEach(function(s,k){
-T.push(setTimeout(function(){if(!started)el.classList.add(s[0])},500+k*1400))});
+T.push(setTimeout(function(){if(au.paused)el.classList.add(s[0])},2400+k*1400))});
 if(reduced||once)return;
-T.push(setTimeout(function(){if(!started&&loopers.has(el))playLoop(el,st)},
-500+st.length*1400+4200))}
+T.push(setTimeout(function(){if(au.paused&&loopers.has(el))playLoop(el,st)},
+2400+st.length*1400+4200))}
 var pio=new IntersectionObserver(function(es){es.forEach(function(en){
-var el=en.target,st=null;
-try{st=JSON.parse(el.getAttribute('data-st'))}catch(e){}
-if(!st||!st.length||started)return;
+var el=en.target;
+if(en.intersectionRatio>=.4)inview.add(el);else inview.delete(el);
+var st=pieceSt(el);
+if(!st||!au.paused)return;
 if(en.intersectionRatio>=.4){
 if(!loopers.has(el))playLoop(el,st,el.id==='pivot')}
 else if(el.id!=='pivot')stopLoop(el)})},{threshold:[0,.4,.55]});
 pieces.forEach(function(pc){pio.observe(pc.el)});
 au.addEventListener('play',function(){
 loopers.forEach(function(T){T.forEach(clearTimeout)});loopers.clear()});
+au.addEventListener('pause',function(){
+setTimeout(function(){if(!au.paused)return;
+inview.forEach(function(el){var st=pieceSt(el);
+if(st&&!loopers.has(el))playLoop(el,st,el.id==='pivot')})},1200)});
 Array.prototype.forEach.call(document.querySelectorAll('.rv,[data-piece]'),function(el){io.observe(el)});
 unitEls.forEach(function(el){if(el)io.observe(el)});
 
