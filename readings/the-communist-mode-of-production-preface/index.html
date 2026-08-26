@@ -648,10 +648,10 @@ stopLoop(el);
 var T=[];loopers.set(el,T);
 if(!once)st.forEach(function(s){el.classList.remove(s[0])});
 st.forEach(function(s,k){
-T.push(setTimeout(function(){if(!started)el.classList.add(s[0])},500+k*950))});
+T.push(setTimeout(function(){if(!started)el.classList.add(s[0])},500+k*1400))});
 if(reduced||once)return;
 T.push(setTimeout(function(){if(!started&&loopers.has(el))playLoop(el,st)},
-500+st.length*950+2800))}
+500+st.length*1400+4200))}
 var pio=new IntersectionObserver(function(es){es.forEach(function(en){
 var el=en.target,st=null;
 try{st=JSON.parse(el.getAttribute('data-st'))}catch(e){}

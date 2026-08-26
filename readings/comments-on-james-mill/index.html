@@ -183,24 +183,27 @@ transition:opacity 1s,transform 1.2s cubic-bezier(.3,1.4,.4,1)}
 .figv.st1 .fv-box{transform:translateY(-44px)}
 .figv.st2 .fv-box em{opacity:.9;transform:scale(1)}
 
-/* equivalents: five distinct vessels flatten into identical squares */
+/* equivalents: five distinct vessels give way, one at a time, to identical squares */
 .figq{gap:20px}
-.eqi{position:relative;width:58px;height:76px}
-.eqi b,.eqi u{position:absolute;inset:0;transition:opacity 1.1s ease}
+.eqi{position:relative;width:58px;height:76px;--qd:0s}
+.eqi:nth-child(2){--qd:.6s}
+.eqi:nth-child(3){--qd:1.2s}
+.eqi:nth-child(4){--qd:1.8s}
+.eqi:nth-child(5){--qd:2.4s}
+.eqi b,.eqi u{position:absolute;inset:0;
+transition-property:opacity,transform,box-shadow;
+transition-duration:.55s,.55s,.8s;
+transition-timing-function:ease,cubic-bezier(.3,1.3,.4,1),ease;
+transition-delay:var(--qd)}
 .eqi u{background:var(--glass);border:1.5px solid var(--dim);opacity:0;
-top:9px;bottom:9px;transition:opacity 1.1s ease,box-shadow 1.1s}
-.eqi:nth-child(1) b{background:#B08D57;border-radius:46% 46% 18% 18%/60% 60% 12% 12%}
-.eqi:nth-child(2) b{background:#7E9E77;border-radius:50%;top:10px;bottom:10px}
-.eqi:nth-child(3) b{background:#9A7B9E;clip-path:polygon(50% 0,92% 26%,78% 100%,22% 100%,8% 26%)}
-.eqi:nth-child(4) b{background:#C2827A;border-radius:8px;top:18px}
-.eqi:nth-child(5) b{background:#7F94B0;clip-path:polygon(30% 0,70% 0,100% 78%,50% 100%,0 78%)}
-.figq.st1 .eqi b{opacity:0}
-.figq.st1 .eqi u{opacity:1}
-.figq.st1 .eqi:nth-child(2) u{transition-delay:.15s}
-.figq.st1 .eqi:nth-child(3) u{transition-delay:.3s}
-.figq.st1 .eqi:nth-child(4) u{transition-delay:.45s}
-.figq.st1 .eqi:nth-child(5) u{transition-delay:.6s}
-.figq.st1 .eqi b{transition-delay:inherit}
+transform:scale(.55);top:9px;bottom:9px}
+.eqi:nth-child(1) b{background:#C89B5B;border-radius:46% 46% 18% 18%/60% 60% 12% 12%}
+.eqi:nth-child(2) b{background:#7FB877;border-radius:50%;top:10px;bottom:10px}
+.eqi:nth-child(3) b{background:#A87BC0;clip-path:polygon(50% 0,92% 26%,78% 100%,22% 100%,8% 26%)}
+.eqi:nth-child(4) b{background:#D08A7E;border-radius:8px;top:18px}
+.eqi:nth-child(5) b{background:#7F9FD0;clip-path:polygon(30% 0,70% 0,100% 78%,50% 100%,0 78%)}
+.figq.st1 .eqi b{opacity:0;transform:scale(.8) translateY(8px)}
+.figq.st1 .eqi u{opacity:1;transform:scale(1)}
 .figq.st2 .eqi u{box-shadow:inset 0 -18px 22px -14px color-mix(in oklab,var(--ac) 45%,transparent)}
 
 /* the pivot: Gesellschaft struck, Gemeinschaft blooms — and the page warms */
@@ -668,10 +671,10 @@ stopLoop(el);
 var T=[];loopers.set(el,T);
 if(!once)st.forEach(function(s){el.classList.remove(s[0])});
 st.forEach(function(s,k){
-T.push(setTimeout(function(){if(!started)el.classList.add(s[0])},500+k*950))});
+T.push(setTimeout(function(){if(!started)el.classList.add(s[0])},500+k*1400))});
 if(reduced||once)return;
 T.push(setTimeout(function(){if(!started&&loopers.has(el))playLoop(el,st)},
-500+st.length*950+2800))}
+500+st.length*1400+4200))}
 var pio=new IntersectionObserver(function(es){es.forEach(function(en){
 var el=en.target,st=null;
 try{st=JSON.parse(el.getAttribute('data-st'))}catch(e){}
