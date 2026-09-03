@@ -204,21 +204,38 @@ margin-left:-6px;background:var(--tx);clip-path:polygon(20% 0,80% 0,100% 100%,0 
 .figw.st2 .wring b:nth-child(7){transition-delay:.9s}
 .figw.st2 .wring b:nth-child(8){transition-delay:1.05s}
 
-/* a new volume opens */
-.figb{display:flex;align-items:center;justify-content:center;min-height:190px;
+/* a new volume opens: a real book — spine, plate, page block, ruled spread, ribbon */
+.figb{display:flex;align-items:center;justify-content:center;min-height:230px;
 perspective:900px}
-.bk{position:relative;width:150px;height:104px;transform:rotateX(24deg);
+.bk{position:relative;width:176px;height:116px;transform:rotateX(20deg);
 transform-style:preserve-3d}
+.page{position:absolute;top:4px;bottom:4px;width:calc(50% - 4px);
+background:repeating-linear-gradient(180deg,transparent 0 9px,rgba(70,58,44,.28) 9px 10px),#E9E0CB;
+opacity:0;transition:opacity .8s .7s}
+.pg-l{left:4px;border-right:1px solid rgba(70,58,44,.35)}
+.pg-r{right:4px}
 .pgl{position:absolute;inset:4px;background:radial-gradient(60% 80% at 50% 50%,
-rgba(239,212,138,.75),rgba(239,212,138,.08) 75%);opacity:0;transition:opacity 1.4s .5s}
+rgba(239,212,138,.7),rgba(239,212,138,.05) 75%);opacity:0;transition:opacity 1.4s .9s;z-index:1}
 .cvr{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(180deg,#2B2350,#1C1738);
-border:1.5px solid rgba(201,168,76,.6);transform-style:preserve-3d;
+border:1.5px solid rgba(201,168,76,.75);transform-style:preserve-3d;z-index:2;
 transition:transform 1.9s cubic-bezier(.2,.8,.2,1)}
+.cvr::after{content:'';position:absolute;top:3px;bottom:3px;width:7px;
+background:repeating-linear-gradient(180deg,#E9E0CB 0 1px,#C6BBA3 1px 2px)}
 .cvl{left:0;transform-origin:left center}
+.cvl::after{left:-8px}
 .cvright{right:0;transform-origin:right center}
-.figb.lit .cvl{transform:rotateY(-148deg)}
-.figb.lit .cvright{transform:rotateY(148deg)}
-.figb.lit .pgl{opacity:1}
+.cvright::after{right:-8px}
+.ttl{position:absolute;left:18%;top:24%;width:64%;height:16px;border:1.5px solid var(--acb);opacity:.9}
+.ttl2{position:absolute;left:30%;top:52%;width:40%;height:2px;background:var(--acb);opacity:.7}
+.spine{position:absolute;left:50%;top:-3px;bottom:-3px;width:10px;margin-left:-5px;
+background:linear-gradient(90deg,#2A2250,#5A4A9E,#2A2250);border-radius:2px;z-index:3;
+border:1px solid rgba(201,168,76,.5)}
+.rib{position:absolute;left:50%;top:0;width:8px;height:0;margin-left:-4px;
+background:var(--ac);z-index:1;transition:height 1.2s ease 1s}
+.figb.lit .cvl{transform:rotateY(-152deg)}
+.figb.lit .cvright{transform:rotateY(152deg)}
+.figb.lit .page,.figb.lit .pgl{opacity:1}
+.figb.lit .rib{height:140px}
 
 /* ————— extracts ————— */
 #sheet2{max-width:680px;margin:90px auto 0;padding-top:40px;
@@ -282,6 +299,17 @@ border-radius:50%;background:var(--acb);border:none}
 #rseek::-moz-range-progress{background:var(--ac);height:3px}
 #rrate{font-family:var(--mono);font-size:12px;letter-spacing:.05em;width:auto!important;padding:0 4px}
 
+/* volume: a mute glyph and a short slider, remembered across readings */
+#rmute .mx{display:none}
+#rmute.muted .mx{display:block}
+#rmute.muted .wv1,#rmute.muted .wv2{display:none}
+#rvol{flex:0 0 64px;width:64px;appearance:none;-webkit-appearance:none;height:3px;border-radius:2px;cursor:pointer;
+background:linear-gradient(var(--ac) 0 0) 0/var(--vp,100%) 100% no-repeat color-mix(in oklab,var(--dim) 40%,transparent)}
+#rvol::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--acb);border:none}
+#rvol::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:var(--acb);border:none}
+#rvol::-moz-range-progress{background:var(--ac);height:3px}
+@media(max-width:560px){#rvol{display:none}}
+
 /* ————— authorship dialog ————— */
 #ainote{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;
 padding:20px;background:rgba(9,7,18,.82)}
@@ -310,7 +338,7 @@ body{font-size:17.5px}
 .js .rv,.js .sp,.js .para .u,.js .spi,.js .pc{opacity:1;transform:none;transition:none}
 .js .cue{animation:none}
 body.playing #seal .ring{animation:none}
-#riseglow,.cpair b,.cjoin,.ckey,.kbit,.wcoin,.wring b,.cvr,.pgl{transition:none}
+#riseglow,.cpair b,.cjoin,.ckey,.kbit,.wcoin,.wring b,.cvr,.pgl,.page,.rib{transition:none}
 }
 @media print{
 #rail,#followpill,#seal,.cue,#inkrule,#riseglow,.hnote{display:none!important}
@@ -372,7 +400,7 @@ body{background:#fff;color:#000}
 </p>
 <p class="para"><span class="u" data-u="9"><i>Until</i> <i>that</i> <i>negation</i> <i>of</i> <i>the</i> <i>negation</i> <i>is</i> <i>reached,</i> <i>the</i> <i>negatory</i> <i>condition</i> <i>is</i> <i>a</i> <i>transitional</i> <i>period</i> <i>which</i> <i>is</i> <i>the</i> <i>Dictatorship</i> <i>of</i> <i>the</i> <i>Proletariat.</i> <i>This</i> <i>is</i> <i>still</i> <i>political</i> <i>in</i> <i>nature</i> <i>and</i> <i>can</i> <i>either</i> <i>be</i> <i>democratic</i> <i>or</i> <i>despotic</i> <i>so</i> <i>long</i> <i>as</i> <i>it</i> <i>continues</i> <i>to</i> <i>abolish</i> <i>private</i> <i>property.</i> <i>Under</i> <i>this</i> <i>circumstance,</i> <i>the</i> <i>state</i> <i>is</i> <i>not</i> <i>fully</i> <i>abolished</i> <i>as</i> <i>private</i> <i>property</i> <i>and</i> <i>thus</i> <i>alienation</i> <i>remains.</i> <i>However,</i> <i>in</i> <i>such</i> <i>a</i> <i>society,</i> <i>mankind</i> <i>is</i> <i>fully</i> <i>conscious</i> <i>of</i> <i>that</i> <i>alienation.</i> <i>This</i> <i>will</i> <i>lead</i> <i>mankind</i> <i>to</i> <i>abolish</i> <i>Bourgeois</i> <i>Right</i> <i>through</i> <i>the</i> <i>seeking</i> <i>of</i> <i>practical</i> <i>changes</i> <i>in</i> <i>industry,</i> <i>science</i> <i>and</i> <i>relations</i> <i>of</i> <i>production</i> <i>which</i> <i>will</i> <i>allow</i> <i>mankind</i> <i>to</i> <i>transcend</i> <i>bourgeois</i> <i>ideology</i> <i>that</i> <i>keeps</i> <i>them</i> <i>captivated</i> <i>by</i> <i>the</i> <i>idea</i> <i>of</i> <i>private</i> <i>property.</i></span>
 </p>
-<figure class="figb" data-piece="1" data-st='[["lit",250.08]]' role="img" aria-label="a closed book opens; light rises from the blank spread: a new volume in human history can finally be opened"><span class="bk"><span class="pgl"></span><span class="cvr cvl"></span><span class="cvr cvright"></span></span><figcaption class="fs-cap">a new volume in human history</figcaption></figure>
+<figure class="figb" data-piece="1" data-st='[["lit",250.08]]' role="img" aria-label="a closed book — spine, title plate, page edges — opens into a two-page spread of ruled lines; a ribbon bookmark falls and light rises from the pages: a new volume in human history can finally be opened"><span class="bk"><span class="page pg-l"></span><span class="page pg-r"></span><span class="pgl"></span><span class="cvr cvl"><b class="ttl"></b><b class="ttl2"></b></span><span class="cvr cvright"></span><span class="spine"></span><span class="rib"></span></span><figcaption class="fs-cap">a new volume in human history</figcaption></figure>
 <p class="para"><span class="u" data-u="10"><i>It</i> <i>is</i> <i>at</i> <i>this</i> <i>point,</i> <i>and</i> <i>with</i> <i>the</i> <i>end</i> <i>of</i> <i>all</i> <i>remnants</i> <i>of</i> <i>bourgeois</i> <i>society,</i> <i>that</i> <i>a</i> <i>new</i> <i>epoch</i> <i>of</i> <i>history</i> <i>begins</i> <i>with</i> <i>new</i> <i>forms</i> <i>of</i> <i>emancipation</i> <i>for</i> <i>humanity.</i></span>
 </p>
 <aside class="u sp" data-u="11"><span class="sptag">spoken · closing remarks</span><span class="spw"><i>And</i> <i>that</i> <i>is</i> <i>the</i> <i>summary</i> <i>of</i> <i>Marx’s</i> <i>Economic</i> <i>and</i> <i>Philosophic</i> <i>Manuscripts</i> <i>of</i> <i>1844,</i> <i>the</i> <i>section</i> <i>Private</i> <i>Property</i> <i>and</i> <i>Communism.</i> <i>And</i> <i>if</i> <i>you</i> <i>want</i> <i>to</i> <i>go</i> <i>over</i> <i>the</i> <i>quotation</i> <i>extracts</i> <i>and</i> <i>my</i> <i>reasoning</i> <i>for</i> <i>that</i> <i>summary,</i> <i>then</i> <i>feel</i> <i>free</i> <i>to</i> <i>go</i> <i>into</i> <i>the</i> <i>description</i> <i>below</i> <i>to</i> <i>the</i> <i>shared</i> <i>Google</i> <i>Doc</i> <i>containing</i> <i>this</i> <i>—</i> <i>and</i> <i>potentially</i> <i>consider</i> <i>joining</i> <i>the</i> <i>United</i> <i>Marxist</i> <i>Pact</i> <i>Discord</i> <i>server,</i> <i>which</i> <i>is</i> <i>in</i> <i>the</i> <i>link</i> <i>there.</i> <i>Tomorrow,</i> <i>I</i> <i>will</i> <i>be</i> <i>going</i> <i>over</i> <i>my</i> <i>summary</i> <i>of</i> <i>the</i> <i>1845</i> <i>piece</i> <i>by</i> <i>Marx:</i> <i>A</i> <i>Critique</i> <i>of</i> <i>the</i> <i>German</i> <i>Ideology,</i> <i>Part</i> <i>One.</i> <i>Thank</i> <i>you</i> <i>for</i> <i>joining</i> <i>me</i> <i>for</i> <i>today’s</i> <i>topical</i> <i>summary,</i> <i>and</i> <i>I</i> <i>hope</i> <i>to</i> <i>see</i> <i>you</i> <i>tomorrow.</i></span></aside>
@@ -412,6 +440,8 @@ body{background:#fff;color:#000}
   <span id="rtime">0:00 / 5:57</span>
   <input id="rseek" type="range" min="0" max="357.73" step="0.5" value="0" aria-label="seek">
   <button id="rrate" type="button" aria-label="playback speed">1×</button>
+  <button id="rmute" type="button" aria-label="mute or unmute"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="spk" d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5H4z" fill="currentColor"/><path class="wv1" d="M15 9.2a4 4 0 0 1 0 5.6" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path class="wv2" d="M17.6 6.6a7.6 7.6 0 0 1 0 10.8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path class="mx" d="M15 9.5l5 5M20 9.5l-5 5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
+  <input id="rvol" type="range" min="0" max="1" step="0.05" value="1" aria-label="volume">
 </div>
 
 <footer class="foot">
@@ -673,6 +703,19 @@ if(document.visibilityState==='visible'&&!au.paused)wlGet()});
 render(0);
 
 })();
+/* volume control: slider + mute, remembered across readings */
+(function(){var au=document.getElementById('au'),v=document.getElementById('rvol'),m=document.getElementById('rmute');
+if(!au||!v||!m)return;var key='wc-volume',saved=null;
+try{saved=localStorage.getItem(key)}catch(e){}
+var vol=saved==null?1:Math.max(0,Math.min(1,+saved));if(isNaN(vol))vol=1;
+au.volume=vol;v.value=vol;
+function paint(){v.style.setProperty('--vp',((au.muted?0:au.volume)*100)+'%');
+m.classList.toggle('muted',au.muted||au.volume===0)}
+v.addEventListener('input',function(){au.volume=+v.value;au.muted=false;
+try{localStorage.setItem(key,v.value)}catch(e){}paint()});
+m.addEventListener('click',function(){au.muted=!au.muted;paint()});
+au.addEventListener('volumechange',paint);paint()})();
+
 </script>
 </body>
 </html>
