@@ -881,6 +881,7 @@ st.renderer.render(st.scene,st.cam)}}
 var last=0;
 function loop(now){requestAnimationFrame(loop);
 var dt=Math.min(.05,(now-last)/1000||.016);last=now;
+if(document.body.classList.contains('anopen'))return;
 tick(dt)}
 requestAnimationFrame(loop);
 addEventListener('resize',function(){scenes.forEach(function(st){
