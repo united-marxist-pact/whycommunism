@@ -173,6 +173,7 @@ transition:transform 1.1s cubic-bezier(.2,.8,.2,1)}
 .scene{position:relative;height:var(--sh,340px);margin:0 auto;max-width:640px;overflow:hidden;
 contain:layout paint style}
 html.js .scene:not(.live) *{animation-play-state:paused!important}
+body.anopen .scene *{animation-play-state:paused!important}
 .s3d{position:absolute;inset:0;perspective:1150px;perspective-origin:50% 42%}
 .srot,.rot,.c3{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
 .rot{animation:spin var(--spin,44s) linear infinite;transform:rotateX(var(--tilt,-16deg)) rotateY(-28deg)}
@@ -381,6 +382,7 @@ body{font-size:17.5px}
 .fig3d.pin.solo .s3d{transform:translateY(-12vh) scale(1)}
 .fig3d.flow .s3d{transform:scale(.8)}
 }
+@media(max-width:400px){#ainote{padding:20px 16px}}
 @media(max-width:380px){.coverart .scene{transform:scale(.66)}.fig3d.pin .s3d{transform:translateY(14vh) scale(.72)}
 .fig3d.pin.solo .s3d{transform:translateY(-12vh) scale(.86)}}
 @media(prefers-reduced-motion:reduce){
