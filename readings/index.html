@@ -22,40 +22,44 @@
 --mono:'Plex Mono',ui-monospace,monospace}
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:var(--paper);color:var(--ink);font-family:var(--serif);
-font-size:18.5px;line-height:1.75}
+font-size:17.5px;line-height:1.7;overflow-x:hidden}
 a{color:inherit}
-.topnav{padding:16px 20px;font-family:var(--mono);font-size:12.5px;
-letter-spacing:.14em}
+.topnav{padding:16px 20px;font-family:var(--mono);font-size:12.5px;letter-spacing:.14em}
 .topnav a{color:var(--faded);text-decoration:none;border-bottom:1px solid rgba(109,99,83,.4)}
 .topnav a:hover{color:var(--red);border-color:var(--red)}
-.hero{max-width:680px;margin:0 auto;padding:8vh 20px 30px;text-align:center}
-.mast{font-family:var(--mono);font-size:11.5px;letter-spacing:.34em;
-text-indent:.34em;color:var(--faded)}
-h1{margin-top:20px;font-weight:600;font-size:clamp(38px,6vw,56px)}
-.lede{margin-top:18px;color:var(--faded)}
-.list{max-width:680px;margin:0 auto;padding:10px 20px 40px}
-.entry{display:block;position:relative;background:var(--sheet);
-border:1px solid var(--rule);padding:26px 28px 26px 92px;text-decoration:none;
-box-shadow:0 2px 18px rgba(70,50,20,.10)}
+.hero{max-width:680px;margin:0 auto;padding:6vh 20px 22px;text-align:center}
+.mast{font-family:var(--mono);font-size:11px;letter-spacing:.3em;text-indent:.3em;color:var(--faded)}
+h1{margin-top:18px;font-weight:600;font-size:clamp(36px,9vw,56px)}
+.lede{margin-top:16px;color:var(--faded)}
+.list{max-width:680px;margin:0 auto;padding:6px 16px 40px}
+.shelf+.shelf{margin-top:34px}
+.shelfh{margin:0 0 14px;text-align:center;font-weight:600;font-style:italic;font-size:15px;
+letter-spacing:.04em;color:var(--red)}
+.entry{display:flex;align-items:center;gap:16px;background:var(--sheet);border:1px solid var(--rule);
+padding:18px 18px 18px 16px;text-decoration:none;box-shadow:0 2px 18px rgba(70,50,20,.10)}
+.entry+.entry{margin-top:14px}
 .entry:hover{border-color:var(--red)}
-.eseal{position:absolute;left:26px;top:50%;width:44px;height:44px;
-transform:translateY(-50%);border-radius:50%;border:2.5px solid var(--red);
+.eseal{flex:0 0 42px;width:42px;height:42px;border-radius:50%;border:2.5px solid var(--red);
 color:var(--red);display:flex;align-items:center;justify-content:center}
-.eseal svg{width:20px;height:20px}
+.eseal svg{width:18px;height:18px}
 .entry:hover .eseal{background:rgba(165,35,29,.08)}
-.emeta{display:block;font-family:var(--mono);font-size:11px;
-letter-spacing:.22em;color:var(--faded)}
-.etitle{display:block;margin-top:6px;font-weight:600;font-size:23px;
-line-height:1.25}
-.esub{display:block;margin-top:6px;font-style:italic;font-size:14.5px;
-color:var(--faded)}
-.soon{margin-top:22px;text-align:center;font-style:italic;font-size:15px;
-color:var(--faded)}
-.foot{max-width:680px;margin:0 auto;padding:20px 20px 46px;
-border-top:1px solid var(--rule)}
+.ebody{flex:1;min-width:0}
+.emeta{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--faded)}
+.etitle{display:block;margin-top:5px;font-weight:600;font-size:19.5px;line-height:1.22}
+.soon{margin-top:22px;text-align:center;font-style:italic;font-size:15px;color:var(--faded)}
+.foot{max-width:680px;margin:0 auto;padding:20px 20px 46px;border-top:1px solid var(--rule)}
 .flinks{font-family:var(--mono);font-size:12px;letter-spacing:.08em}
 .flinks a{color:var(--faded);text-decoration:none;border-bottom:1px solid rgba(109,99,83,.4)}
 .flinks a:hover{color:var(--red);border-color:var(--red)}
+@media(min-width:560px){
+body{font-size:18.5px;line-height:1.75}
+.list{padding:10px 20px 40px}
+.entry{gap:22px;padding:24px 28px 24px 22px}
+.eseal{flex-basis:44px;width:44px;height:44px}
+.eseal svg{width:20px;height:20px}
+.emeta{font-size:11px;letter-spacing:.22em}
+.etitle{font-size:23px;line-height:1.25}
+}
 </style>
 </head>
 <body>
@@ -66,48 +70,40 @@ border-top:1px solid var(--rule)}
 <p class="lede">Daemon Sultan is reading his summaries of the communist canon aloud, text by text. Press play on any reading and the text follows his voice.</p>
 </header>
 <main class="list">
-<a class="entry" href="manifesto-of-the-communist-party/" style="margin-top:16px">
+<section class="shelf" aria-labelledby="sh-cmop">
+<h2 class="shelfh" id="sh-cmop">The Communist Mode of Production According to Marx &amp; Engels</h2>
+<a class="entry" href="the-communist-mode-of-production-preface/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1848 · MARX &amp; ENGELS · 5 MIN</span>
-  <span class="etitle">Manifesto of the Communist Party</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1844–1890 · THE SERIES OPENS · 8 MIN</span><span class="etitle">The Communist Mode of Production — Preface and Format</span></span>
 </a>
-<a class="entry" href="critique-of-the-german-ideology/" style="margin-top:16px">
+<a class="entry" href="comments-on-james-mill/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1845 · MARX · 11 MIN</span>
-  <span class="etitle">A Critique of the German Ideology</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1844 · MARX · 9 MIN</span><span class="etitle">Comments on James Mill</span></span>
 </a>
-<a class="entry" href="private-property-and-communism/" style="margin-top:16px">
+<a class="entry" href="private-property-and-communism/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1844 · MARX · 6 MIN</span>
-  <span class="etitle">Private Property and Communism</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1844 · MARX · 6 MIN</span><span class="etitle">Private Property and Communism</span></span>
 </a>
-<a class="entry" href="comments-on-james-mill/" style="margin-top:16px">
+<a class="entry" href="critique-of-the-german-ideology/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1844 · MARX · 9 MIN</span>
-  <span class="etitle">Comments on James Mill</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1845 · MARX · 11 MIN</span><span class="etitle">A Critique of the German Ideology</span></span>
 </a>
-<a class="entry" href="the-communist-mode-of-production-preface/" style="margin-top:16px">
+<a class="entry" href="manifesto-of-the-communist-party/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1844–1890 · THE SERIES OPENS · 8 MIN</span>
-  <span class="etitle">The Communist Mode of Production — Preface and Format</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1848 · MARX &amp; ENGELS · 5 MIN</span><span class="etitle">Manifesto of the Communist Party</span></span>
 </a>
 <a class="entry" href="critique-of-the-gotha-programme/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1875 · MARX · 21 MIN</span>
-  <span class="etitle">Critique of the Gotha Programme</span>
-  <span class="esub">from the series: The Communist Mode of Production According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1875 · MARX · 21 MIN</span><span class="etitle">Critique of the Gotha Programme</span></span>
 </a>
-<a class="entry" href="introduction-to-class-struggles-in-france/" style="margin-top:16px">
+</section>
+<section class="shelf" aria-labelledby="sh-dotp">
+<h2 class="shelfh" id="sh-dotp">The Dictatorship of the Proletariat According to Marx &amp; Engels</h2>
+<a class="entry" href="introduction-to-class-struggles-in-france/">
   <span class="eseal" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.2 5.5 L 18.5 12 L 8.2 18.5 Z" fill="currentColor"/></svg></span>
-  <span class="emeta">1850 · ENGELS · 3 MIN</span>
-  <span class="etitle">Introduction to Class Struggles in France</span>
-  <span class="esub">from the series: The Dictatorship of the Proletariat According to Marx &amp; Engels</span>
+  <span class="ebody"><span class="emeta">1850 · ENGELS · 3 MIN</span><span class="etitle">Introduction to Class Struggles in France</span></span>
 </a>
+</section>
 <p class="soon">further readings are being prepared as the recordings arrive.</p>
 </main>
 <footer class="foot">
